@@ -1,26 +1,130 @@
 @import "tailwindcss";
 
+/* Tailwind v4 Dark Mode Configuration */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Custom color palette - Light Mode */
+    --color-main-blue: #0E48CC;
+    --color-light-blue: #5A87DD;
+    --color-gray: #7C7C7C;
+    --color-dark: #1A1A1A;
+    --color-light-bg: #F8F9FA;
+    --color-success: #10B981;
+    --color-error: #EF4444;
+    --color-warning: #F59E0B;
+
+    /* Typography - Font Sizes with Line Heights */
+    --text-xs: 0.75rem;
+    --text-xs--line-height: 1.4;
+
+    --text-sm: 0.875rem;
+    --text-sm--line-height: 1.5;
+
+    --text-base: 1rem;
+    --text-base--line-height: 1.6;
+
+    --text-lg: 1.125rem;
+    --text-lg--line-height: 1.6;
+
+    --text-xl: 1.25rem;
+    --text-xl--line-height: 1.5;
+
+    --text-2xl: 1.563rem;
+    --text-2xl--line-height: 1.4;
+
+    --text-3xl: 1.953rem;
+    --text-3xl--line-height: 1.3;
+
+    --text-4xl: 2.441rem;
+    --text-4xl--line-height: 1.2;
+
+    --text-5xl: 3.052rem;
+    --text-5xl--line-height: 1.1;
+
+    --text-6xl: 3.815rem;
+    --text-6xl--line-height: 1.1;
+
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Letter Spacing */
+    --letter-spacing-tight: -0.01em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.01em;
+}
+
+/* Dark Mode Color Overrides */
+@layer theme {
+    .dark {
+        --color-main-blue: #5A87DD;
+        --color-light-blue: #7BA3E8;
+        --color-gray: #9CA3AF;
+        --color-dark: #F9FAFB;
+        --color-light-bg: #1F2937;
+    }
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #1A1A1A;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
+.dark {
     --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    --foreground: #F9FAFB;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Roboto Flex', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fluid Typography Utilities */
+@layer utilities {
+    .text-fluid-sm {
+        font-size: clamp(0.875rem, 0.5vw + 0.75rem, 1rem);
+        line-height: 1.5;
+    }
+
+    .text-fluid-base {
+        font-size: clamp(1rem, 0.5vw + 0.875rem, 1.125rem);
+        line-height: 1.6;
+    }
+
+    .text-fluid-lg {
+        font-size: clamp(1.125rem, 1vw + 0.75rem, 1.5rem);
+        line-height: 1.6;
+    }
+
+    .text-fluid-xl {
+        font-size: clamp(1.25rem, 1.5vw + 0.75rem, 2rem);
+        line-height: 1.5;
+    }
+
+    .text-fluid-2xl {
+        font-size: clamp(1.563rem, 2vw + 1rem, 2.5rem);
+        line-height: 1.4;
+    }
+
+    .text-fluid-3xl {
+        font-size: clamp(1.953rem, 3vw + 1rem, 3.5rem);
+        line-height: 1.3;
+    }
+
+    .text-fluid-4xl {
+        font-size: clamp(2.441rem, 4vw + 1rem, 4.5rem);
+        line-height: 1.2;
+    }
+
+    .text-fluid-5xl {
+        font-size: clamp(3.052rem, 5vw + 1.5rem, 6rem);
+        line-height: 1.1;
+    }
 }
