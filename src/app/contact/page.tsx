@@ -1,10 +1,73 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Container from "@/components/ui/Container";
 import MiniHero from "@/components/sections/MiniHero";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { SITE_CONFIG } from "@/constants/config";
 
+type Status = "idle" | "submitting" | "success" | "error";
+
+const INITIAL_FORM = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "residential",
+    message: "",
+};
+
 export default function Contact() {
+    const [formData, setFormData] = useState(INITIAL_FORM);
+    const [website, setWebsite] = useState("");
+    const [status, setStatus] = useState<Status>("idle");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        if (status !== "success" && status !== "error") return;
+        const timer = setTimeout(() => {
+            setStatus("idle");
+            setErrorMessage("");
+        }, 10000);
+        return () => clearTimeout(timer);
+    }, [status]);
+
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus("submitting");
+        setErrorMessage("");
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...formData, website }),
+            });
+            const data = await res.json();
+
+            if (!res.ok || !data.success) {
+                setStatus("error");
+                setErrorMessage(data.error || "Something went wrong. Please try again.");
+                return;
+            }
+
+            setStatus("success");
+            setFormData(INITIAL_FORM);
+            setWebsite("");
+        } catch {
+            setStatus("error");
+            setErrorMessage("Network error. Please check your connection and try again.");
+        }
+    };
+
     return (
         <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
             {/* Breadcrumb */}
@@ -35,7 +98,19 @@ export default function Contact() {
                                     Fill out the form below and we'll get back to you within 24 hours.
                                 </p>
 
-                                <form className="space-y-6">
+                                <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+                                    {/* Honeypot — hidden from users, bots fill it */}
+                                    <input
+                                        type="text"
+                                        name="website"
+                                        value={website}
+                                        onChange={(e) => setWebsite(e.target.value)}
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        aria-hidden="true"
+                                        className="absolute left-[-9999px] w-px h-px opacity-0"
+                                    />
+
                                     {/* Name Fields */}
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
@@ -46,6 +121,8 @@ export default function Contact() {
                                                 type="text"
                                                 id="firstName"
                                                 name="firstName"
+                                                value={formData.firstName}
+                                                onChange={handleChange}
                                                 placeholder="Enter your first name"
                                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
                                                 required
@@ -59,6 +136,8 @@ export default function Contact() {
                                                 type="text"
                                                 id="lastName"
                                                 name="lastName"
+                                                value={formData.lastName}
+                                                onChange={handleChange}
                                                 placeholder="Enter your last name"
                                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
                                                 required
@@ -76,6 +155,8 @@ export default function Contact() {
                                                 type="email"
                                                 id="email"
                                                 name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
                                                 placeholder="your.email@example.com"
                                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
                                                 required
@@ -89,6 +170,8 @@ export default function Contact() {
                                                 type="tel"
                                                 id="phone"
                                                 name="phone"
+                                                value={formData.phone}
+                                                onChange={handleChange}
                                                 placeholder="(555) 123-4567"
                                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
                                                 required
@@ -103,19 +186,19 @@ export default function Contact() {
                                         </label>
                                         <div className="grid md:grid-cols-2 gap-4">
                                             <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="residential" className="w-4 h-4 text-light-blue" defaultChecked />
+                                                <input type="radio" name="service" value="residential" checked={formData.service === "residential"} onChange={handleChange} className="w-4 h-4 text-light-blue" />
                                                 <span className="ml-3 text-gray-900 dark:text-white">Residential</span>
                                             </label>
                                             <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="commercial" className="w-4 h-4 text-light-blue" />
+                                                <input type="radio" name="service" value="commercial" checked={formData.service === "commercial"} onChange={handleChange} className="w-4 h-4 text-light-blue" />
                                                 <span className="ml-3 text-gray-900 dark:text-white">Commercial</span>
                                             </label>
                                             <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="renovation" className="w-4 h-4 text-light-blue" />
+                                                <input type="radio" name="service" value="renovation" checked={formData.service === "renovation"} onChange={handleChange} className="w-4 h-4 text-light-blue" />
                                                 <span className="ml-3 text-gray-900 dark:text-white">Renovation</span>
                                             </label>
                                             <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="other" className="w-4 h-4 text-light-blue" />
+                                                <input type="radio" name="service" value="other" checked={formData.service === "other"} onChange={handleChange} className="w-4 h-4 text-light-blue" />
                                                 <span className="ml-3 text-gray-900 dark:text-white">Other</span>
                                             </label>
                                         </div>
@@ -129,6 +212,8 @@ export default function Contact() {
                                         <textarea
                                             id="message"
                                             name="message"
+                                            value={formData.message}
+                                            onChange={handleChange}
                                             rows={6}
                                             placeholder="Tell us about your project, any specific requirements, or questions you have..."
                                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors resize-none"
@@ -139,10 +224,22 @@ export default function Contact() {
                                     {/* Submit Button */}
                                     <button
                                         type="submit"
-                                        className="w-full bg-main-blue hover:bg-light-blue text-white font-semibold px-8 py-4 rounded-lg transition-colors"
+                                        disabled={status === "submitting"}
+                                        className="w-full bg-main-blue hover:bg-light-blue text-white font-semibold px-8 py-4 rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                                     >
-                                        Get Your Free Quote
+                                        {status === "submitting" ? "Sending..." : "Get Your Free Quote"}
                                     </button>
+
+                                    {status === "success" && (
+                                        <div className="rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-4 py-3 text-green-800 dark:text-green-200">
+                                            Thanks! Your message has been sent. We&apos;ll get back to you within 24 hours.
+                                        </div>
+                                    )}
+                                    {status === "error" && (
+                                        <div className="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-red-800 dark:text-red-200">
+                                            {errorMessage}
+                                        </div>
+                                    )}
                                 </form>
                             </div>
 
