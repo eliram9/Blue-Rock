@@ -3,7 +3,7 @@ import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
-const ALLOWED_SERVICES = ["residential", "commercial", "renovation", "other"] as const;
+const ALLOWED_SERVICES = ["residential", "commercial", "government", "renovation", "other"] as const;
 type Service = (typeof ALLOWED_SERVICES)[number];
 
 type ContactPayload = {

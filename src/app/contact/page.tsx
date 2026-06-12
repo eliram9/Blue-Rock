@@ -194,6 +194,10 @@ export default function Contact() {
                                                 <span className="ml-3 text-gray-900 dark:text-white">Commercial</span>
                                             </label>
                                             <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
+                                                <input type="radio" name="service" value="government" checked={formData.service === "government"} onChange={handleChange} className="w-4 h-4 text-light-blue" />
+                                                <span className="ml-3 text-gray-900 dark:text-white">Government</span>
+                                            </label>
+                                            <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
                                                 <input type="radio" name="service" value="renovation" checked={formData.service === "renovation"} onChange={handleChange} className="w-4 h-4 text-light-blue" />
                                                 <span className="ml-3 text-gray-900 dark:text-white">Renovation</span>
                                             </label>
