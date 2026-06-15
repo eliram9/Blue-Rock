@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto_Flex } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import TopBar from "@/components/ui-elements/TopBar";
 import Header from "@/components/ui-elements/Header";
@@ -23,6 +24,8 @@ export default function RootLayout({
     }: Readonly<{
     children: React.ReactNode;
     }>) {
+    const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
     return (
         <html lang="en" className={robotoFlex.variable} suppressHydrationWarning>
             <body className={`${robotoFlex.className} antialiased`}>
@@ -35,6 +38,7 @@ export default function RootLayout({
                     <Footer />
                 </ThemeProvider>
             </body>
+            {gaId && <GoogleAnalytics gaId={gaId} />}
         </html>
     );
 }
