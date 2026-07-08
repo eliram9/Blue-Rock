@@ -82,6 +82,8 @@ export default function Contact() {
             <MiniHero
                 title="CONTACT US"
                 subtitle="Let's Bring Your Vision to Life"
+                size="subcategory"
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
             />
 
             {/* Contact Section */}

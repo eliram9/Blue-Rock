@@ -37,7 +37,7 @@ export default function Header(): React.ReactElement {
                         {/* Mobile menu button */}
                         <div className="md:hidden">
                             <button
-                                className="text-gray-700 hover:text-main-blue transition-colors"
+                                className="text-gray-700 dark:text-gray-200 hover:text-main-blue transition-colors"
                                 aria-label="Toggle mobile menu"
                             >
                                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

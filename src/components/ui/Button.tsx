@@ -16,9 +16,9 @@ export default function Button({
     const baseStyles = "font-semibold px-8 py-3 rounded-lg transition-colors inline-block";
 
     const variants: Record<ButtonVariant, string> = {
-        primary: "bg-main-blue hover:bg-light-blue text-white",
+        primary: "bg-main-blue hover:bg-main-blue-deep text-white",
         secondary: "bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-2 border-white",
-        ghost: "bg-transparent text-white hover:bg-white/10"
+        ghost: "bg-transparent text-white hover:bg-ink/40"
     };
 
     return (

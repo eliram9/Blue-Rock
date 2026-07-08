@@ -9,7 +9,7 @@ export default function Footer(): React.ReactElement {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="relative bg-gray-900 border-t border-gray-800 transition-colors duration-300 overflow-hidden">
+        <footer className="relative bg-ink border-t border-gray-800 transition-colors duration-300 overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
                 <Image
@@ -19,7 +19,7 @@ export default function Footer(): React.ReactElement {
                     className="object-cover"
                     quality={75}
                 />
-                <div className="absolute inset-0 bg-gray-900/90" />
+                <div className="absolute inset-0 bg-ink/90" />
             </div>
 
             {/* Content */}
@@ -48,12 +48,12 @@ export default function Footer(): React.ReactElement {
                         <div className="space-y-3 text-gray-400">
                             {/* Phone */}
                             <div className="flex items-center gap-3">
-                                <svg className="w-5 h-5 flex-shrink-0 text-light-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 flex-shrink-0 text-brand-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
                                 <a
                                     href={`tel:${SITE_CONFIG.phone}`}
-                                    className="hover:text-light-blue transition-colors"
+                                    className="hover:text-brand-light transition-colors"
                                 >
                                     {SITE_CONFIG.phoneDisplay}
                                 </a>
@@ -62,12 +62,12 @@ export default function Footer(): React.ReactElement {
                             {/* Email */}
                             {SITE_CONFIG.email && (
                                 <div className="flex items-center gap-3">
-                                    <svg className="w-5 h-5 flex-shrink-0 text-light-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg className="w-5 h-5 flex-shrink-0 text-brand-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
                                     <a
                                         href={`mailto:${SITE_CONFIG.email}`}
-                                        className="hover:text-light-blue transition-colors"
+                                        className="hover:text-brand-light transition-colors"
                                     >
                                         {SITE_CONFIG.email}
                                     </a>
@@ -77,7 +77,7 @@ export default function Footer(): React.ReactElement {
                             {/* Address */}
                             {SITE_CONFIG.address && (
                                 <div className="flex items-start gap-3">
-                                    <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-light-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg className="w-5 h-5 flex-shrink-0 mt-0.5 text-brand-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
@@ -96,7 +96,7 @@ export default function Footer(): React.ReactElement {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Visit our Google page"
-                                className="text-gray-400 hover:text-light-blue transition-colors border border-light-blue rounded-full p-1.5 hover:border-white"
+                                className="text-gray-400 hover:text-brand-light transition-colors border border-brand-light rounded-full p-1.5 hover:border-white"
                             >
                                 <Image
                                     src="/svg/google.svg"
@@ -113,7 +113,7 @@ export default function Footer(): React.ReactElement {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Visit our Yelp page"
-                                className="text-gray-400 hover:text-light-blue transition-colors border border-light-blue rounded-full p-1.5 hover:border-white"
+                                className="text-gray-400 hover:text-brand-light transition-colors border border-brand-light rounded-full p-1.5 hover:border-white"
                             >
                                 <Image
                                     src="/svg/yelp.svg"
@@ -130,7 +130,7 @@ export default function Footer(): React.ReactElement {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Visit our Houzz page"
-                                className="text-gray-400 hover:text-light-blue transition-colors border border-light-blue rounded-full p-1.5 hover:border-white"
+                                className="text-gray-400 hover:text-brand-light transition-colors border border-brand-light rounded-full p-1.5 hover:border-white"
                             >
                                 <Image
                                     src="/svg/houzz.svg"
@@ -147,7 +147,7 @@ export default function Footer(): React.ReactElement {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Visit our HomeAdvisor page"
-                                className="text-gray-400 hover:text-light-blue transition-colors border border-light-blue rounded-full p-1.5 hover:border-white"
+                                className="text-gray-400 hover:text-brand-light transition-colors border border-brand-light rounded-full p-1.5 hover:border-white"
                             >
                                 <Image
                                     src="/svg/homeadvisor.svg"
@@ -170,7 +170,7 @@ export default function Footer(): React.ReactElement {
                                 <li key={link.href}>
                                     <a
                                         href={link.href}
-                                        className="text-gray-400 hover:text-light-blue transition-colors"
+                                        className="text-gray-400 hover:text-brand-light transition-colors"
                                     >
                                         {link.label}
                                     </a>
@@ -331,7 +331,7 @@ export default function Footer(): React.ReactElement {
                             {/* Powered By */}
                             {SITE_CONFIG.poweredBy && (
                                 <p className="text-xs">
-                                    Built by <span className="font-medium text-light-blue">{SITE_CONFIG.poweredBy}</span>
+                                    Built by <span className="font-medium text-brand-light">{SITE_CONFIG.poweredBy}</span>
                                 </p>
                             )}
                         </div>

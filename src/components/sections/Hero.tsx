@@ -6,7 +6,9 @@ import Container from "@/components/ui/Container";
 
 export default function Hero(): React.ReactElement {
     return (
-        <section className="relative w-full h-[90vh] overflow-hidden">
+        // Tier 1 hero (homepage only). min-h + svh: grows with content, and small
+        // viewport units keep mobile browser chrome from causing overflow.
+        <section className="relative flex min-h-[55svh] w-full items-center justify-center overflow-hidden md:min-h-[90svh]">
             {/* Background Image */}
             <Image src="/kitchen.jpg"
                    alt="Modern kitchen"
@@ -16,11 +18,11 @@ export default function Hero(): React.ReactElement {
                    quality={85}
             />
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50"></div>
+            {/* Scrim — fixed ink on a fixed photo; identical in light & dark */}
+            <div className="absolute inset-0 bg-ink/50"></div>
 
             {/* Content */}
-            <div className="relative z-10 h-full flex items-center justify-center">
+            <div className="relative z-10 w-full py-20">
                 <Container className="text-center">
                     <Text variant="lead" fluid className="text-white mb-8">
                         Craft Dreams, Build Realities

@@ -4,12 +4,34 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-    /* Custom color palette - Light Mode */
+    /* ── Fixed brand palette (identical in light & dark) ──
+       Use on art-directed "ink" surfaces that must NOT flip:
+       the navy Story band, the steel CTA band, the Footer. */
+    --color-brand: #0E48CC;         /* deep brand blue */
+    --color-brand-light: #5A87DD;   /* light brand-blue accent on ink */
+    --color-ink: #0a1628;           /* navy dark ground */
+    --color-ink-soft: #0d1c30;      /* navy card/panel variant */
+    --color-steel-top: #2a4a7a;     /* CTA gradient top */
+    --color-steel-bottom: #1b3357;  /* CTA gradient bottom */
+
+    /* ── Flipping brand palette (lightens in dark for contrast) ──
+       Use on themed surfaces (light sections, chrome). */
     --color-main-blue: #0E48CC;
+    --color-main-blue-deep: #0B3AA6; /* darker hover state for main-blue fills */
     --color-light-blue: #5A87DD;
+
+    /* ── Semantic surfaces & text (flip with theme) ── */
+    --color-surface: #ffffff;        /* card / section surface */
+    --color-surface-muted: #F8F9FA;  /* subtle raised surface */
+    --color-muted: #7C7C7C;          /* secondary text */
+    --color-border: #E5E7EB;         /* hairline borders */
+
+    /* ── Legacy tokens (kept for back-compat; prefer the names above) ── */
     --color-gray: #7C7C7C;
     --color-dark: #1A1A1A;
     --color-light-bg: #F8F9FA;
+
+    /* ── Status ── */
     --color-success: #10B981;
     --color-error: #EF4444;
     --color-warning: #F59E0B;
@@ -45,6 +67,9 @@
     --text-6xl: 3.815rem;
     --text-6xl--line-height: 1.1;
 
+    /* Font Families */
+    --font-title: var(--font-unica-one), sans-serif;
+
     /* Font Weights */
     --font-weight-light: 300;
     --font-weight-regular: 400;
@@ -58,11 +83,28 @@
     --letter-spacing-wide: 0.01em;
 }
 
-/* Dark Mode Color Overrides */
+/* Dark Mode Color Overrides
+   NOTE: the fixed-brand/ink/steel tokens are intentionally absent here — that
+   is what keeps art-directed "ink" surfaces identical in both modes. */
 @layer theme {
     .dark {
+        /* Flipping brand — lighten for contrast on dark grounds */
         --color-main-blue: #5A87DD;
+        --color-main-blue-deep: #4470C7;
         --color-light-blue: #7BA3E8;
+
+        /* Semantic surfaces & text */
+        --color-surface: #111827;
+        --color-surface-muted: #1F2937;
+        --color-muted: #9CA3AF;
+        --color-border: #243044;
+
+        /* Status — tuned brighter for dark grounds */
+        --color-success: #34D399;
+        --color-error: #F87171;
+        --color-warning: #FBBF24;
+
+        /* Legacy */
         --color-gray: #9CA3AF;
         --color-dark: #F9FAFB;
         --color-light-bg: #1F2937;
@@ -86,8 +128,64 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Running-border hover effect: a conic-gradient ring whose bright segments
+   chase around the element's edge. Registered so the angle interpolates. */
+@property --border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes border-run {
+    to {
+        --border-angle: 360deg;
+    }
+}
+
 /* Fluid Typography Utilities */
 @layer utilities {
+    /* Fixed brand-light/white streaks — tuned for ink surfaces (CTA band). */
+    .running-border {
+        position: relative;
+    }
+
+    .running-border::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 2px;
+        /* Fixed-art hexes: decorative electric spectrum, not brand tokens */
+        background: conic-gradient(
+            from var(--border-angle),
+            transparent 0deg,
+            var(--color-brand-light) 30deg,
+            #22d3ee 60deg,
+            #60a5fa 90deg,
+            #a78bfa 120deg,
+            transparent 150deg,
+            transparent 180deg,
+            var(--color-brand-light) 210deg,
+            #22d3ee 240deg,
+            #60a5fa 270deg,
+            #a78bfa 300deg,
+            transparent 330deg
+        );
+        /* Keep only the 2px ring: punch the content-box out of the fill */
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .running-border:hover::before {
+        opacity: 1;
+        animation: border-run 2.5s linear infinite;
+    }
+
     .text-fluid-sm {
         font-size: clamp(0.875rem, 0.5vw + 0.75rem, 1rem);
         line-height: 1.5;
