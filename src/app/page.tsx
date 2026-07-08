@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/Hero";
+import TrustedBadges from "@/components/sections/TrustedBadges";
 import Container from "@/components/ui/Container";
 import Carousel from "@/components/ui/Carousel";
 
@@ -34,6 +35,9 @@ export default function Home(): React.ReactElement {
     return (
         <div className="min-h-screen">
             <Hero />
+
+            {/* Licensing + review-platform trust strip */}
+            <TrustedBadges />
 
             {/* Featured Projects Carousel Section */}
             <section className="py-20 md:py-28 bg-gray-50 dark:bg-gray-800/50 transition-colors">

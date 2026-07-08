@@ -142,6 +142,14 @@ body {
     }
 }
 
+/* Logo marquee: the track holds two identical sets and slides half its own
+   width, so the loop is seamless. Pauses on hover to keep links clickable. */
+@keyframes marquee-scroll {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
 /* Fluid Typography Utilities */
 @layer utilities {
     /* Fixed brand-light/white streaks — tuned for ink surfaces (CTA band). */
@@ -184,6 +192,41 @@ body {
     .running-border:hover::before {
         opacity: 1;
         animation: border-run 2.5s linear infinite;
+    }
+
+    .marquee-track {
+        animation: marquee-scroll 35s linear infinite;
+    }
+
+    .marquee:hover .marquee-track {
+        animation-play-state: paused;
+    }
+
+    /* Spotlight: while one logo is hovered, the rest fade back so the
+       hovered mark (full colour + glow) owns the row. :has() is a
+       progressive enhancement — without it logos simply don't dim. */
+    .marquee:has(a:hover) a:not(:hover) .marquee-logo {
+        opacity: 0.2;
+    }
+
+    /* Reduced motion: no scrolling — drop the clone and let one set wrap
+       into a centered static grid instead. */
+    @media (prefers-reduced-motion: reduce) {
+        .marquee-track {
+            animation: none;
+            width: 100%;
+        }
+
+        .marquee-set {
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-right: 0;
+        }
+
+        .marquee-clone {
+            display: none;
+        }
     }
 
     .text-fluid-sm {

@@ -279,7 +279,7 @@ export default function OurStory() {
                         </span>
                         <span className="flex-1 border-t border-dashed border-brand-light/15" />
                     </div>
-                    <RecognitionLogos />
+                    <RecognitionLogos onInk />
                 </motion.div>
             </div>
         </section>
