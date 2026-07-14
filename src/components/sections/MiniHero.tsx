@@ -20,6 +20,9 @@ interface MiniHeroProps {
     imageSrc?: string;
     size?: MiniHeroSize;
     breadcrumbs?: BreadcrumbItem[];
+    /** Brand-blue "blueprint" wash over the image (like the service cards) —
+        use on light renders so the white text stays readable. */
+    tint?: boolean;
 }
 
 const tiers: Record<MiniHeroSize, { section: string; display: "lg" | "sm" }> = {
@@ -33,6 +36,7 @@ export default function MiniHero({
     imageSrc = "/images/hero/inner-hero.jpg",
     size = "category",
     breadcrumbs,
+    tint = false,
 }: MiniHeroProps): React.ReactElement {
     const tier = tiers[size];
 
@@ -40,15 +44,32 @@ export default function MiniHero({
         <section
             className={`relative flex w-full items-center justify-center overflow-hidden ${tier.section}`}
         >
+            {/* Tinted renders stay razor-sharp (the wash handles text contrast);
+                plain photo heroes keep the soft blur treatment */}
             <Image
                 src={imageSrc}
                 alt={title}
                 fill
                 priority
-                className="object-cover blur-[1px]"
-                quality={85}
+                className={`object-cover ${tint ? "" : "blur-[1px]"}`}
+                quality={tint ? 95 : 85}
             />
-            {/* Scrim — fixed ink on a fixed photo; identical in light & dark */}
+            {/* On-image overlays use fixed tokens — identical in light & dark */}
+            {tint && (
+                <>
+                    {/* Brand wash: "blueprints" light renders, like the cards */}
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-brand/35 mix-blend-multiply"
+                    />
+                    {/* Gentle depth gradient behind the centered text */}
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/15 to-ink/50"
+                    />
+                </>
+            )}
+            {/* Base scrim */}
             <div className="absolute inset-0 bg-ink/30" />
 
             <div className="relative z-10 w-full py-12">

@@ -1,4 +1,5 @@
 import { SITE_URL, BUSINESS } from "./site";
+import { SERVICES } from "./services";
 
 /** Stable @id so every other schema node can reference this one entity. */
 export const ORG_ID = `${SITE_URL}/#organization`;
@@ -40,6 +41,30 @@ export const organizationSchema: Record<string, unknown> = {
         closes: "17:00",
     },
     ...(BUSINESS.sameAs.length > 0 ? { sameAs: BUSINESS.sameAs } : {}),
+};
+
+/**
+ * Machine-readable service catalog, generated from the same SERVICES data the
+ * home-page WhatWeDo section renders — visible content and schema never drift.
+ */
+export const servicesCatalogSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    name: `${BUSINESS.name} — Construction & Remodeling Services`,
+    itemListElement: SERVICES.map((service) => ({
+        "@type": "Offer",
+        itemOffered: {
+            "@type": "Service",
+            name: service.title,
+            description: service.blurb,
+            url: `${SITE_URL}${service.href}`,
+            provider: { "@id": ORG_ID },
+            areaServed: BUSINESS.areaServed.map((name) => ({
+                "@type": "AdministrativeArea",
+                name,
+            })),
+        },
+    })),
 };
 
 /** Breadcrumb trail for the About page. */

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
 
@@ -21,11 +22,21 @@ export default function Button({
         ghost: "bg-transparent text-white hover:bg-ink/40"
     };
 
+    const { href, ...rest } = props;
+    const classes = `${baseStyles} ${variants[variant]} ${className}`;
+
+    /* Internal routes get next/link (client-side nav + viewport prefetch);
+       external/tel/mailto links stay plain anchors */
+    if (href?.startsWith("/")) {
+        return (
+            <Link href={href} className={classes} {...rest}>
+                {children}
+            </Link>
+        );
+    }
+
     return (
-        <a
-            className={`${baseStyles} ${variants[variant]} ${className}`}
-            {...props}
-        >
+        <a href={href} className={classes} {...rest}>
             {children}
         </a>
     );

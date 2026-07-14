@@ -1,13 +1,15 @@
 // Colors use `currentColor` so the blueprint inherits its color from the
 // parent element — set `text-*` / `dark:text-*` on the wrapper to theme it.
-import * as React from "react"
-const Blueprint
- = (props) => (
+/** `zoom` crops a centered window of the 2611×1206 canvas: 1 = full drawing,
+ *  1.4 = grid squares ~40% larger. Clamped ≥1 so blank canvas never shows. */
+const Blueprint = ({ zoom = 1, ...props }) => {
+  const z = Math.max(1, zoom);
+  const w = 2611 / z;
+  const h = 1206 / z;
+  return (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={2611}
-    height={1206}
-    viewBox="0 0 2611 1206"
+    viewBox={`${(2611 - w) / 2} ${(1206 - h) / 2} ${w} ${h}`}
     preserveAspectRatio="xMidYMid slice"
     fill="none"
     {...props}
@@ -51,9 +53,9 @@ const Blueprint
       <path
         stroke="currentColor"
         strokeWidth={1.5}
-        d="M2135.71 350h30m-30 400h30m-15-400v400"
+        d="M1750 350h30m-30 400h30m-15-400v400"
       />
-      <text x={2185} y={555} fill="currentColor" fontFamily="sans-serif" fontSize={26}>
+      <text x={1800} y={555} fill="currentColor" fontFamily="sans-serif" fontSize={26}>
         {"9'-6\""}
       </text>
       <path
@@ -97,6 +99,7 @@ const Blueprint
       </radialGradient>
     </defs>
   </svg>
-)
+  );
+};
 export default Blueprint
 

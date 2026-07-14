@@ -1,43 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import MiniHero from "@/components/sections/MiniHero";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import { SERVICES } from "@/lib/services";
 
 export default function ResidentialServices() {
-    const services = [
-        {
-            title: "Kitchen Remodeling",
-            description: "Transform your kitchen into a functional and beautiful space with custom cabinetry, modern appliances, and innovative design solutions.",
-            image: "/kitchen.jpg",
-        },
-        {
-            title: "Bathroom Renovation",
-            description: "Create your dream bathroom with luxurious fixtures, elegant tiles, and smart storage solutions tailored to your lifestyle.",
-            image: "/kitchen.jpg",
-        },
-        {
-            title: "Basement Finishing",
-            description: "Maximize your home's potential by transforming your basement into a comfortable living space, home office, or entertainment area.",
-            image: "/kitchen.jpg",
-        },
-        {
-            title: "Home Additions",
-            description: "Expand your living space with seamlessly integrated additions that blend with your home's existing architecture and style.",
-            image: "/kitchen.jpg",
-        },
-        {
-            title: "Exterior Renovations",
-            description: "Enhance your home's curb appeal and protection with new siding, roofing, windows, and outdoor living spaces.",
-            image: "/kitchen.jpg",
-        },
-        {
-            title: "Whole Home Remodeling",
-            description: "Complete home transformations that reimagine every space while maintaining functionality and increasing property value.",
-            image: "/kitchen.jpg",
-        },
-    ];
-
     return (
         <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
             {/* Breadcrumb */}
@@ -50,9 +19,12 @@ export default function ResidentialServices() {
             />
 
             {/* Hero Section */}
+            {/* Category-tier hero — brand tint over the light render */}
             <MiniHero
                 title="RESIDENTIAL SERVICES"
                 subtitle="Transforming Houses into Dream Homes"
+                imageSrc="/images/hero/residential.png"
+                tint
             />
 
             {/* Introduction Section */}
@@ -87,28 +59,33 @@ export default function ResidentialServices() {
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {services.map((service, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
+                            {SERVICES.map((service) => (
+                                <Link
+                                    key={service.slug}
+                                    href={service.href}
+                                    className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
                                 >
-                                    <div className="relative h-48">
+                                    <div className="relative h-48 overflow-hidden">
                                         <Image
-                                            src={service.image}
+                                            src={service.image ?? "/kitchen.jpg"}
                                             alt={service.title}
                                             fill
-                                            className="object-cover"
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                                         />
                                     </div>
                                     <div className="p-6">
-                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-main-blue transition-colors">
                                             {service.title}
                                         </h3>
                                         <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                            {service.description}
+                                            {service.blurb}
                                         </p>
+                                        <span className="mt-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-main-blue">
+                                            View details
+                                            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                                        </span>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import NavLink from "@/components/ui/NavLink";
 import { NAVIGATION_LINKS } from "@/constants/navigation";
 import React, { useState, useRef, useEffect } from "react";
@@ -65,13 +66,13 @@ export default function Navbar(): React.ReactElement {
                             {openDropdown === link.label && (
                                 <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50">
                                     {link.dropdown.map((item) => (
-                                        <a
+                                        <Link
                                             key={item.href}
                                             href={item.href}
                                             className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-main-blue dark:hover:text-light-blue transition-colors"
                                         >
                                             {item.label}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             )}

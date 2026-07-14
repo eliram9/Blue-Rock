@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "./Navbar";
 import Container from "@/components/ui/Container";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -11,7 +12,7 @@ export default function Header(): React.ReactElement {
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <a href="/">
+                        <Link href="/">
                             <Image
                                 src="/logos/BR-logo.png"
                                 alt="BlueRock Logo"
@@ -21,7 +22,7 @@ export default function Header(): React.ReactElement {
                                 className="hover:opacity-80 transition-opacity"
                                 style={{ width: '200px', height: 'auto' }}
                             />
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Right side: Navigation + Actions */}

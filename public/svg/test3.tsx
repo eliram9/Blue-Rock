@@ -1,10 +1,47 @@
 import * as React from "react"
-const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
+type BlueprintProps = {
+  zoom?: number;
+  /** Grid cell size in canvas units (canvas is 2611×1206). Smaller = denser
+   *  squares. The original hand-drawn grid used 117.07. */
+  gridStep?: number;
+} & React.SVGProps<SVGSVGElement>;
+
+const CANVAS_W = 2611;
+const CANVAS_H = 1206;
+
+/* Grid lines and "+" intersection marks are generated so the cell size stays
+   adjustable via gridStep instead of living in a frozen path string. */
+const gridPath = (step: number) => {
+  const parts: string[] = [];
+  for (let x = step; x < CANVAS_W; x += step) parts.push(`M${+x.toFixed(2)} 0v${CANVAS_H}`);
+  for (let y = step; y < CANVAS_H; y += step) parts.push(`M0 ${+y.toFixed(2)}h${CANVAS_W}`);
+  return `M0 0v${CANVAS_H}M0 0h${CANVAS_W}` + parts.join("");
+};
+
+const crossesPath = (step: number) => {
+  const parts: string[] = [];
+  for (let i = 2; i * step < CANVAS_W; i += 4) {
+    for (let j = 2; j * step < CANVAS_H; j += 4) {
+      const cx = +(i * step).toFixed(2);
+      const cy = +(j * step).toFixed(2);
+      parts.push(`M${cx - 11} ${cy}h22M${cx} ${cy - 11}v22`);
+    }
+  }
+  return parts.join("");
+};
+
+/** `zoom` crops a centered window of the 2611×1206 canvas: 1 = full drawing,
+ *  1.4 = grid squares ~40% larger. Clamped ≥1 so blank canvas never shows. */
+const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
+  const z = Math.max(1, zoom);
+  const w = CANVAS_W / z;
+  const h = CANVAS_H / z;
+  /* Snap decorative dots onto the current grid's intersections. */
+  const snap = (v: number) => Math.round(v / gridStep) * gridStep;
+  return (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={2611}
-    height={1206}
-    viewBox="0 0 2611 1206"
+    viewBox={`${(2611 - w) / 2} ${(1206 - h) / 2} ${w} ${h}`}
     preserveAspectRatio="xMidYMid slice"
     fill="none"
     {...props}
@@ -18,7 +55,7 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
     </defs>
     <path
       stroke="url(#a)"
-      d="M0 0v1206M117.07 0v1206M234.14 0v1206M351.22 0v1206M468.29 0v1206M585.36 0v1206M702.43 0v1206M819.5 0v1206M936.58 0v1206M1053.65 0v1206M1170.72 0v1206M1287.79 0v1206M1404.86 0v1206M1521.94 0v1206M1639.01 0v1206M1756.08 0v1206M1873.15 0v1206M1990.22 0v1206M2107.3 0v1206M2224.37 0v1206M2341.44 0v1206M2458.51 0v1206M2575.58 0v1206M0 0h2611M0 117.07h2611M0 234.14h2611M0 351.22h2611M0 468.29h2611M0 585.36h2611M0 702.43h2611M0 819.5h2611M0 936.58h2611M0 1053.65h2611M0 1170.72h2611"
+      d={gridPath(gridStep)}
       opacity={0.15}
       style={{
         mixBlendMode: "soft-light",
@@ -27,7 +64,7 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
     <path
       stroke="url(#a)"
       strokeWidth={1.6}
-      d="M223.14 234.14h22m-11-11v22m-11 457.29h22m-11-11v22m-11 457.29h22m-11-11v22m457.29-947.58h22m-11-11v22m-11 457.29h22m-11-11v22m-11 457.29h22m-11-11v22m457.29-947.58h22m-11-11v22m-11 457.29h22m-11-11v22m-11 457.29h22m-11-11v22m457.29-947.58h22m-11-11v22m-11 457.29h22m-11-11v22m-11 457.29h22m-11-11v22m457.29-947.58h22m-11-11v22m-11 457.29h22m-11-11v22m-11 457.29h22m-11-11v22m457.28-947.58h22m-11-11v22m-11 457.29h22m-11-11v22m-11 457.29h22m-11-11v22"
+      d={crossesPath(gridStep)}
       opacity={0.8}
       style={{
         mixBlendMode: "soft-light",
@@ -59,11 +96,11 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         <path
           stroke="url(#a)"
           strokeWidth={1.6}
-          d="M1550 81v18m350-18v18m-350-9h350"
+          d="M820 141v18m350-18v18m-350-9h350"
         />
         <text
-          x={1725}
-          y={74}
+          x={995}
+          y={134}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
@@ -76,10 +113,10 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         <path
           stroke="url(#a)"
           strokeWidth={1.6}
-          d="M2050 251v18m370-18v18m-370-9h370"
+          d="M1280 251v18m370-18v18m-370-9h370"
         />
         <text
-          x={2235}
+          x={1465}
           y={244}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
@@ -125,10 +162,10 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         <path
           stroke="url(#a)"
           strokeWidth={1.6}
-          d="M1850 971v18m400-18v18m-400-9h400"
+          d="M1450 971v18m400-18v18m-400-9h400"
         />
         <text
-          x={2050}
+          x={1650}
           y={964}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
@@ -158,10 +195,10 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         <path
           stroke="url(#a)"
           strokeWidth={1.6}
-          d="M2150 611v18m330-18v18m-330-9h330"
+          d="M1150 611v18m330-18v18m-330-9h330"
         />
         <text
-          x={2315}
+          x={1315}
           y={604}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
@@ -191,10 +228,10 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         <path
           stroke="url(#a)"
           strokeWidth={1.6}
-          d="M700 1041v18m280-18v18m-280-9h280"
+          d="M1180 1041v18m280-18v18m-280-9h280"
         />
         <text
-          x={840}
+          x={1320}
           y={1034}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
@@ -224,11 +261,11 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         <path
           stroke="url(#a)"
           strokeWidth={1.6}
-          d="M2000 1131v18m380-18v18m-380-9h380"
+          d="M1550 1080v18m380-18v18m-380-9h380"
         />
         <text
-          x={2190}
-          y={1124}
+          x={1740}
+          y={1073}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
@@ -269,10 +306,10 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         mixBlendMode: "soft-light",
       }}
     >
-      <circle cx={1639} cy={1170.7} r={2.5} opacity={0.33} />
-      <circle cx={234.1} cy={1170.7} r={2.5} opacity={0.46} />
-      <circle cx={234.1} cy={234.1} r={2.5} opacity={0.71} />
-      <circle cx={1639} cy={234.1} r={2.5} opacity={0.32} />
+      <circle cx={snap(1639)} cy={snap(1170.7)} r={2.5} opacity={0.33} />
+      <circle cx={snap(234.1)} cy={snap(1170.7)} r={2.5} opacity={0.46} />
+      <circle cx={snap(234.1)} cy={snap(234.1)} r={2.5} opacity={0.71} />
+      <circle cx={snap(1639)} cy={snap(234.1)} r={2.5} opacity={0.32} />
     </g>
     <g
       style={{
@@ -280,9 +317,9 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
       }}
     >
       <g opacity={0.85}>
-        <path stroke="url(#a)" strokeWidth={1.4} d="M90 940h330v90H90z" />
+        <path stroke="url(#a)" strokeWidth={1.4} d="M700 940h330v90H700z" />
         <text
-          x={106}
+          x={716}
           y={975}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
@@ -291,9 +328,9 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         >
           {"SCALE    N.T.S."}
         </text>
-        <path stroke="url(#a)" d="M90 985h330" />
+        <path stroke="url(#a)" d="M700 985h330" />
         <text
-          x={106}
+          x={716}
           y={1020}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
@@ -304,9 +341,9 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
         </text>
       </g>
       <g opacity={0.55}>
-        <path stroke="url(#a)" strokeWidth={1.4} d="M2150 330h250v70h-250z" />
+        <path stroke="url(#a)" strokeWidth={1.4} d="M1850 330h250v70h-250z" />
         <text
-          x={2166}
+          x={1866}
           y={390}
           fill="url(#a)"
           fontFamily="Helvetica, Arial, sans-serif"
@@ -318,5 +355,6 @@ const Bluprint3 = (props: React.SVGProps<SVGSVGElement>) => (
       </g>
     </g>
   </svg>
-)
+  );
+};
 export default Bluprint3

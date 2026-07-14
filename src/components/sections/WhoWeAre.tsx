@@ -58,7 +58,7 @@ export default function WhoWeAre() {
                     className="flex items-center gap-3 mb-6"
                 >
                     <span className="font-mono text-sm text-light-blue/80 tracking-widest uppercase">
-                        Section 01.01
+                        About 01.01
                     </span>
                     <div className="flex-1 border-t border-dashed border-light-blue/25" />
                 </motion.div>
@@ -74,10 +74,10 @@ export default function WhoWeAre() {
                     <span className="pointer-events-none absolute -top-10 -left-2 font-title text-[7rem] md:text-[11rem] leading-none font-bold text-light-blue/[0.25] select-none">
                         01
                     </span>
-                    <h2 className="relative font-title text-6xl md:text-8xl font-bold tracking-tight text-foreground ml-20">
+                    <h2 className="relative font-title text-3xl md:text-5xl font-bold uppercase tracking-tight text-foreground ml-20">
                         WHO WE ARE
                     </h2>
-                    <div className="mt-5 flex items-center gap-4">
+                    <div className="mt-15 flex items-center gap-4">
                         <span className="h-1 w-24 bg-light-blue" />
                         <span className="font-mono text-md tracking-[0.25em] text-muted uppercase">
                             Est. 2010 · DMV Area

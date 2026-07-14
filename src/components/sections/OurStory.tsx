@@ -80,7 +80,7 @@ export default function OurStory() {
                     className="flex items-center gap-3 mb-6"
                 >
                     <span className="font-mono text-sm text-brand-light/80 tracking-widest uppercase">
-                        Section 01.02
+                        About 01.02
                     </span>
                     <div className="flex-1 border-t border-dashed border-brand-light/25" />
                 </motion.div>
@@ -96,10 +96,10 @@ export default function OurStory() {
                     <span className="pointer-events-none absolute -top-10 -left-2 font-title text-[7rem] md:text-[11rem] leading-none font-bold text-brand-light/[0.09] select-none">
                         02
                     </span>
-                    <h2 className="relative font-title text-6xl md:text-8xl font-bold tracking-tight text-white ml-20">
+                    <h2 className="relative font-title text-3xl md:text-5xl font-bold uppercase tracking-tight text-white ml-20">
                         OUR STORY
                     </h2>
-                    <div className="mt-5 flex items-center gap-4">
+                    <div className="mt-15 flex items-center gap-4">
                         <span className="h-1 w-24 bg-brand-light" />
                         <span className="font-mono text-md tracking-[0.25em] text-blue-100/50 uppercase">
                             2010 — Present · DMV

@@ -49,7 +49,10 @@ export default function ReadyToTransform() {
     return (
         <section className="relative overflow-hidden border-t-2 border-brand-light/25 bg-gradient-to-b from-steel-top to-steel-bottom py-24 md:py-32">
             {/* Bright blueprint variant (test3-bright): soft-light removed, uniform
-                white gradient, grid opacity raised — renders crisp bright white. */}
+                white gradient, grid opacity raised — renders crisp bright white.
+                Tune `zoom` (≥1) to enlarge the drawing; for a different zoom per
+                breakpoint render two instances, e.g. one with className="hidden
+                md:block" and one zoomed with className="md:hidden". */}
             <Blueprint
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-90"
@@ -93,14 +96,6 @@ export default function ReadyToTransform() {
                         viewport={viewport}
                         transition={{ duration: 1.3, delay: 0.9, ease: EASE }}
                     />
-
-                    {/* Oversized ghost index — continues 01 / 02 from the sections above */}
-                    <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 select-none font-title text-[7rem] font-bold leading-none text-brand-light/[0.07] md:text-[11rem]"
-                    >
-                        03
-                    </span>
 
                     {/* Kicker */}
                     <motion.div

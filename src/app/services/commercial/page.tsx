@@ -49,10 +49,12 @@ export default function CommercialServices() {
                 ]}
             />
 
-            {/* Hero Section */}
+            {/* Hero Section — brand tint over the light render */}
             <MiniHero
                 title="COMMERCIAL SERVICES"
                 subtitle="Professional General Contracting in Rockville, MD"
+                imageSrc="/images/hero/commercial.png"
+                tint
             />
 
             {/* Introduction Section */}
