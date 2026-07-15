@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
     title: "Our Projects",
     description:
-        "Explore Blue Rock Remodeling's portfolio of completed kitchen, bathroom, basement, and whole-home projects across Maryland, Washington DC, and Virginia.",
+        "Explore Blue Rock Remodeling's portfolio of completed kitchen, bathroom, basement, and whole-home projects across Maryland and Washington DC.",
     alternates: { canonical: `${SITE_URL}/projects` },
 };
 
@@ -16,7 +16,6 @@ export default function Projects() {
             <MiniHero
                 title="OUR PROJECTS"
                 subtitle="A portfolio of finished work across the DMV"
-                size="subcategory"
                 breadcrumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
             />
 

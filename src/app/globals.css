@@ -150,6 +150,17 @@ body {
     }
 }
 
+/* Card-header hover effect: Lottie-style stroke redraw (paths carry
+   pathLength=1 so dash math is normalized regardless of real path length). */
+@keyframes icon-redraw {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
 /* Fluid Typography Utilities */
 @layer utilities {
     /* Fixed brand-light/white streaks — tuned for ink surfaces (CTA band). */

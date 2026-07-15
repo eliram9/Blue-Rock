@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import Blueprint from "../../../public/svg/test1";
+import ServiceIcon from "@/components/ui/ServiceIcon";
 import { FLAGSHIP_SERVICES, MORE_SERVICES, SECTOR_SERVICES, type Service } from "@/lib/services";
 
 /* next/link with motion props — keeps client-side nav + viewport prefetch */
@@ -22,110 +23,6 @@ const fadeUp: Variants = {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
-
-/* Line-art icons "draw themselves" in: each path animates 0 → full length. */
-const iconDraw: Variants = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-        pathLength: 1,
-        opacity: 1,
-        transition: { duration: 1.1, ease: "easeInOut" },
-    },
-};
-
-/* Stroke path sets per service (24×24 grid, drawn to read at a glance). */
-const ICON_PATHS: Record<string, string[]> = {
-    "kitchen-remodeling": [
-        "M5 10.5h14v8a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 18.5v-8Z",
-        "M3.5 10.5h17",
-        "M9 14.5h6",
-        "M8.5 7.5c0-1.2 1-1.8 1-3M12 7.5c0-1.2 1-1.8 1-3M15.5 7.5c0-1.2 1-1.8 1-3",
-    ],
-    "bathroom-remodeling": [
-        "M4 12.5h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2Z",
-        "M6 12.5V6a2 2 0 0 1 4 0",
-        "M8.5 6.5h3",
-        "M7 19.5 6 21.5M17 19.5l1 2",
-    ],
-    "home-additions": [
-        "M3.5 11 12 4l8.5 7",
-        "M6 9.5V20h12V9.5",
-        "M12 12.5v5M9.5 15h5",
-    ],
-    "basement-finishing": [
-        "M3.5 9.5 12 3l8.5 6.5",
-        "M6 8v6h12V8",
-        "M6 17h12v4H6z",
-        "M12 14v3",
-    ],
-    "exterior-renovations": [
-        "M4 5.5h12v4H4z",
-        "M16 7.5h3.5V11H14",
-        "M14 11v3",
-        "M12.5 14h3v6.5h-3z",
-    ],
-    "demolition-services": [
-        "M13.5 4.5 19.5 10.5",
-        "M15 3l6 6",
-        "M13 8 4 17l3 3 9-9",
-        "M6.5 14.5l3 3",
-    ],
-    "deck-installation": [
-        "M3.5 12h17",
-        "M5 12v8M9.5 12v8M14.5 12v8M19 12v8",
-        "M3.5 16h17",
-        "M7 12 12 5l5 7",
-    ],
-    "interior-design": [
-        "M5.5 13v-2a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v2",
-        "M4 13a2 2 0 0 1 2 2v2h12v-2a2 2 0 0 1 2-2",
-        "M6 17v3M18 17v3",
-    ],
-    "commercial-services": [
-        "M3.5 21h17",
-        "M6 21V4.5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1V21",
-        "M14 9.5h3.5a1 1 0 0 1 1 1V21",
-        "M8.5 7.5h2M8.5 11h2M8.5 14.5h2M16 13h.75M16 16.5h.75",
-    ],
-    "government-services": [
-        "M3.5 9.5 12 4l8.5 5.5",
-        "M4.5 9.5h15",
-        "M6 12v6.5M10 12v6.5M14 12v6.5M18 12v6.5",
-        "M3.5 21h17M4.5 18.5h15",
-    ],
-};
-
-function ServiceIcon({
-    slug,
-    animated,
-    className = "",
-}: {
-    slug: string;
-    animated: boolean;
-    className?: string;
-}) {
-    const paths = ICON_PATHS[slug] ?? [];
-    return (
-        <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={1.7}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={className}
-        >
-            {paths.map((d) =>
-                animated ? (
-                    <motion.path key={d} d={d} variants={iconDraw} />
-                ) : (
-                    <path key={d} d={d} />
-                ),
-            )}
-        </svg>
-    );
-}
 
 function ArrowIcon({ className = "" }: { className?: string }) {
     return (
@@ -325,7 +222,7 @@ export default function WhatWeDo() {
                 {/* Headline */}
                 <motion.h2
                     variants={fadeUp}
-                    className="mx-auto text-center font-title text-6xl font-bold uppercase tracking-tight text-foreground md:text-8xl"
+                    className="mx-auto text-center font-title text-4xl font-bold uppercase tracking-tight text-foreground md:text-6xl"
                 >
                     A Wide Range of General Construction Services
                 </motion.h2>

@@ -16,7 +16,6 @@ export default function Resources() {
             <MiniHero
                 title="RESOURCES"
                 subtitle="Guides and helpful information for planning your project"
-                size="subcategory"
                 breadcrumbs={[{ label: "Home", href: "/" }, { label: "Resources" }]}
             />
 

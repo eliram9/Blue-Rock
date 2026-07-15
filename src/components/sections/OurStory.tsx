@@ -114,7 +114,7 @@ export default function OurStory() {
                         initial="hidden"
                         whileInView="visible"
                         viewport={viewport}
-                        className="md:col-span-6 text-2xl md:text-3xl leading-snug tracking-tight text-white"
+                        className="md:col-span-6 text-xl md:text-2xl leading-snug tracking-tight text-white"
                     >
                         What began in 2010 as a{" "}
                         <span className="text-brand-light">Rockville remodeling shop</span> is now a

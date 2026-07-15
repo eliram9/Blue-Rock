@@ -174,7 +174,7 @@ export default function WhoWeAre() {
                                 Who we serve
                             </span>
                         </div>
-                        <p className="text-3xl md:text-4xl leading-snug tracking-tight text-foreground">
+                        <p className="text-xl md:text-2xl leading-snug tracking-tight text-foreground">
                             A licensed general contractor serving{" "}
                             <span className="text-main-blue">residential, commercial &amp; government</span>{" "}
                             clients across the DMV.
@@ -190,12 +190,12 @@ export default function WhoWeAre() {
                         viewport={viewport}
                         className="md:col-span-7 space-y-5 md:border-l md:border-dashed md:border-light-blue/30 md:pl-10"
                     >
-                        <p className="text-foreground/80 leading-relaxed text-lg md:text-xl">
+                        <p className="text-foreground/80 leading-relaxed text-base md:text-lg">
                             Founded in 2010, <span className="font-semibold">Blue Rock Remodeling &amp; Construction</span>{" "}
                             handles the full scope of work — kitchen and bath remodels, additions, basements,
-                            exteriors, and new-home builds — across Maryland, Washington DC, and Virginia.
+                            exteriors, and new-home builds — across Maryland and Washington DC.
                         </p>
-                        <p className="text-foreground/80 leading-relaxed text-lg md:text-xl">
+                        <p className="text-foreground/80 leading-relaxed text-base md:text-lg">
                             We&apos;re licensed by the Maryland Home Improvement Commission (MHIC) and hold
                             General Contractor and New Home Builder licenses, so every project meets the
                             highest legal and professional standards.

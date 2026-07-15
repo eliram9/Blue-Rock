@@ -64,7 +64,7 @@ export default function TrustedBadges() {
                 {/* Headline */}
                 <motion.h2
                     variants={fadeUp}
-                    className="text-center font-title text-6xl font-bold uppercase tracking-tight text-foreground md:text-8xl"
+                    className="text-center font-title text-4xl font-bold uppercase tracking-tight text-foreground md:text-6xl"
                 >
                     Credentials You Can Verify
                 </motion.h2>

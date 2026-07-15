@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: `%s | ${BUSINESS.shortName}`,
   },
   description:
-    "Licensed general contractor serving residential, commercial, and government clients across Maryland, DC, and Virginia since 2010. MHIC, GC, and New Home Builder licensed.",
+    "Licensed general contractor serving residential, commercial, and government clients across Maryland and Washington, DC since 2010. MHIC, GC, and New Home Builder licensed.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

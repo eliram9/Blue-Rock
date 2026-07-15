@@ -19,5 +19,6 @@ export const NAVIGATION_LINKS: NavigationLink[] = [
     },
     { href: "/projects", label: "Projects" },
     { href: "/resources", label: "Resources" },
+    { href: "/faq", label: "FAQ" },
     { href: "/contact", label: "Contact" },
 ];

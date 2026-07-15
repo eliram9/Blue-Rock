@@ -1,17 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "./Navbar";
+import MobileMenu from "./MobileMenu";
 import Container from "@/components/ui/Container";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import React from "react";
 
 export default function Header(): React.ReactElement {
     return (
-        <header className="w-full shadow-sm bg-white dark:bg-gray-900 transition-colors duration-300">
+        <header className="sticky top-0 z-50 w-full border-b border-border bg-surface/95 backdrop-blur transition-colors duration-300">
             <Container>
-                <div className="flex justify-between items-center h-20">
+                {/* Three zones: logo · centered nav · actions. The 1fr flanks
+                    keep the nav truly centered regardless of side widths. */}
+                <div className="grid h-20 grid-cols-[1fr_auto_1fr] items-center">
                     {/* Logo */}
-                    <div className="flex-shrink-0">
+                    <div className="justify-self-start">
                         <Link href="/">
                             <Image
                                 src="/logos/BR-logo.png"
@@ -25,28 +28,25 @@ export default function Header(): React.ReactElement {
                         </Link>
                     </div>
 
-                    {/* Right side: Navigation + Actions */}
-                    <div className="flex items-center gap-8">
-                        {/* Navigation */}
-                        <Navbar />
+                    {/* Centered navigation */}
+                    <Navbar />
 
-                        {/* Actions */}
-                        <div className="flex items-center gap-4">
+                    {/* Actions */}
+                    <div className="flex items-center gap-4 justify-self-end">
+                        {/* Contact CTA — drafting plate, fills on hover */}
+                        <Link
+                            href="/contact"
+                            className="hidden items-center gap-2 border border-main-blue px-5 py-2.5 font-mono text-xs uppercase tracking-[0.2em] text-main-blue transition-colors hover:bg-main-blue hover:text-white lg:inline-flex"
+                        >
+                            Contact Us
+                            <span aria-hidden="true">→</span>
+                        </Link>
+
                         {/* Dark mode toggle */}
                         <ThemeToggle />
 
-                        {/* Mobile menu button */}
-                        <div className="md:hidden">
-                            <button
-                                className="text-gray-700 dark:text-gray-200 hover:text-main-blue transition-colors"
-                                aria-label="Toggle mobile menu"
-                            >
-                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                            </button>
-                        </div>
-                        </div>
+                        {/* Mobile menu */}
+                        <MobileMenu />
                     </div>
                 </div>
             </Container>

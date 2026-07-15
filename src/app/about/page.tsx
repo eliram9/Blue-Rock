@@ -11,7 +11,7 @@ import { aboutBreadcrumbSchema } from "@/lib/schema";
 export const metadata: Metadata = {
     title: "About Us",
     description:
-        "Blue Rock Remodeling & Construction is a licensed general contractor serving residential, commercial, and government clients across Maryland, DC, and Virginia since 2010.",
+        "Blue Rock Remodeling & Construction is a licensed general contractor serving residential, commercial, and government clients across Maryland and Washington, DC since 2010.",
     alternates: { canonical: `${SITE_URL}/about` },
     openGraph: {
         title: `About ${BUSINESS.name}`,

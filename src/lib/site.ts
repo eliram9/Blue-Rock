@@ -22,7 +22,12 @@ export const BUSINESS = {
         country: "US",
     },
     hours: "Mon–Fri, 9:00 AM – 5:00 PM",
-    areaServed: ["Maryland", "Washington, DC", "Virginia"],
+    /** Display rows for on-page hour readouts; keep in sync with `hours`. */
+    hoursDisplay: [
+        { days: "Monday – Friday", hours: "9:00 AM – 5:00 PM" },
+        { days: "Saturday – Sunday", hours: "Closed" },
+    ],
+    areaServed: ["Maryland", "Washington, DC"],
     cities: ["Rockville", "Potomac", "Bethesda", "Silver Spring", "Gaithersburg"],
     licenses: [
         "Maryland Home Improvement Commission (MHIC)",

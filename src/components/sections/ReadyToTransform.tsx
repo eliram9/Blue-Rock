@@ -112,7 +112,7 @@ export default function ReadyToTransform() {
                     {/* Headline — rises word-by-word */}
                     <motion.h2
                         variants={headlineStagger}
-                        className="relative font-title text-5xl font-bold uppercase leading-[1.05] tracking-tight text-white md:text-7xl"
+                        className="relative font-title text-4xl font-bold uppercase leading-[1.05] tracking-tight text-white md:text-6xl"
                     >
                         {HEADLINE.split(" ").map((word, i) => (
                             <span

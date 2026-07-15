@@ -7,20 +7,10 @@ import Blueprint from "../../../public/svg/test3";
 import BlueprintGrid from "../../../public/svg/test1";
 import Carousel from "@/components/ui/Carousel";
 import Container from "@/components/ui/Container";
+import Corners from "@/components/ui/Corners";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { EASE, fadeUp, stagger, viewport } from "@/lib/motion";
 import type { ServiceDetail } from "@/lib/services";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
-const viewport = { once: true, amount: 0.2 };
-
-const stagger: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-};
-
-const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
-};
 
 /* Dashed connector between phase markers "draws" downward into view */
 const lineDraw: Variants = {
@@ -28,68 +18,21 @@ const lineDraw: Variants = {
     visible: { scaleY: 1, transition: { duration: 0.5, ease: EASE } },
 };
 
-/* Blueprint-style corner brackets (same treatment as the carousel frame) */
-function Corners({ color = "border-brand-light" }: { color?: string }) {
-    return (
-        <>
-            {["top-0 left-0 border-t-2 border-l-2", "top-0 right-0 border-t-2 border-r-2", "bottom-0 left-0 border-b-2 border-l-2", "bottom-0 right-0 border-b-2 border-r-2"].map((pos) => (
-                <span key={pos} aria-hidden="true" className={`absolute ${pos} z-10 h-5 w-5 ${color}`} />
-            ))}
-        </>
-    );
-}
-
-/* About-page header treatment: mono section label + dashed rule, oversized
-   ghost number behind the headline. Themed and ink variants per surface. */
-function SectionHeader({
-    prefix,
-    index,
-    kicker,
-    title,
-    tone = "themed",
-}: {
-    prefix: string;
-    index: string;
-    kicker: string;
-    title: string;
-    tone?: "themed" | "ink";
-}) {
-    const ink = tone === "ink";
-    return (
-        <>
-            <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
-                <span
-                    className={`font-mono text-sm uppercase tracking-widest ${ink ? "text-brand-light/80" : "text-light-blue/80"}`}
-                >
-                    {prefix} 01.{index} · {kicker}
-                </span>
-                <div
-                    className={`flex-1 border-t border-dashed ${ink ? "border-brand-light/25" : "border-light-blue/25"}`}
-                />
-            </motion.div>
-
-            <motion.div variants={fadeUp} className="relative">
-                <span
-                    className={`pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none md:text-[11rem] ${ink ? "text-brand-light/[0.09]" : "text-light-blue/[0.25]"}`}
-                >
-                    {index}
-                </span>
-                <h2
-                    className={`relative ml-20 font-title text-3xl font-bold uppercase tracking-tight md:text-5xl ${ink ? "text-white" : "text-foreground"}`}
-                >
-                    {title}
-                </h2>
-            </motion.div>
-        </>
-    );
-}
-
 export default function ServiceDetailSections({ detail }: { detail: ServiceDetail }) {
-    const { materials, process, timeline, gallery, faq } = detail;
+    const { materials, process, care, timeline, gallery, faq } = detail;
     /* Single-open FAQ accordion; answers stay in the DOM (CSS-collapsed, same
        as the home-page services drawer) so they keep matching the FAQPage
        JSON-LD for search and AI crawlers. */
     const [openFaq, setOpenFaq] = useState<number | null>(null);
+    /* Process, care, and timeline are optional — sheet numbers stay
+       sequential across whichever sections a service actually has. */
+    let sheet = 1; // materials is always 01
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const processIndex = process ? pad(++sheet) : "";
+    const careIndex = care ? pad(++sheet) : "";
+    const timelineIndex = timeline ? pad(++sheet) : "";
+    const galleryIndex = pad(++sheet);
+    const faqIndex = pad(++sheet);
 
     return (
         <>
@@ -143,11 +86,46 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                                 </figcaption>
                             </motion.figure>
                         </div>
+
+                        {/* Optional choice cards — e.g. wood vs. composite */}
+                        {materials.options && (
+                            <div className="grid grid-cols-1 gap-5 pb-10 md:grid-cols-2">
+                                {materials.options.map((option) => (
+                                    <motion.div
+                                        key={option.title}
+                                        variants={fadeUp}
+                                        className="group relative border border-border bg-surface p-6 transition-colors hover:border-main-blue/40 md:p-8"
+                                    >
+                                        <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
+                                            {option.label}
+                                        </span>
+                                        <h3 className="mt-3 font-title text-xl font-bold uppercase tracking-tight text-foreground md:text-2xl">
+                                            {option.title}
+                                        </h3>
+                                        <ul className="mt-5 space-y-3">
+                                            {option.points.map((point) => (
+                                                <li
+                                                    key={point}
+                                                    className="flex items-start gap-3 text-sm leading-relaxed text-muted md:text-base"
+                                                >
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className="mt-[0.65em] h-px w-4 shrink-0 bg-main-blue/70"
+                                                    />
+                                                    {point}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
                     </motion.div>
                 </Container>
             </section>
 
-            {/* ── 02 · The process — ordered phase log ── */}
+            {/* ── The process — ordered phase log ── */}
+            {process && (
             <section className="relative overflow-hidden bg-surface py-16 transition-colors md:py-24">
                 <BlueprintGrid
                     aria-hidden="true"
@@ -161,7 +139,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                         viewport={viewport}
                         className="mx-auto max-w-4xl"
                     >
-                        <SectionHeader prefix={detail.sheetName} index="02" kicker={process.kicker} title={process.heading} />
+                        <SectionHeader prefix={detail.sheetName} index={processIndex} kicker={process.kicker} title={process.heading} />
 
                         <div className="py-10">
                             <motion.p
@@ -222,8 +200,10 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                     </motion.div>
                 </Container>
             </section>
+            )}
 
-            {/* ── 03 · Timeline — ink band with stat readouts ── */}
+            {/* ── Care & repair — inspection sheet on ink ── */}
+            {care && (
             <section className="relative overflow-hidden bg-ink py-16 md:py-24">
                 <Blueprint
                     aria-hidden="true"
@@ -239,7 +219,88 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                     >
                         <SectionHeader
                             prefix={detail.sheetName}
-                            index="03"
+                            index={careIndex}
+                            kicker={care.kicker}
+                            title={care.heading}
+                            tone="ink"
+                        />
+
+                        <motion.p
+                            variants={fadeUp}
+                            className="mx-auto mt-8 max-w-3xl pt-10 text-center text-base leading-relaxed text-blue-100/80 md:text-lg"
+                        >
+                            {care.lead}
+                        </motion.p>
+
+                        {/* Warning-sign readouts — inspection-sheet treatment */}
+                        <motion.div
+                            variants={fadeUp}
+                            className="relative mt-12 border border-brand-light/25 bg-gradient-to-b from-ink-soft/80 to-ink/40 backdrop-blur-sm"
+                        >
+                            <Corners />
+
+                            {/* Title block strip */}
+                            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-brand-light/20 px-6 py-3">
+                                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-100/60">
+                                    Inspection Sheet · Warning Signs
+                                </span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-100/60">
+                                    Check annually
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+                                {care.signs.map((sign, i) => {
+                                    const last = i === care.signs.length - 1;
+                                    return (
+                                        <div
+                                            key={sign.title}
+                                            className={`group px-5 py-5 transition-colors duration-300 hover:bg-brand-light/[0.07] md:py-6 ${!last ? "lg:border-r" : ""} ${i % 2 === 0 && !last ? "sm:border-r" : ""} ${!last ? "max-lg:border-b" : ""} border-brand-light/15`}
+                                        >
+                                            <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-brand-light">
+                                                WS—{String(i + 1).padStart(2, "0")}
+                                            </div>
+                                            <div className="mt-2 font-title text-lg font-bold uppercase tracking-tight text-white transition-colors duration-300 group-hover:text-brand-light">
+                                                {sign.title}
+                                            </div>
+                                            <div className="mt-2 text-xs leading-relaxed text-blue-100/60 transition-colors duration-300 group-hover:text-blue-100/85">
+                                                {sign.note}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </motion.div>
+
+                        <motion.p
+                            variants={fadeUp}
+                            className="mx-auto mt-10 max-w-3xl text-center text-base leading-relaxed text-blue-100/80 md:text-lg"
+                        >
+                            {care.close}
+                        </motion.p>
+                    </motion.div>
+                </Container>
+            </section>
+            )}
+
+            {/* ── Timeline — ink band with stat readouts ── */}
+            {timeline && (
+            <section className="relative overflow-hidden bg-ink py-16 md:py-24">
+                <Blueprint
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-40"
+                />
+                <Container className="relative z-10">
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewport}
+                        className="mx-auto max-w-5xl"
+                    >
+                        <SectionHeader
+                            prefix={detail.sheetName}
+                            index={timelineIndex}
                             kicker={timeline.kicker}
                             title={timeline.heading}
                             tone="ink"
@@ -293,8 +354,9 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                     </motion.div>
                 </Container>
             </section>
+            )}
 
-            {/* ── 04 · Recent work — project carousel ── */}
+            {/* ── Recent work — project carousel ── */}
             <section className="bg-surface py-16 transition-colors md:py-24">
                 <Container>
                     <motion.div
@@ -304,7 +366,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                         viewport={viewport}
                         className="mx-auto max-w-5xl"
                     >
-                        <SectionHeader prefix={detail.sheetName} index="04" kicker={gallery.kicker} title={gallery.heading} />
+                        <SectionHeader prefix={detail.sheetName} index={galleryIndex} kicker={gallery.kicker} title={gallery.heading} />
 
                         <motion.div variants={fadeUp} className="mt-12 py-10">
                             <Carousel
@@ -317,7 +379,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                 </Container>
             </section>
 
-            {/* ── 05 · FAQ — visible Q&A, mirrored as FAQPage JSON-LD ── */}
+            {/* ── FAQ — visible Q&A, mirrored as FAQPage JSON-LD ── */}
             <section className="bg-surface-muted py-16 transition-colors md:py-24">
                 <Container>
                     <motion.div
@@ -327,7 +389,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                         viewport={viewport}
                         className="mx-auto max-w-3xl"
                     >
-                        <SectionHeader prefix={detail.sheetName} index="05" kicker="FAQ" title="Common Questions" />
+                        <SectionHeader prefix={detail.sheetName} index={faqIndex} kicker="FAQ" title="Common Questions" />
 
                         <dl className="mt-12 py-10">
                             {faq.map((item, i) => {

@@ -1,13 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Blueprint from "../../../public/svg/test3";
 import BlueprintBright from "../../../public/svg/test3-bright";
 import BlueprintGrid from "../../../public/svg/test1";
 import Button from "@/components/ui/Button";
+import ChecklistSheet from "@/components/ui/ChecklistSheet";
 import Container from "@/components/ui/Container";
+import Corners from "@/components/ui/Corners";
+import { fadeUp, stagger, viewport } from "@/lib/motion";
 import { BUSINESS } from "@/lib/site";
 import {
     GOV_CREDENTIALS,
@@ -16,29 +19,6 @@ import {
     GOV_PAST_PERFORMANCE,
     GOV_NAICS,
 } from "@/lib/government";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
-const viewport = { once: true, amount: 0.2 };
-
-const stagger: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-};
-
-const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
-};
-
-/* Checkmark that draws itself in when the row scrolls into view */
-const checkDraw: Variants = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-        pathLength: 1,
-        opacity: 1,
-        transition: { duration: 0.5, ease: "easeOut", delay: 0.2 },
-    },
-};
 
 /* Past-performance collage — placeholder renders until real project photos
    land. Different widths + offsets so the frames overlap like pinned prints. */
@@ -62,17 +42,6 @@ const PP_COLLAGE = [
         z: "z-30",
     },
 ] as const;
-
-/* Blueprint-style corner brackets */
-function Corners({ color = "border-brand-light" }: { color?: string }) {
-    return (
-        <>
-            {["top-0 left-0 border-t-2 border-l-2", "top-0 right-0 border-t-2 border-r-2", "bottom-0 left-0 border-b-2 border-l-2", "bottom-0 right-0 border-b-2 border-r-2"].map((pos) => (
-                <span key={pos} aria-hidden="true" className={`absolute ${pos} h-5 w-5 ${color}`} />
-            ))}
-        </>
-    );
-}
 
 export default function GovernmentCapabilities() {
     return (
@@ -309,59 +278,12 @@ export default function GovernmentCapabilities() {
                         {/* Review checklist — official qualification sheet, same
                             drafting-document treatment as the capability sheet */}
                         <motion.div variants={fadeUp} className="lg:col-span-7">
-                            <div className="relative border border-border bg-surface-muted/60">
-                                <Corners color="border-main-blue/50" />
-
-                                {/* Title block strip */}
-                                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-5 py-3">
-                                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                                        Agency Review · Qualifications
-                                    </span>
-                                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                                        Sheet GC—1.4 · Rev. A
-                                    </span>
-                                </div>
-
-                                {/* Requirement rows */}
-                                <ul>
-                                    {GOV_WHY_AGENCIES.map((reason, i) => (
-                                        <motion.li
-                                            key={reason}
-                                            variants={fadeUp}
-                                            className="group flex items-start gap-4 border-b border-border px-5 py-4 transition-colors hover:bg-surface"
-                                        >
-                                            {/* Drafting checkbox with drawn check */}
-                                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-main-blue/60 transition-colors group-hover:border-main-blue">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth={3}
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="h-3.5 w-3.5 text-main-blue"
-                                                >
-                                                    <motion.path variants={checkDraw} d="m5 12.5 4.5 4.5L19 7" />
-                                                </svg>
-                                            </span>
-                                            <span className="shrink-0 pt-0.5 font-mono text-xs tracking-[0.2em] text-main-blue">
-                                                RQ—{String(i + 1).padStart(2, "0")}
-                                            </span>
-                                            <span className="text-base leading-relaxed text-foreground">
-                                                {reason}
-                                            </span>
-                                        </motion.li>
-                                    ))}
-                                </ul>
-
-                                {/* Sign-off strip */}
-                                <div className="px-5 py-4">
-                                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                                        {GOV_WHY_AGENCIES.length} of {GOV_WHY_AGENCIES.length} requirements met
-                                    </span>
-                                </div>
-                            </div>
+                            <ChecklistSheet
+                                titleLeft="Agency Review · Qualifications"
+                                titleRight="Sheet GC—1.4 · Rev. A"
+                                items={GOV_WHY_AGENCIES}
+                                footer={`${GOV_WHY_AGENCIES.length} of ${GOV_WHY_AGENCIES.length} requirements met`}
+                            />
                         </motion.div>
                     </motion.div>
                 </Container>

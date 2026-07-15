@@ -18,7 +18,7 @@ export const organizationSchema: Record<string, unknown> = {
     logo: `${SITE_URL}/logos/BR-logo.png`,
     image: `${SITE_URL}/kitchen.jpg`,
     description:
-        "Licensed general contractor serving residential, commercial, and government clients across Maryland, Washington DC, and Virginia since 2010.",
+        "Licensed general contractor serving residential, commercial, and government clients across Maryland and Washington DC since 2010.",
     foundingDate: String(BUSINESS.foundingYear),
     telephone: BUSINESS.phone,
     email: BUSINESS.email,
@@ -92,7 +92,7 @@ export const aboutFaqSchema: Record<string, unknown> = {
             name: "Where does Blue Rock Remodeling & Construction work?",
             acceptedAnswer: {
                 "@type": "Answer",
-                text: "Blue Rock serves the DMV area — Maryland, Washington DC, and Virginia — including Rockville, Potomac, Bethesda, Silver Spring, and Gaithersburg.",
+                text: "Blue Rock serves the DMV area — Maryland and Washington DC — including Rockville, Potomac, Bethesda, Silver Spring, and Gaithersburg.",
             },
         },
         {
