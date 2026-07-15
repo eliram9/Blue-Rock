@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import NavLink from "@/components/ui/NavLink";
 import { NAVIGATION_LINKS } from "@/constants/navigation";
 import React, { useState, useRef, useEffect } from "react";
@@ -29,9 +30,12 @@ export default function Navbar(): React.ReactElement {
         };
     }, []);
 
+    /* Contact lives as the CTA button in the header actions, not here */
+    const centerLinks = NAVIGATION_LINKS.filter((link) => link.href !== "/contact");
+
     return (
-        <nav className="hidden md:flex space-x-8">
-            {NAVIGATION_LINKS.map((link) => {
+        <nav className="hidden md:flex md:items-center md:gap-8">
+            {centerLinks.map((link) => {
                 if (link.dropdown) {
                     return (
                         <div
@@ -61,17 +65,22 @@ export default function Navbar(): React.ReactElement {
                                 </svg>
                             </button>
 
-                            {/* Dropdown Menu */}
+                            {/* Dropdown Menu — drafting sheet, centered under trigger */}
                             {openDropdown === link.label && (
-                                <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50">
+                                <div className="absolute top-full left-1/2 z-50 mt-3 w-52 -translate-x-1/2 border border-border bg-surface shadow-xl">
+                                    <div className="border-b border-border px-4 py-2">
+                                        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
+                                            {link.label}
+                                        </span>
+                                    </div>
                                     {link.dropdown.map((item) => (
-                                        <a
+                                        <Link
                                             key={item.href}
                                             href={item.href}
-                                            className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-main-blue dark:hover:text-light-blue transition-colors"
+                                            className="block px-4 py-2.5 text-foreground font-medium transition-colors hover:bg-surface-muted hover:text-main-blue"
                                         >
                                             {item.label}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             )}

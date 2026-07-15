@@ -1,0 +1,67 @@
+<svg width="2611" height="1206" viewBox="0 0 2611 1206" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="fadeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="white" stop-opacity="0.03"/>
+<stop offset="45%" stop-color="white" stop-opacity="0.22"/>
+<stop offset="75%" stop-color="white" stop-opacity="0.6"/>
+<stop offset="100%" stop-color="white" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<g opacity="0.8" style="mix-blend-mode:soft-light">
+<path d="M0.00 0V1206 M58.54 0V1206 M117.07 0V1206 M175.61 0V1206 M234.14 0V1206 M292.68 0V1206 M351.22 0V1206 M409.75 0V1206 M468.29 0V1206 M526.82 0V1206 M585.36 0V1206 M643.90 0V1206 M702.43 0V1206 M760.97 0V1206 M819.50 0V1206 M878.04 0V1206 M936.58 0V1206 M995.11 0V1206 M1053.65 0V1206 M1112.18 0V1206 M1170.72 0V1206 M1229.26 0V1206 M1287.79 0V1206 M1346.33 0V1206 M1404.86 0V1206 M1463.40 0V1206 M1521.94 0V1206 M1580.47 0V1206 M1639.01 0V1206 M1697.54 0V1206 M1756.08 0V1206 M1814.62 0V1206 M1873.15 0V1206 M1931.69 0V1206 M1990.22 0V1206 M2048.76 0V1206 M2107.30 0V1206 M2165.83 0V1206 M2224.37 0V1206 M2282.90 0V1206 M2341.44 0V1206 M2399.98 0V1206 M2458.51 0V1206 M2517.05 0V1206 M2575.58 0V1206 M0 0.00H2611 M0 58.54H2611 M0 117.07H2611 M0 175.61H2611 M0 234.14H2611 M0 292.68H2611 M0 351.22H2611 M0 409.75H2611 M0 468.29H2611 M0 526.82H2611 M0 585.36H2611 M0 643.90H2611 M0 702.43H2611 M0 760.97H2611 M0 819.50H2611 M0 878.04H2611 M0 936.58H2611 M0 995.11H2611 M0 1053.65H2611 M0 1112.18H2611 M0 1170.72H2611" stroke="url(#fadeGrad)" stroke-width="1.2"/>
+</g>
+<g opacity="0.95" style="mix-blend-mode:soft-light">
+<path d="M223.14 234.14H245.14M234.14 223.14V245.14 M223.14 702.43H245.14M234.14 691.43V713.43 M223.14 1170.72H245.14M234.14 1159.72V1181.72 M691.43 234.14H713.43M702.43 223.14V245.14 M691.43 702.43H713.43M702.43 691.43V713.43 M691.43 1170.72H713.43M702.43 1159.72V1181.72 M1159.72 234.14H1181.72M1170.72 223.14V245.14 M1159.72 702.43H1181.72M1170.72 691.43V713.43 M1159.72 1170.72H1181.72M1170.72 1159.72V1181.72 M1628.01 234.14H1650.01M1639.01 223.14V245.14 M1628.01 702.43H1650.01M1639.01 691.43V713.43 M1628.01 1170.72H1650.01M1639.01 1159.72V1181.72 M2096.30 234.14H2118.30M2107.30 223.14V245.14 M2096.30 702.43H2118.30M2107.30 691.43V713.43 M2096.30 1170.72H2118.30M2107.30 1159.72V1181.72 M2564.58 234.14H2586.58M2575.58 223.14V245.14 M2564.58 702.43H2586.58M2575.58 691.43V713.43 M2564.58 1170.72H2586.58M2575.58 1159.72V1181.72" stroke="url(#fadeGrad)" stroke-width="2"/>
+</g>
+<g style="mix-blend-mode:soft-light">
+<g opacity="0.55">
+<path d="M120.0 137.0V163.0M420.0 137.0V163.0M120.0 150.0H420.0" stroke="url(#fadeGrad)" stroke-width="2.6"/>
+<text x="270.0" y="128.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="url(#fadeGrad)">6'-3"</text>
+</g>
+<g opacity="0.5">
+<path d="M247.0 380.0H273.0M247.0 720.0H273.0M260.0 380.0V720.0" stroke="url(#fadeGrad)" stroke-width="2.6"/>
+<text x="282.0" y="550.0" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="url(#fadeGrad)">3'-9"</text>
+</g>
+<g opacity="0.55">
+<path d="M700.0 1047.0V1073.0M980.0 1047.0V1073.0M700.0 1060.0H980.0" stroke="url(#fadeGrad)" stroke-width="2.6"/>
+<text x="840.0" y="1038.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="url(#fadeGrad)">5'-4"</text>
+</g>
+<g opacity="0.55">
+<path d="M967.0 260.0H993.0M967.0 560.0H993.0M980.0 260.0V560.0" stroke="url(#fadeGrad)" stroke-width="2.6"/>
+<text x="1002.0" y="410.0" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="url(#fadeGrad)">2'-6"</text>
+</g>
+</g>
+<g style="mix-blend-mode:soft-light">
+<path d="M68 90H90V68M68 90V112M68 112H68" opacity="0.4" fill="none" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+<path d="M90 68H112M112 68V112M90 112H112" opacity="0.4" fill="none" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+<path d="M128 1080H150V1058M128 1080V1102M128 1102H128" opacity="0.35" fill="none" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+<path d="M150 1058H172M172 1058V1102M150 1102H172" opacity="0.35" fill="none" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+<path d="M1283 60H1305V38M1283 60V82M1283 82H1283" opacity="0.4" fill="none" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+<path d="M1305 38H1327M1327 38V82M1305 82H1327" opacity="0.4" fill="none" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+</g>
+<g style="mix-blend-mode:soft-light">
+<g opacity="0.85">
+<rect x="1550" y="340" width="770" height="540" fill="none" stroke="url(#fadeGrad)" stroke-width="2"/>
+<path d="M1715 610.0H2155" stroke="url(#fadeGrad)" stroke-width="2.2"/>
+<path d="M1550 340L1715 610.0M1550 880L1715 610.0M2320 340L2155 610.0M2320 880L2155 610.0" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+<path d="M1632.5 610.0L1672.5 575.0M1672.5 575.0L1668.6 583.1M1672.5 575.0L1664.0 577.8" stroke="url(#fadeGrad)" stroke-width="1.3"/><text x="1632.5" y="600.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="url(#fadeGrad)">6:12</text>
+<path d="M1632.5 610.0L1672.5 645.0M1672.5 645.0L1664.0 642.2M1672.5 645.0L1668.6 636.9" stroke="url(#fadeGrad)" stroke-width="1.3"/><text x="1632.5" y="600.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="url(#fadeGrad)">6:12</text>
+<path d="M2237.5 610.0L2197.5 575.0M2197.5 575.0L2206.0 577.8M2197.5 575.0L2201.4 583.1" stroke="url(#fadeGrad)" stroke-width="1.3"/><text x="2237.5" y="600.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="url(#fadeGrad)">6:12</text>
+<path d="M2237.5 610.0L2197.5 645.0M2197.5 645.0L2201.4 636.9M2197.5 645.0L2206.0 642.2" stroke="url(#fadeGrad)" stroke-width="1.3"/><text x="2237.5" y="600.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="url(#fadeGrad)">6:12</text>
+</g>
+<g opacity="1"><path d="M1550 261V289M2320 261V289M1550 275H2320" stroke="url(#fadeGrad)" stroke-width="2.6"/>
+<text x="1935.0" y="253" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="url(#fadeGrad)">32'-0"</text></g>
+<g opacity="1"><path d="M1471 340H1499M1471 880H1499M1485 340V880" stroke="url(#fadeGrad)" stroke-width="2.6"/>
+<text x="1461" y="610.0" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="url(#fadeGrad)">24'-0"</text></g>
+<g opacity="1"><path d="M1715 556.0V584.0M2155 556.0V584.0M1715 570.0H2155" stroke="url(#fadeGrad)" stroke-width="2.6"/>
+<text x="1935.0" y="552.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="url(#fadeGrad)">18'-0"</text></g>
+</g>
+<g style="mix-blend-mode:soft-light">
+<g opacity="1">
+<rect x="2470" y="120" width="130" height="966" fill="none" stroke="url(#fadeGrad)" stroke-width="2"/>
+<text x="2535.0" y="361.5" text-anchor="middle" transform="rotate(-90 2535.0 361.5)" font-family="Helvetica, Arial, sans-serif" font-size="30" letter-spacing="2" fill="url(#fadeGrad)">ROOFING PLAN</text>
+<path d="M2470 603.0H2600" stroke="url(#fadeGrad)" stroke-width="1.4"/>
+<text x="2535.0" y="844.5" text-anchor="middle" transform="rotate(-90 2535.0 844.5)" font-family="Helvetica, Arial, sans-serif" font-size="30" letter-spacing="2" fill="url(#fadeGrad)">SCALE  1/4" = 1'-0"</text>
+</g>
+</g>
+</svg>

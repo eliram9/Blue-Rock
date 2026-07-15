@@ -1,12 +1,162 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import Blueprint from "../../../public/svg/test3";
 import Container from "@/components/ui/Container";
+import Corners from "@/components/ui/Corners";
 import MiniHero from "@/components/sections/MiniHero";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import { fadeUp, stagger, viewport } from "@/lib/motion";
+import { BUSINESS } from "@/lib/site";
 import { SITE_CONFIG } from "@/constants/config";
 
+type Status = "idle" | "submitting" | "success" | "error";
+
+const INITIAL_FORM = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "residential",
+    message: "",
+};
+
+/* The four required text fields, rendered into a 2-column grid via .map() */
+const CONTACT_FIELDS = [
+    { name: "firstName", type: "text", label: "First Name", placeholder: "Enter your first name" },
+    { name: "lastName", type: "text", label: "Last Name", placeholder: "Enter your last name" },
+    { name: "email", type: "email", label: "Email Address", placeholder: "your.email@example.com" },
+    { name: "phone", type: "tel", label: "Phone Number", placeholder: "(555) 123-4567" },
+] as const;
+
+/* Direct-line sheet rows — values come from BUSINESS/SITE_CONFIG, never
+   hardcoded, so contact details stay in sync site-wide. */
+const DIRECT_LINE_ROWS: { label: string; content: React.ReactNode; note?: string }[] = [
+    {
+        label: "Call Now",
+        note: "Fastest way to reach us - talk to the team directly.",
+        content: (
+            <a
+                href={`tel:${SITE_CONFIG.phone}`}
+                className="mt-2 block font-mono text-2xl font-bold tracking-wide text-white transition-colors hover:text-brand-light md:text-3xl"
+            >
+                {SITE_CONFIG.phoneDisplay}
+            </a>
+        ),
+    },
+    {
+        label: "Email Us",
+        note: "Plans, photos, and project details welcome.",
+        content: (
+            <a
+                href={`mailto:${SITE_CONFIG.email}`}
+                className="mt-2 block break-all font-mono text-lg font-bold tracking-wide text-white transition-colors hover:text-brand-light md:text-xl"
+            >
+                {SITE_CONFIG.email}
+            </a>
+        ),
+    },
+    {
+        label: "Business Hours",
+        content: (
+            <div className="mt-3 space-y-2">
+                {BUSINESS.hoursDisplay.map((row) => (
+                    <div key={row.days} className="flex items-baseline justify-between gap-4">
+                        <span className="text-sm text-blue-100/70">{row.days}</span>
+                        <span className="font-mono text-sm font-bold text-white">{row.hours}</span>
+                    </div>
+                ))}
+            </div>
+        ),
+    },
+    {
+        label: "Address",
+        note: `Serving ${BUSINESS.areaServed.join(" and ")}.`,
+        content: (
+            <address className="mt-2 not-italic text-base leading-relaxed text-blue-100/90">
+                {SITE_CONFIG.address}
+            </address>
+        ),
+    },
+];
+
+/* Shared field styling — drafting-sheet inputs on the themed surface */
+const inputClass =
+    "w-full border border-border bg-surface px-4 py-3 text-foreground placeholder:text-muted/60 transition-colors focus:border-main-blue focus:outline-none focus:ring-1 focus:ring-main-blue";
+const labelClass =
+    "mb-2 block font-mono text-xs font-semibold uppercase tracking-[0.2em] text-main-blue";
+
+const SERVICE_OPTIONS = [
+    { value: "residential", label: "Residential" },
+    { value: "commercial", label: "Commercial" },
+    { value: "government", label: "Government" },
+    { value: "renovation", label: "Renovation" },
+    { value: "other", label: "Other" },
+] as const;
+
 export default function Contact() {
+    const [formData, setFormData] = useState(INITIAL_FORM);
+    const [website, setWebsite] = useState("");
+    const [status, setStatus] = useState<Status>("idle");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        if (status !== "success" && status !== "error") return;
+        const timer = setTimeout(() => {
+            setStatus("idle");
+            setErrorMessage("");
+        }, 10000);
+        return () => clearTimeout(timer);
+    }, [status]);
+
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    /* Button stays inert gray until every required field has content */
+    const isComplete = [
+        formData.firstName,
+        formData.lastName,
+        formData.email,
+        formData.phone,
+        formData.message,
+    ].every((value) => value.trim() !== "");
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus("submitting");
+        setErrorMessage("");
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...formData, website }),
+            });
+            const data = await res.json();
+
+            if (!res.ok || !data.success) {
+                setStatus("error");
+                setErrorMessage(data.error || "Something went wrong. Please try again.");
+                return;
+            }
+
+            setStatus("success");
+            setFormData(INITIAL_FORM);
+            setWebsite("");
+        } catch {
+            setStatus("error");
+            setErrorMessage("Network error. Please check your connection and try again.");
+        }
+    };
+
     return (
-        <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+        <main className="min-h-screen bg-background transition-colors">
             {/* Breadcrumb */}
             <Breadcrumb
                 items={[
@@ -15,190 +165,182 @@ export default function Contact() {
                 ]}
             />
 
-            {/* Hero Section */}
+            {/* Hero Section — no breadcrumbs prop; the standalone Breadcrumb
+                bar above already renders the trail */}
             <MiniHero
                 title="CONTACT US"
                 subtitle="Let's Bring Your Vision to Life"
             />
 
-            {/* Contact Section */}
-            <section className="py-20 md:py-28">
+            {/* ── 01 · Project inquiry — form sheet + direct-line panel ── */}
+            <section className="bg-surface py-16 transition-colors md:py-24">
                 <Container>
-                    <div className="max-w-7xl mx-auto">
-                        <div className="grid lg:grid-cols-2 gap-12">
-                            {/* Left Column - Contact Form */}
-                            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-10">
-                                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                                    Send Us a Message
-                                </h2>
-                                <p className="text-gray-600 dark:text-gray-400 mb-8">
-                                    Fill out the form below and we'll get back to you within 24 hours.
-                                </p>
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewport}
+                        className="mx-auto max-w-7xl"
+                    >
+                        {/* Section label */}
+                        <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
+                            <span className="font-mono text-sm uppercase tracking-widest text-light-blue/80">
+                                Contact 01.01 · Project Inquiry
+                            </span>
+                            <div className="flex-1 border-t border-dashed border-light-blue/25" />
+                        </motion.div>
 
-                                <form className="space-y-6">
-                                    {/* Name Fields */}
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label htmlFor="firstName" className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                                First Name <span className="text-red-500">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="firstName"
-                                                name="firstName"
-                                                placeholder="Enter your first name"
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="lastName" className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                                Last Name <span className="text-red-500">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="lastName"
-                                                name="lastName"
-                                                placeholder="Enter your last name"
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
+                        {/* Oversized headline */}
+                        <motion.div variants={fadeUp} className="relative">
+                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-light-blue/[0.25] md:text-[11rem]">
+                                01
+                            </span>
+                            <h2 className="relative ml-20 font-title text-3xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
+                                Start the Conversation
+                            </h2>
+                        </motion.div>
+                        <motion.div variants={fadeUp} className="mt-20 h-0.5 w-16 bg-main-blue" />
 
-                                    {/* Email and Phone */}
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                                Email Address <span className="text-red-500">*</span>
-                                            </label>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                name="email"
-                                                placeholder="your.email@example.com"
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="phone" className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                                Phone Number <span className="text-red-500">*</span>
-                                            </label>
-                                            <input
-                                                type="tel"
-                                                id="phone"
-                                                name="phone"
-                                                placeholder="(555) 123-4567"
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
+                        <div className="mt-12 grid gap-12 lg:grid-cols-2">
+                            {/* Left Column — inquiry form as a drafting sheet */}
+                            <motion.div
+                                variants={fadeUp}
+                                className="relative border border-border bg-surface-muted/40"
+                            >
+                                <Corners color="border-main-blue/50" />
 
-                                    {/* Service Needed */}
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-900 dark:text-white mb-3">
-                                            Service Needed
-                                        </label>
-                                        <div className="grid md:grid-cols-2 gap-4">
-                                            <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="residential" className="w-4 h-4 text-light-blue" defaultChecked />
-                                                <span className="ml-3 text-gray-900 dark:text-white">Residential</span>
-                                            </label>
-                                            <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="commercial" className="w-4 h-4 text-light-blue" />
-                                                <span className="ml-3 text-gray-900 dark:text-white">Commercial</span>
-                                            </label>
-                                            <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="renovation" className="w-4 h-4 text-light-blue" />
-                                                <span className="ml-3 text-gray-900 dark:text-white">Renovation</span>
-                                            </label>
-                                            <label className="flex items-center p-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer hover:border-light-blue dark:hover:border-light-blue transition-colors">
-                                                <input type="radio" name="service" value="other" className="w-4 h-4 text-light-blue" />
-                                                <span className="ml-3 text-gray-900 dark:text-white">Other</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    {/* Message */}
-                                    <div>
-                                        <label htmlFor="message" className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                                            Message <span className="text-red-500">*</span>
-                                        </label>
-                                        <textarea
-                                            id="message"
-                                            name="message"
-                                            rows={6}
-                                            placeholder="Tell us about your project, any specific requirements, or questions you have..."
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-light-blue focus:border-transparent transition-colors resize-none"
-                                            required
-                                        ></textarea>
-                                    </div>
-
-                                    {/* Submit Button */}
-                                    <button
-                                        type="submit"
-                                        className="w-full bg-main-blue hover:bg-light-blue text-white font-semibold px-8 py-4 rounded-lg transition-colors"
-                                    >
-                                        Get Your Free Quote
-                                    </button>
-                                </form>
-                            </div>
-
-                            {/* Right Column - Contact Information */}
-                            <div className="relative bg-gradient-to-br from-main-blue via-blue-600 to-blue-800 dark:from-blue-900 dark:via-blue-950 dark:to-gray-900 rounded-2xl shadow-2xl overflow-hidden">
-                                {/* Blueprint House Plan Pattern Overlay */}
-                                <div className="absolute inset-0 opacity-8">
-                                    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                                        <defs>
-                                            <pattern id="blueprint-house" width="300" height="300" patternUnits="userSpaceOnUse">
-                                                {/* Main house outline */}
-                                                <rect x="30" y="40" width="240" height="200" fill="none" stroke="white" strokeWidth="1.2"/>
-
-                                                {/* Interior walls */}
-                                                <path d="M 30 140 L 270 140" stroke="white" strokeWidth="0.8"/>
-                                                <path d="M 150 40 L 150 240" stroke="white" strokeWidth="0.8"/>
-                                                <path d="M 90 140 L 90 240" stroke="white" strokeWidth="0.8"/>
-                                                <path d="M 210 140 L 210 240" stroke="white" strokeWidth="0.8"/>
-
-                                                {/* Doors */}
-                                                <path d="M 140 240 L 140 210 A 20 20 0 0 1 160 210 L 160 240" fill="none" stroke="white" strokeWidth="0.6"/>
-                                                <path d="M 90 150 L 90 170 A 15 15 0 0 0 105 170 L 105 150" fill="none" stroke="white" strokeWidth="0.6"/>
-
-                                                {/* Windows */}
-                                                <rect x="50" y="60" width="30" height="25" fill="none" stroke="white" strokeWidth="0.5"/>
-                                                <path d="M 65 60 L 65 85 M 50 72.5 L 80 72.5" stroke="white" strokeWidth="0.3"/>
-                                                <rect x="160" y="60" width="30" height="25" fill="none" stroke="white" strokeWidth="0.5"/>
-                                                <path d="M 175 60 L 175 85 M 160 72.5 L 190 72.5" stroke="white" strokeWidth="0.3"/>
-                                                <rect x="220" y="80" width="25" height="30" fill="none" stroke="white" strokeWidth="0.5"/>
-                                                <path d="M 232.5 80 L 232.5 110 M 220 95 L 245 95" stroke="white" strokeWidth="0.3"/>
-
-                                                {/* Dimension lines */}
-                                                <path d="M 20 40 L 20 240" stroke="white" strokeWidth="0.4" strokeDasharray="2,2"/>
-                                                <path d="M 18 40 L 22 40 M 18 240 L 22 240" stroke="white" strokeWidth="0.4"/>
-                                                <path d="M 30 30 L 270 30" stroke="white" strokeWidth="0.4" strokeDasharray="2,2"/>
-                                                <path d="M 30 28 L 30 32 M 270 28 L 270 32" stroke="white" strokeWidth="0.4"/>
-
-                                                {/* Room labels (represented as small rectangles) */}
-                                                <rect x="55" y="80" width="25" height="8" fill="white" opacity="0.3"/>
-                                                <rect x="165" y="80" width="25" height="8" fill="white" opacity="0.3"/>
-                                                <rect x="105" y="175" width="30" height="8" fill="white" opacity="0.3"/>
-
-                                                {/* Grid reference points */}
-                                                <circle cx="30" cy="40" r="2" fill="white" opacity="0.5"/>
-                                                <circle cx="270" cy="40" r="2" fill="white" opacity="0.5"/>
-                                                <circle cx="30" cy="240" r="2" fill="white" opacity="0.5"/>
-                                                <circle cx="270" cy="240" r="2" fill="white" opacity="0.5"/>
-                                            </pattern>
-                                        </defs>
-                                        <rect width="100%" height="100%" fill="url(#blueprint-house)" />
-                                    </svg>
+                                {/* Title block strip */}
+                                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-6 py-3">
+                                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+                                        Project Inquiry · Form CT—1.1
+                                    </span>
+                                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+                                        Response within 24h
+                                    </span>
                                 </div>
 
-                                {/* Decorative Circles */}
-                                <div className="absolute -top-20 -right-20 w-64 h-64 bg-light-blue/20 rounded-full blur-3xl"></div>
-                                <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+                                <div className="p-6 md:p-8">
+                                    <h3 className="font-title text-2xl font-bold uppercase tracking-tight text-foreground md:text-3xl">
+                                        Send Us a Message
+                                    </h3>
+                                    <p className="mt-2 mb-8 text-muted">
+                                        Fill out the form below and we&apos;ll get back to you within 24 hours.
+                                    </p>
+
+                                    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+                                        {/* Honeypot — hidden from users, bots fill it */}
+                                        <input
+                                            type="text"
+                                            name="website"
+                                            value={website}
+                                            onChange={(e) => setWebsite(e.target.value)}
+                                            tabIndex={-1}
+                                            autoComplete="off"
+                                            aria-hidden="true"
+                                            className="absolute left-[-9999px] w-px h-px opacity-0"
+                                        />
+
+                                        {/* Contact fields — name / email / phone in one mapped grid */}
+                                        <div className="grid gap-6 md:grid-cols-2">
+                                            {CONTACT_FIELDS.map((field) => (
+                                                <div key={field.name}>
+                                                    <label htmlFor={field.name} className={labelClass}>
+                                                        {field.label} <span className="text-error">*</span>
+                                                    </label>
+                                                    <input
+                                                        type={field.type}
+                                                        id={field.name}
+                                                        name={field.name}
+                                                        value={formData[field.name]}
+                                                        onChange={handleChange}
+                                                        placeholder={field.placeholder}
+                                                        className={inputClass}
+                                                        required
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Service Needed */}
+                                        <div>
+                                            <span className={labelClass}>Service Needed</span>
+                                            <div className="grid gap-4 md:grid-cols-2">
+                                                {SERVICE_OPTIONS.map((option) => (
+                                                    <label
+                                                        key={option.value}
+                                                        className="flex cursor-pointer items-center border border-border bg-surface p-4 transition-colors hover:border-main-blue/50 has-[:checked]:border-main-blue has-[:checked]:bg-light-blue/[0.07]"
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            name="service"
+                                                            value={option.value}
+                                                            checked={formData.service === option.value}
+                                                            onChange={handleChange}
+                                                            className="h-4 w-4 accent-main-blue"
+                                                        />
+                                                        <span className="ml-3 text-foreground">{option.label}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Message */}
+                                        <div>
+                                            <label htmlFor="message" className={labelClass}>
+                                                Message <span className="text-error">*</span>
+                                            </label>
+                                            <textarea
+                                                id="message"
+                                                name="message"
+                                                value={formData.message}
+                                                onChange={handleChange}
+                                                rows={6}
+                                                placeholder="Tell us about your project, any specific requirements, or questions you have..."
+                                                className={`${inputClass} resize-none`}
+                                                required
+                                            ></textarea>
+                                        </div>
+
+                                        {/* Submit Button */}
+                                        <button
+                                            type="submit"
+                                            disabled={!isComplete || status === "submitting"}
+                                            className={`w-full px-8 py-4 font-bold font-mono text-md uppercase tracking-[0.25em] transition-colors disabled:cursor-not-allowed ${
+                                                isComplete
+                                                    ? "running-border bg-main-blue text-white hover:bg-main-blue-deep disabled:opacity-60"
+                                                    : "border border-border bg-surface-muted text-muted"
+                                            }`}
+                                        >
+                                            {status === "submitting" ? "Sending..." : "Get Your Free Quote"}
+                                        </button>
+
+                                        {status === "success" && (
+                                            <div className="border border-success/40 bg-success/10 px-4 py-3 text-sm text-success">
+                                                Thanks! Your message has been sent. We&apos;ll get back to you within 24 hours.
+                                            </div>
+                                        )}
+                                        {status === "error" && (
+                                            <div className="border border-error/40 bg-error/10 px-4 py-3 text-sm text-error">
+                                                {errorMessage}
+                                            </div>
+                                        )}
+                                    </form>
+                                </div>
+                            </motion.div>
+
+                            {/* Right Column — direct-line panel on the steel band
+                                (fixed ink art direction, identical in both themes) */}
+                            <motion.div
+                                variants={fadeUp}
+                                className="relative overflow-hidden border border-brand-light/25 bg-gradient-to-b from-steel-top to-steel-bottom shadow-2xl"
+                            >
+                                {/* Blueprint layer — same fixed-white sheet as the CTA band */}
+                                <Blueprint
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-50"
+                                />
+                                {/* Radial vignette grounds the sheet into the steel */}
+                                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,var(--color-steel-bottom)_95%)]" />
 
                                 {/* Logo Watermark */}
                                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5">
@@ -211,94 +353,61 @@ export default function Contact() {
                                     />
                                 </div>
 
-                                {/* Content */}
-                                <div className="relative z-10 p-8 md:p-10 text-white">
-                                    <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                                        Need Immediate Help?
+                                {/* Content — flex column so the sheet fills the panel */}
+                                <div className="relative z-10 flex h-full flex-col p-6 md:p-8">
+                                    {/* Section label */}
+                                    <div className="mb-6 flex items-center gap-3">
+                                        <span className="font-mono text-sm uppercase tracking-widest text-brand-light/80">
+                                            Contact · Direct Line
+                                        </span>
+                                        <div className="flex-1 border-t border-dashed border-brand-light/25" />
+                                    </div>
+
+                                    <h2 className="font-title text-3xl font-bold uppercase tracking-tight text-white md:text-4xl">
+                                        Need Immediate <span className="text-brand-light">Help?</span>
                                     </h2>
-                                    <p className="text-blue-50 mb-10 text-lg">
+                                    <p className="mt-4 text-base leading-relaxed text-blue-100/80">
                                         Our expert team is ready to assist you with any remodeling emergency or question you may have.
                                     </p>
 
-                                    {/* Call Now */}
-                                    <div className="group bg-white/15 backdrop-blur-md rounded-2xl p-6 mb-5 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:shadow-xl hover:shadow-white/10">
-                                        <div className="flex items-center gap-5">
-                                            <div className="w-14 h-14 bg-gradient-to-br from-light-blue to-blue-400 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h3 className="font-semibold text-lg mb-1 text-blue-50">Call Now</h3>
-                                                <a href={`tel:${SITE_CONFIG.phone}`} className="text-2xl font-bold hover:text-light-blue transition-colors">
-                                                    {SITE_CONFIG.phoneDisplay}
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {/* Contact sheet — rows flex to fill the full height */}
+                                    <div className="relative mt-8 flex flex-1 flex-col border border-brand-light/25 bg-gradient-to-b from-ink-soft/80 to-ink/40 backdrop-blur-sm">
+                                        <Corners color="border-brand-light" />
 
-                                    {/* Email Us */}
-                                    <div className="group bg-white/15 backdrop-blur-md rounded-2xl p-6 mb-5 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:shadow-xl hover:shadow-white/10">
-                                        <div className="flex items-center gap-5">
-                                            <div className="w-14 h-14 bg-gradient-to-br from-light-blue to-blue-400 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                                </svg>
-                                            </div>
-                                            <div className="overflow-hidden">
-                                                <h3 className="font-semibold text-lg mb-1 text-blue-50">Email Us</h3>
-                                                <a href={`mailto:${SITE_CONFIG.email}`} className="text-base hover:text-light-blue transition-colors break-all">
-                                                    {SITE_CONFIG.email}
-                                                </a>
-                                            </div>
+                                        {/* Title block strip — name reads from BUSINESS so the
+                                            entity stays identical everywhere (NAP consistency) */}
+                                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-brand-light/20 px-6 py-3">
+                                            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-100/60">
+                                                {BUSINESS.name}
+                                            </span>
+                                            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-100/60">
+                                                Sheet CT—1.0 · Rev. A
+                                            </span>
                                         </div>
-                                    </div>
 
-                                    {/* Business Hours */}
-                                    <div className="group bg-white/15 backdrop-blur-md rounded-2xl p-6 mb-5 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:shadow-xl hover:shadow-white/10">
-                                        <div className="flex items-start gap-5">
-                                            <div className="w-14 h-14 bg-gradient-to-br from-light-blue to-blue-400 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                            </div>
-                                            <div className="flex-1">
-                                                <h3 className="font-semibold text-lg mb-3 text-blue-50">Business Hours</h3>
-                                                <div className="space-y-2">
-                                                    <div className="flex justify-between items-center">
-                                                        <span className="text-blue-100">Monday - Friday:</span>
-                                                        <span className="font-semibold">9:00 AM - 5:00 PM</span>
-                                                    </div>
-                                                    <div className="flex justify-between items-center">
-                                                        <span className="text-blue-100">Saturday - Sunday:</span>
-                                                        <span className="font-semibold">Closed</span>
-                                                    </div>
+                                        {/* Readout rows — mapped; each stretches (flex-1) so the
+                                            sheet fills the panel's full height */}
+                                        {DIRECT_LINE_ROWS.map((row) => (
+                                            <div
+                                                key={row.label}
+                                                className="group flex flex-1 flex-col justify-center border-b border-brand-light/15 px-6 py-5 transition-colors last:border-b-0 hover:bg-brand-light/[0.07]"
+                                            >
+                                                <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-brand-light">
+                                                    {row.label}
                                                 </div>
+                                                {row.content}
+                                                {row.note && (
+                                                    <div className="mt-2 text-sm leading-relaxed text-blue-100/60">
+                                                        {row.note}
+                                                    </div>
+                                                )}
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Address */}
-                                    <div className="group bg-white/15 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:shadow-xl hover:shadow-white/10">
-                                        <div className="flex items-start gap-5">
-                                            <div className="w-14 h-14 bg-gradient-to-br from-light-blue to-blue-400 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h3 className="font-semibold text-lg mb-2 text-blue-50">Address</h3>
-                                                <address className="not-italic text-blue-50 leading-relaxed">
-                                                    {SITE_CONFIG.address}
-                                                </address>
-                                            </div>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
-                    </div>
+                    </motion.div>
                 </Container>
             </section>
         </main>

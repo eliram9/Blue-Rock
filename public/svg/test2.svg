@@ -1,0 +1,101 @@
+<svg width="2611" height="1206" viewBox="0 0 2611 1206" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Light shades of the brand blue #5B86DC — a=lightest … d=base -->
+<linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#C8D8F5" stop-opacity="0.08"/>
+<stop offset="55%" stop-color="#C8D8F5" stop-opacity="0.35"/>
+<stop offset="100%" stop-color="#C8D8F5" stop-opacity="1"/>
+</linearGradient>
+<linearGradient id="b" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#A7C0EE" stop-opacity="0.08"/>
+<stop offset="55%" stop-color="#A7C0EE" stop-opacity="0.35"/>
+<stop offset="100%" stop-color="#A7C0EE" stop-opacity="1"/>
+</linearGradient>
+<linearGradient id="c" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#86A5E6" stop-opacity="0.08"/>
+<stop offset="55%" stop-color="#86A5E6" stop-opacity="0.35"/>
+<stop offset="100%" stop-color="#86A5E6" stop-opacity="1"/>
+</linearGradient>
+<linearGradient id="d" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#5B86DC" stop-opacity="0.08"/>
+<stop offset="55%" stop-color="#5B86DC" stop-opacity="0.35"/>
+<stop offset="100%" stop-color="#5B86DC" stop-opacity="1"/>
+</linearGradient>
+</defs>
+<g opacity="0.6" style="mix-blend-mode:soft-light">
+<path d="M0.00 0V1206 M58.54 0V1206 M117.07 0V1206 M175.61 0V1206 M234.14 0V1206 M292.68 0V1206 M351.22 0V1206 M409.75 0V1206 M468.29 0V1206 M526.82 0V1206 M585.36 0V1206 M643.90 0V1206 M702.43 0V1206 M760.97 0V1206 M819.50 0V1206 M878.04 0V1206 M936.58 0V1206 M995.11 0V1206 M1053.65 0V1206 M1112.18 0V1206 M1170.72 0V1206 M1229.26 0V1206 M1287.79 0V1206 M1346.33 0V1206 M1404.86 0V1206 M1463.40 0V1206 M1521.94 0V1206 M1580.47 0V1206 M1639.01 0V1206 M1697.54 0V1206 M1756.08 0V1206 M1814.62 0V1206 M1873.15 0V1206 M1931.69 0V1206 M1990.22 0V1206 M2048.76 0V1206 M2107.30 0V1206 M2165.83 0V1206 M2224.37 0V1206 M2282.90 0V1206 M2341.44 0V1206 M2399.98 0V1206 M2458.51 0V1206 M2517.05 0V1206 M2575.58 0V1206 M0 0.00H2611 M0 58.54H2611 M0 117.07H2611 M0 175.61H2611 M0 234.14H2611 M0 292.68H2611 M0 351.22H2611 M0 409.75H2611 M0 468.29H2611 M0 526.82H2611 M0 585.36H2611 M0 643.90H2611 M0 702.43H2611 M0 760.97H2611 M0 819.50H2611 M0 878.04H2611 M0 936.58H2611 M0 995.11H2611 M0 1053.65H2611 M0 1112.18H2611 M0 1170.72H2611" stroke="url(#a)" stroke-width="1"/>
+</g>
+<g opacity="0.8" style="mix-blend-mode:soft-light">
+<path d="M223.14 234.14H245.14M234.14 223.14V245.14 M223.14 702.43H245.14M234.14 691.43V713.43 M223.14 1170.72H245.14M234.14 1159.72V1181.72 M691.43 234.14H713.43M702.43 223.14V245.14 M691.43 702.43H713.43M702.43 691.43V713.43 M691.43 1170.72H713.43M702.43 1159.72V1181.72 M1159.72 234.14H1181.72M1170.72 223.14V245.14 M1159.72 702.43H1181.72M1170.72 691.43V713.43 M1159.72 1170.72H1181.72M1170.72 1159.72V1181.72 M1628.01 234.14H1650.01M1639.01 223.14V245.14 M1628.01 702.43H1650.01M1639.01 691.43V713.43 M1628.01 1170.72H1650.01M1639.01 1159.72V1181.72 M2096.30 234.14H2118.30M2107.30 223.14V245.14 M2096.30 702.43H2118.30M2107.30 691.43V713.43 M2096.30 1170.72H2118.30M2107.30 1159.72V1181.72 M2564.58 234.14H2586.58M2575.58 223.14V245.14 M2564.58 702.43H2586.58M2575.58 691.43V713.43 M2564.58 1170.72H2586.58M2575.58 1159.72V1181.72" stroke="url(#b)" stroke-width="1.6"/>
+</g>
+<g style="mix-blend-mode:soft-light">
+<g opacity="0.35">
+<path d="M120.0 131.0V149.0M420.0 131.0V149.0M120.0 140.0H420.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="270.0" y="124.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">6'-3"</text>
+</g>
+<g opacity="0.55">
+<path d="M1550.0 81.0V99.0M1900.0 81.0V99.0M1550.0 90.0H1900.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="1725.0" y="74.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">14'-0"</text>
+</g>
+<g opacity="0.75">
+<path d="M2050.0 251.0V269.0M2420.0 251.0V269.0M2050.0 260.0H2420.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="2235.0" y="244.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">3'-9"</text>
+</g>
+<g opacity="0.35">
+<path d="M251.0 380.0H269.0M251.0 720.0H269.0M260.0 380.0V720.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="276.0" y="550.0" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">9'-6"</text>
+</g>
+<g opacity="0.8">
+<path d="M2491.0 500.0H2509.0M2491.0 900.0H2509.0M2500.0 500.0V900.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="2516.0" y="700.0" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">22'-0"</text>
+</g>
+<g opacity="0.7">
+<path d="M1850.0 971.0V989.0M2250.0 971.0V989.0M1850.0 980.0H2250.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="2050.0" y="964.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">5'-4"</text>
+</g>
+<g opacity="0.5">
+<path d="M1711.0 150.0H1729.0M1711.0 470.0H1729.0M1720.0 150.0V470.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="1736.0" y="310.0" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">11'-8"</text>
+</g>
+<g opacity="0.75">
+<path d="M2150.0 611.0V629.0M2480.0 611.0V629.0M2150.0 620.0H2480.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="2315.0" y="604.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">17'-2"</text>
+</g>
+<g opacity="0.75">
+<path d="M2311.0 780.0H2329.0M2311.0 1080.0H2329.0M2320.0 780.0V1080.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="2336.0" y="930.0" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">8'-0"</text>
+</g>
+<g opacity="0.35">
+<path d="M700.0 1041.0V1059.0M980.0 1041.0V1059.0M700.0 1050.0H980.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="840.0" y="1034.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">2'-6"</text>
+</g>
+<g opacity="0.4">
+<path d="M971.0 260.0H989.0M971.0 560.0H989.0M980.0 260.0V560.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="996.0" y="410.0" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">13'-11"</text>
+</g>
+<g opacity="0.7">
+<path d="M2000.0 1131.0V1149.0M2380.0 1131.0V1149.0M2000.0 1140.0H2380.0" stroke="url(#a)" stroke-width="1.6"/>
+<text x="2190.0" y="1124.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="url(#a)">19'-5"</text>
+</g>
+</g>
+<g style="mix-blend-mode:soft-light">
+<path d="M68 90H90V68M68 90V112M68 112H68" opacity="0.4" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M90 68H112M112 68V112M90 112H112" opacity="0.4" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M2478 130H2500V108M2478 130V152M2478 152H2478" opacity="0.6" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M2500 108H2522M2522 108V152M2500 152H2522" opacity="0.6" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M128 1080H150V1058M128 1080V1102M128 1102H128" opacity="0.35" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M150 1058H172M172 1058V1102M150 1102H172" opacity="0.35" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M2448 1080H2470V1058M2448 1080V1102M2448 1102H2448" opacity="0.7" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M2470 1058H2492M2492 1058V1102M2470 1102H2492" opacity="0.7" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M1283 60H1305V38M1283 60V82M1283 82H1283" opacity="0.4" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M1305 38H1327M1327 38V82M1305 82H1327" opacity="0.4" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M1283 1140H1305V1118M1283 1140V1162M1283 1162H1283" opacity="0.4" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+<path d="M1305 1118H1327M1327 1118V1162M1305 1162H1327" opacity="0.4" fill="none" stroke="url(#c)" stroke-width="1.4"/>
+</g>
+<g style="mix-blend-mode:soft-light">
+<circle cx="1639.0" cy="1170.7" r="2.5" fill="url(#d)" opacity="0.33"/>
+<circle cx="234.1" cy="1170.7" r="2.5" fill="url(#d)" opacity="0.46"/>
+<circle cx="234.1" cy="234.1" r="2.5" fill="url(#d)" opacity="0.71"/>
+<circle cx="1639.0" cy="234.1" r="2.5" fill="url(#d)" opacity="0.32"/>
+</g>
+</svg>

@@ -14,9 +14,11 @@ export const NAVIGATION_LINKS: NavigationLink[] = [
         dropdown: [
             { label: "Residential", href: "/services/residential" },
             { label: "Commercial", href: "/services/commercial" },
+            { label: "Government", href: "/services/government" },
         ],
     },
     { href: "/projects", label: "Projects" },
     { href: "/resources", label: "Resources" },
+    { href: "/faq", label: "FAQ" },
     { href: "/contact", label: "Contact" },
 ];

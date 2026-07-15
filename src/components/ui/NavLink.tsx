@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface NavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -17,8 +18,8 @@ export default function NavLink({ href, children, className = "", ...props }: Na
         : "text-gray-700 dark:text-gray-300 font-medium hover:text-main-blue dark:hover:text-light-blue transition-colors border-b-2 border-transparent hover:border-main-blue dark:hover:border-light-blue";
 
     return (
-        <a href={href} className={`${linkClassName} ${className}`} {...props}>
+        <Link href={href} className={`${linkClassName} ${className}`} {...props}>
             {children}
-        </a>
+        </Link>
     );
 }
