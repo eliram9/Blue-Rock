@@ -89,7 +89,7 @@ export default function Navbar(): React.ReactElement {
                 }
 
                 return (
-                    <NavLink key={link.href} href={link.href!}>
+                    <NavLink key={link.href} href={link.href}>
                         {link.label}
                     </NavLink>
                 );

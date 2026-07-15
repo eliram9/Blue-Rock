@@ -154,7 +154,7 @@ export default function Footer(): React.ReactElement {
                             ).map((link) => (
                                 <li key={link.label}>
                                     <Link
-                                        href={link.href ?? "/"}
+                                        href={link.href}
                                         className="text-gray-400 hover:text-brand-light transition-colors"
                                     >
                                         {link.label}

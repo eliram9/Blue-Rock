@@ -1,11 +1,20 @@
-export interface NavigationLink {
-    href?: string;
+/** A direct link in the nav. */
+interface NavigationLeaf {
+    href: string;
     label: string;
-    dropdown?: {
-        label: string;
-        href: string;
-    }[];
+    dropdown?: never;
 }
+
+/** A label-only group whose children are the links (e.g. Services). */
+interface NavigationGroup {
+    label: string;
+    dropdown: { label: string; href: string }[];
+    href?: never;
+}
+
+/** Discriminated union: checking `link.dropdown` narrows to one arm, so
+    leaves always have a string `href` — no assertions needed downstream. */
+export type NavigationLink = NavigationLeaf | NavigationGroup;
 
 export const NAVIGATION_LINKS: NavigationLink[] = [
     { href: "/about", label: "About" },

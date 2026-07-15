@@ -54,7 +54,7 @@ export default function MobileMenu() {
                             ) : (
                                 <Link
                                     key={link.href}
-                                    href={link.href!}
+                                    href={link.href}
                                     onClick={() => setOpen(false)}
                                     className="block border-b border-border py-3 font-semibold text-foreground transition-colors last:border-b-0 hover:text-main-blue"
                                 >
