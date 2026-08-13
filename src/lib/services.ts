@@ -30,7 +30,7 @@ export const SERVICES: Service[] = [
             "Blue Rock Remodeling & Construction designs and builds custom kitchens across Maryland and Washington, DC - handling layout, cabinetry, countertops, lighting, plumbing, and finish work with one licensed, accountable team. As an MHIC-licensed general contractor serving the region since 2010, we take projects from the first sketch to the final walkthrough with transparent pricing at every step.",
             "Whether you want a full gut renovation, an island and layout reconfiguration, or updated cabinetry and counters, we build around how your family actually cooks and lives.",
         ],
-        image: "/images/hero/kitchen-remodeling.png",
+        image: "/images/hero/kitchen-remodeling.webp",
     },
     {
         slug: "bathroom-remodeling",
@@ -42,7 +42,7 @@ export const SERVICES: Service[] = [
             "From powder-room refreshes to full primary-suite renovations, Blue Rock builds bathrooms that balance everyday function with spa-level comfort - tile, custom vanities, glass enclosures, lighting, and plumbing handled by one licensed team across Maryland and Washington, DC.",
             "We manage waterproofing, ventilation, and code compliance behind the walls as carefully as the finishes you see, so the result looks beautiful and stays that way.",
         ],
-        image: "/images/hero/bathroom.png",
+        image: "/images/hero/bathroom.webp",
     },
     {
         slug: "home-additions",
@@ -54,7 +54,7 @@ export const SERVICES: Service[] = [
             "Blue Rock designs and builds home additions across the DMV - extra bedrooms, expanded kitchens, second stories, and in-law suites that blend seamlessly with your home's existing structure and style.",
             "From permits and foundation to framing, roofing, and finish work, one accountable team carries the project from drawings to a finished space that feels like it was always there.",
         ],
-        image: "/images/hero/addition.png",
+        image: "/images/hero/addition.webp",
     },
     {
         slug: "basement-finishing",
@@ -66,7 +66,7 @@ export const SERVICES: Service[] = [
             "An unfinished basement is square footage waiting to work for you. Blue Rock turns basements across Maryland and Washington, DC into home theaters, offices, gyms, guest suites, and rental-ready living areas.",
             "We handle moisture control, egress, insulation, electrical, and finishes as one licensed team - so the new level of your home is comfortable, code-compliant, and built to last.",
         ],
-        image: "/images/hero/basement.png",
+        image: "/images/hero/basement.webp",
     },
     {
         slug: "exterior-renovations",
@@ -78,7 +78,7 @@ export const SERVICES: Service[] = [
             "Curb appeal is more than paint. Blue Rock renovates exteriors across the DMV - siding, trim, windows, doors, and professional exterior painting that protect your home and lift its value.",
             "We combine durable materials with meticulous installation, so the first impression your home makes lasts through every season.",
         ],
-        image: "/images/hero/exterior.png",
+        image: "/images/hero/exterior.webp",
     },
     {
         slug: "demolition-services",
@@ -101,7 +101,7 @@ export const SERVICES: Service[] = [
             "Blue Rock designs, builds, and repairs decks across the DMV - composite and wood structures with railings, stairs, and finishes engineered to code and built for year-round use.",
             "From footings to final seal, one licensed team ensures your outdoor living space is safe, durable, and ready for the seasons.",
         ],
-        image: "/images/hero/deck.png",
+        image: "/images/hero/deck.webp",
     },
     {
         slug: "interior-design",
@@ -113,7 +113,7 @@ export const SERVICES: Service[] = [
             "Great renovations deserve finishing touches that feel intentional. Blue Rock's interior design guidance covers colors, materials, lighting, furniture, and accessories that complete the spaces we build.",
             "Because design and construction live under one roof, choices stay coordinated - and the finished space matches the vision from day one.",
         ],
-        image: "/images/hero/interior.png",
+        image: "/images/hero/interior.webp",
     },
 ];
 
@@ -141,7 +141,7 @@ export const SECTOR_SERVICES: Service[] = [
             "Blue Rock delivers commercial construction across the DMV - office build-outs, retail renovations, and tenant improvements completed on schedule and to code.",
             "One licensed team manages permits, trades, and finish work so your business opens on time.",
         ],
-        image: "/images/hero/commercial.png",
+        image: "/images/hero/commercial.webp",
     },
     {
         slug: "government-services",
@@ -153,7 +153,7 @@ export const SECTOR_SERVICES: Service[] = [
             "Blue Rock serves government clients across Maryland and Washington, DC with licensed, insured general contracting for public facilities.",
             "We meet public-sector compliance, documentation, and scheduling requirements from bid to closeout.",
         ],
-        image: "/images/hero/government.png",
+        image: "/images/hero/government.webp",
     },
 ];
 
@@ -337,7 +337,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                 "Your bathroom in Rockville, Silver Spring, or anywhere in Maryland and DC should reflect your style, not what's easiest for us to install.",
             image: {
                 /* Placeholder render - swap for a real project photo. */
-                src: "/images/hero/bathroom.png",
+                src: "/images/hero/bathroom.webp",
                 alt: "Remodeled bathroom with custom vanity and tile work by Blue Rock Remodeling",
                 caption: "Material selection · Tile & vanities",
             },
@@ -363,31 +363,31 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             /* Placeholder slides - swap src/alt per real project photo. */
             slides: [
                 {
-                    src: "/images/hero/bathroom.png",
+                    src: "/images/hero/bathroom.webp",
                     alt: "Primary suite bathroom renovation with custom tile and double vanity",
                     tag: "Bathroom Remodel",
                     title: "Primary Suite Renovation",
                 },
                 {
-                    src: "/images/hero/bathroom.png",
+                    src: "/images/hero/bathroom.webp",
                     alt: "Walk-in shower conversion with frameless glass enclosure",
                     tag: "Bathroom Remodel",
                     title: "Walk-In Shower Conversion",
                 },
                 {
-                    src: "/images/hero/bathroom.png",
+                    src: "/images/hero/bathroom.webp",
                     alt: "Spa-inspired bathroom with freestanding tub and stone tile",
                     tag: "Bathroom Remodel",
                     title: "Spa-Inspired Primary Bath",
                 },
                 {
-                    src: "/images/hero/bathroom.png",
+                    src: "/images/hero/bathroom.webp",
                     alt: "Powder room refresh with new vanity, lighting, and fixtures",
                     tag: "Bathroom Remodel",
                     title: "Powder Room Refresh",
                 },
                 {
-                    src: "/images/hero/bathroom.png",
+                    src: "/images/hero/bathroom.webp",
                     alt: "Tub-to-shower conversion with custom tile surround",
                     tag: "Bathroom Remodel",
                     title: "Tub-to-Shower Conversion",
@@ -430,7 +430,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                 "A great addition doesn't look like an addition - it looks like your home was always meant to have it.",
             image: {
                 /* Placeholder render - swap for a real project photo. */
-                src: "/images/hero/addition.png",
+                src: "/images/hero/addition.webp",
                 alt: "Seamless home addition matching existing rooflines and siding by Blue Rock Remodeling",
                 caption: "Structural integration · Rooflines & siding",
             },
@@ -457,31 +457,31 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             /* Placeholder slides - swap src/alt per real project photo. */
             slides: [
                 {
-                    src: "/images/hero/addition.png",
+                    src: "/images/hero/addition.webp",
                     alt: "Two-story rear home addition with matched roofline and siding",
                     tag: "Home Addition",
                     title: "Two-Story Rear Addition",
                 },
                 {
-                    src: "/images/hero/addition.png",
+                    src: "/images/hero/addition.webp",
                     alt: "Sunroom addition with full-height windows and matched exterior finishes",
                     tag: "Home Addition",
                     title: "Sunroom Addition",
                 },
                 {
-                    src: "/images/hero/addition.png",
+                    src: "/images/hero/addition.webp",
                     alt: "Primary suite addition with bedroom and en-suite bathroom",
                     tag: "Home Addition",
                     title: "Primary Suite Addition",
                 },
                 {
-                    src: "/images/hero/addition.png",
+                    src: "/images/hero/addition.webp",
                     alt: "Family room extension tied into the home's existing structure",
                     tag: "Home Addition",
                     title: "Family Room Extension",
                 },
                 {
-                    src: "/images/hero/addition.png",
+                    src: "/images/hero/addition.webp",
                     alt: "In-law suite addition with separate living space",
                     tag: "Home Addition",
                     title: "In-Law Suite Addition",
@@ -528,7 +528,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                 "A finished basement should feel like part of your home - not like a basement.",
             image: {
                 /* Placeholder render - swap for a real project photo. */
-                src: "/images/hero/basement.png",
+                src: "/images/hero/basement.webp",
                 alt: "Finished basement living space with modern lighting and flooring by Blue Rock Remodeling",
                 caption: "Layout planning · Structure & moisture assessment",
             },
@@ -554,31 +554,31 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             /* Placeholder slides - swap src/alt per real project photo. */
             slides: [
                 {
-                    src: "/images/hero/basement.png",
+                    src: "/images/hero/basement.webp",
                     alt: "Basement home theater conversion with recessed lighting",
                     tag: "Basement Finishing",
                     title: "Home Theater Conversion",
                 },
                 {
-                    src: "/images/hero/basement.png",
+                    src: "/images/hero/basement.webp",
                     alt: "Basement guest suite build-out with bedroom and full bath",
                     tag: "Basement Finishing",
                     title: "Guest Suite Build-Out",
                 },
                 {
-                    src: "/images/hero/basement.png",
+                    src: "/images/hero/basement.webp",
                     alt: "Basement home office conversion with built-in lighting",
                     tag: "Basement Finishing",
                     title: "Home Office Conversion",
                 },
                 {
-                    src: "/images/hero/basement.png",
+                    src: "/images/hero/basement.webp",
                     alt: "Basement home gym with durable flooring and utility space",
                     tag: "Basement Finishing",
                     title: "Home Gym & Utility Space",
                 },
                 {
-                    src: "/images/hero/basement.png",
+                    src: "/images/hero/basement.webp",
                     alt: "Rental-ready basement in-law suite with separate living area",
                     tag: "Basement Finishing",
                     title: "Rental-Ready In-Law Suite",
@@ -625,7 +625,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                 "The right deck is the one that fits how you'll use it - and stands up to Maryland and DC weather.",
             image: {
                 /* Placeholder render - swap for a real project photo. */
-                src: "/images/hero/deck.png",
+                src: "/images/hero/deck.webp",
                 alt: "Custom outdoor deck with railings and stairs built by Blue Rock Remodeling",
                 caption: "Material selection · Wood & composite",
             },
@@ -671,31 +671,31 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             /* Placeholder slides - swap src/alt per real project photo. */
             slides: [
                 {
-                    src: "/images/hero/deck.png",
+                    src: "/images/hero/deck.webp",
                     alt: "Composite deck with railings and integrated stairs",
                     tag: "Deck Installation",
                     title: "Composite Deck & Railings",
                 },
                 {
-                    src: "/images/hero/deck.png",
+                    src: "/images/hero/deck.webp",
                     alt: "Classic wood platform deck with pressure-treated lumber",
                     tag: "Deck Installation",
                     title: "Wood Platform Deck",
                 },
                 {
-                    src: "/images/hero/deck.png",
+                    src: "/images/hero/deck.webp",
                     alt: "Deck repair with board and fastener replacement",
                     tag: "Deck Repair",
                     title: "Deck Repair & Board Replacement",
                 },
                 {
-                    src: "/images/hero/deck.png",
+                    src: "/images/hero/deck.webp",
                     alt: "Multi-level deck with stairs and code-compliant railings",
                     tag: "Deck Installation",
                     title: "Multi-Level Deck With Stairs",
                 },
                 {
-                    src: "/images/hero/deck.png",
+                    src: "/images/hero/deck.webp",
                     alt: "Deck restoration with cleaning and resealing",
                     tag: "Deck Repair",
                     title: "Deck Restoration & Sealing",

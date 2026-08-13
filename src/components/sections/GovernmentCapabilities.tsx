@@ -24,19 +24,19 @@ import {
    land. Different widths + offsets so the frames overlap like pinned prints. */
 const PP_COLLAGE = [
     {
-        src: "/images/hero/government.png",
+        src: "/images/hero/government.webp",
         alt: "Government facility construction project",
         position: "left-0 top-0 w-[78%]",
         z: "z-10",
     },
     {
-        src: "/images/hero/commercial.png",
+        src: "/images/hero/commercial.webp",
         alt: "Commercial interior build-out project",
         position: "right-0 top-[30%] w-[64%]",
         z: "z-20",
     },
     {
-        src: "/images/hero/exterior.png",
+        src: "/images/hero/exterior.webp",
         alt: "Exterior renovation and site improvement project",
         position: "bottom-0 left-0 w-[56%]",
         z: "z-30",

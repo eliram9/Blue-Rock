@@ -68,7 +68,7 @@ export default function GovernmentServices() {
             <MiniHero
                 title="GOVERNMENT CONTRACTING"
                 subtitle="Renovation, demolition, fencing, site development, and general construction for federal, state, local government, and institutional clients"
-                imageSrc="/images/hero/government.png"
+                imageSrc="/images/hero/government.webp"
                 tint
             />
 

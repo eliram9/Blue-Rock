@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Blueprint from "../../../public/svg/test1";
 import ServiceIcon from "@/components/ui/ServiceIcon";
 import { FLAGSHIP_SERVICES, MORE_SERVICES, SECTOR_SERVICES, type Service } from "@/lib/services";
@@ -24,6 +24,34 @@ const fadeUp: Variants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
+/* ── Hover choreography ────────────────────────────────────────────────────
+   One timing scale for every layer of a card so the states land together.
+   Rules that keep the accordion smooth:
+     · flex-grow is the ONLY layout property allowed in flight, and only for
+       the 420ms expansion window. Everything else is opacity/filter/transform.
+     · The reveal is sequenced, not simultaneous: the card widens first, the
+       blurb arrives as it settles. Exit has no delay so leaving feels prompt.
+     · Card titles reserve two lines at lg so nothing re-wraps mid-animation. */
+const EXPAND = "duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none";
+const TINT = "duration-[420ms] ease-out motion-reduce:transition-none";
+
+/* Hovering the card OR tabbing to it drives the same state. */
+const OPEN = "group-hover:opacity-100 group-focus-visible:opacity-100";
+const FOCUS_RING =
+    "outline-offset-2 focus-visible:outline-2 focus-visible:outline-brand-light";
+
+const CORNERS = [
+    "top-0 left-0 border-t-2 border-l-2",
+    "top-0 right-0 border-t-2 border-r-2",
+    "bottom-0 left-0 border-b-2 border-l-2",
+    "bottom-0 right-0 border-b-2 border-r-2",
+];
+
+/* Shared accordion geometry: equal at rest, hovered/focused card takes 2.4x.
+   transition-property is flex-grow only — not the `flex` shorthand, which
+   would also interpolate basis and shrink for no visual gain. */
+const ACCORDION = `transition-[flex-grow,border-color] ${EXPAND} lg:aspect-auto lg:h-[480px] lg:flex-[1_1_0%] lg:hover:flex-[2.4_1_0%] lg:focus-visible:flex-[2.4_1_0%]`;
+
 function ArrowIcon({ className = "" }: { className?: string }) {
     return (
         <svg
@@ -38,6 +66,21 @@ function ArrowIcon({ className = "" }: { className?: string }) {
         >
             <path d="M4 12h15M14 6.5 19.5 12 14 17.5" />
         </svg>
+    );
+}
+
+/** Corner brackets that fade in once the card has started opening. */
+function CornerBrackets({ tone }: { tone: string }) {
+    return (
+        <>
+            {CORNERS.map((pos) => (
+                <span
+                    key={pos}
+                    aria-hidden="true"
+                    className={`absolute ${pos} ${tone} ${OPEN} z-10 h-4 w-4 opacity-0 transition-opacity duration-200 ease-out delay-0 group-hover:delay-100 group-focus-visible:delay-100 motion-reduce:transition-none`}
+                />
+            ))}
+        </>
     );
 }
 
@@ -59,19 +102,32 @@ function ImageFlagshipCard({
             href={service.href}
             tabIndex={tabIndex}
             whileTap={{ scale: 0.98 }}
-            className="group relative flex aspect-[3/4] min-w-0 flex-col justify-end overflow-hidden border border-border transition-[flex,border-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-main-blue/40 md:aspect-[2/3] lg:aspect-auto lg:h-[480px] lg:flex-[1_1_0%] lg:hover:flex-[2.4_1_0%]"
+            /* `isolate` scopes the multiply wash to the card. Without it the
+               blend reaches the section's blueprint SVG and repaints it. */
+            className={`group relative isolate flex aspect-[3/4] min-w-0 flex-col justify-end overflow-hidden border border-border hover:border-main-blue/40 focus-visible:border-main-blue/40 md:aspect-[2/3] ${FOCUS_RING} ${ACCORDION}`}
         >
             <Image
                 src={service.image!}
                 alt={`${service.title} — 3D blueprint render blending into the finished space`}
                 fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                className="object-cover saturate-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:saturate-100"
+                /* Sized for the EXPANDED card, since that is the state anyone
+                   actually looks at. Above 1152px the row stops growing (the
+                   wrapper is max-w-6xl = 1152px, minus px-6 and gap-5), so the
+                   hovered card is a fixed ~464px on the flagship row and
+                   ~580px on the 3-card drawer row — hence a px value, not vw.
+                   A vw unit here keeps scaling with the viewport long after
+                   the container has capped, which on a 2133px screen made the
+                   browser fetch the 1920w candidate for a 260px card. */
+                sizes="(min-width: 1152px) 560px, (min-width: 1024px) 42vw, (min-width: 640px) 50vw, 100vw"
+                /* filter only. `transition-all` made the img animate its own
+                   box, so it lagged the container it was supposed to fill.
+                   No scale either — the card expanding is already the zoom. */
+                className={`object-cover saturate-[0.45] transition-[filter] ${TINT} group-hover:saturate-100 group-focus-visible:saturate-100`}
             />
             {/* Blueprint-blue wash that lifts on hover — the card "gets built" */}
             <span
                 aria-hidden="true"
-                className="absolute inset-0 bg-brand/30 mix-blend-multiply transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0"
+                className={`absolute inset-0 bg-brand/30 mix-blend-multiply transition-opacity ${TINT} group-hover:opacity-0 group-focus-visible:opacity-0`}
             />
             {/* Fixed-ink scrim so the on-image text reads in both themes */}
             <span
@@ -79,14 +135,7 @@ function ImageFlagshipCard({
                 className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-ink/90 via-ink/45 to-transparent"
             />
 
-            {/* Corner brackets that appear on hover */}
-            {["top-0 left-0 border-t-2 border-l-2", "top-0 right-0 border-t-2 border-r-2", "bottom-0 left-0 border-b-2 border-l-2", "bottom-0 right-0 border-b-2 border-r-2"].map((pos) => (
-                <span
-                    key={pos}
-                    aria-hidden="true"
-                    className={`absolute ${pos} z-10 h-4 w-4 border-brand-light opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
-                />
-            ))}
+            <CornerBrackets tone="border-brand-light" />
 
             {/* Service icon — top-left, echoing the icon cards */}
             <span aria-hidden="true" className="absolute left-4 top-4 z-10">
@@ -106,17 +155,27 @@ function ImageFlagshipCard({
             </span>
 
             <span className="relative z-10 flex flex-col p-6">
-                <h3 className="font-title text-xl font-bold uppercase tracking-tight text-white transition-[font-size] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:group-hover:text-2xl">
+                {/* min-h reserves two lines at lg so a title that un-wraps as
+                    the card widens does not shunt the block mid-animation. */}
+                <h3 className="font-title text-xl font-bold uppercase tracking-tight text-white lg:flex lg:min-h-[3.5rem] lg:items-end">
                     {service.title}
                 </h3>
-                {/* lg: blurb is the expansion's reward — arrives just after the
-                    card starts growing so the motion reads as a sequence */}
-                <span className="mt-2 line-clamp-2 text-xs leading-relaxed text-blue-100/80 md:text-[15px] md:leading-relaxed lg:mt-0 lg:max-h-0 lg:opacity-0 lg:transition-all lg:duration-700 lg:ease-[cubic-bezier(0.22,1,0.36,1)] lg:group-hover:mt-2 lg:group-hover:max-h-24 lg:group-hover:opacity-100 lg:group-hover:delay-150">
-                    {service.blurb}
+                {/* lg: blurb is the expansion's reward. 0fr→1fr eases over the
+                    real content height (max-height eased over a guess and
+                    stopped short), and the delay lets the width settle first
+                    so the two never contend for the same frames. */}
+                <span
+                    className={`grid grid-rows-[1fr] lg:grid-rows-[0fr] lg:opacity-0 lg:transition-[grid-template-rows,opacity] lg:duration-300 lg:ease-out lg:group-hover:grid-rows-[1fr] lg:group-hover:opacity-100 lg:group-hover:delay-[260ms] lg:group-focus-visible:grid-rows-[1fr] lg:group-focus-visible:opacity-100 lg:group-focus-visible:delay-[260ms] motion-reduce:transition-none`}
+                >
+                    <span className="overflow-hidden">
+                        <span className="mt-2 block line-clamp-2 text-xs leading-relaxed text-blue-100/80 md:text-[15px] md:leading-relaxed">
+                            {service.blurb}
+                        </span>
+                    </span>
                 </span>
                 <span className="mt-4 inline-flex items-center gap-2 whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em] text-brand-light md:text-sm">
                     View details
-                    <ArrowIcon className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1.5 md:h-4 md:w-4" />
+                    <ArrowIcon className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1.5 group-focus-visible:translate-x-1.5 motion-reduce:transition-none md:h-4 md:w-4" />
                 </span>
             </span>
         </MotionLink>
@@ -140,17 +199,9 @@ function FlagshipCard({
             href={service.href}
             tabIndex={tabIndex}
             whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="group relative flex aspect-[3/4] min-w-0 flex-col border border-border bg-surface p-6 transition-[flex,border-color] duration-500 ease-out hover:border-main-blue/40 md:aspect-[2/3] lg:aspect-auto lg:h-[480px] lg:flex-[1_1_0%] lg:hover:flex-[2.4_1_0%]"
+            className={`group relative flex aspect-[3/4] min-w-0 flex-col border border-border bg-surface p-6 hover:border-main-blue/40 focus-visible:border-main-blue/40 md:aspect-[2/3] ${FOCUS_RING} ${ACCORDION}`}
         >
-            {/* Corner brackets that appear on hover */}
-            {["top-0 left-0 border-t-2 border-l-2", "top-0 right-0 border-t-2 border-r-2", "bottom-0 left-0 border-b-2 border-l-2", "bottom-0 right-0 border-b-2 border-r-2"].map((pos) => (
-                <span
-                    key={pos}
-                    aria-hidden="true"
-                    className={`absolute ${pos} h-4 w-4 border-main-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
-                />
-            ))}
+            <CornerBrackets tone="border-main-blue" />
 
             {/* Ghost index */}
             <span
@@ -163,18 +214,23 @@ function FlagshipCard({
             <ServiceIcon
                 slug={service.slug}
                 animated
-                className="mb-5 h-11 w-11 text-main-blue transition-transform duration-300 group-hover:scale-110"
+                className="mb-5 h-11 w-11 text-main-blue transition-transform duration-200 ease-out group-hover:scale-110 group-focus-visible:scale-110 motion-reduce:transition-none"
             />
-            <h3 className="font-title text-xl font-bold uppercase tracking-tight text-foreground md:text-2xl">
+            <h3 className="font-title text-xl font-bold uppercase tracking-tight text-foreground md:text-2xl lg:flex lg:min-h-[3.5rem] lg:items-end lg:text-xl">
                 {service.title}
             </h3>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-muted md:text-base">{service.blurb}</p>
             <span className="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-main-blue md:text-sm">
                 View details
-                <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5 md:h-4 md:w-4" />
+                <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover:translate-x-1.5 group-focus-visible:translate-x-1.5 motion-reduce:transition-none md:h-4 md:w-4" />
             </span>
         </MotionLink>
     );
+}
+
+/** Picks the right card treatment for a service; keeps the three rows terse. */
+function ServiceCard(props: { service: Service; index: number; tabIndex?: number }) {
+    return props.service.image ? <ImageFlagshipCard {...props} /> : <FlagshipCard {...props} />;
 }
 
 /**
@@ -185,6 +241,7 @@ function FlagshipCard({
  */
 export default function WhatWeDo() {
     const [expanded, setExpanded] = useState(false);
+    const reduceMotion = useReducedMotion();
 
     return (
         <section className="relative overflow-hidden bg-surface py-20 transition-colors md:py-28">
@@ -202,8 +259,8 @@ export default function WhatWeDo() {
 
             <motion.div
                 variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
+                initial={reduceMotion ? false : "hidden"}
+                whileInView={reduceMotion ? undefined : "visible"}
                 viewport={viewport}
                 className="relative z-10 mx-auto max-w-6xl px-6"
             >
@@ -243,64 +300,42 @@ export default function WhatWeDo() {
                 {/* Flagship four */}
                 {/* lg: flex accordion — the hovered card grows, siblings yield */}
                 <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:flex">
-                    {FLAGSHIP_SERVICES.map((service, i) =>
-                        service.image ? (
-                            <ImageFlagshipCard key={service.slug} service={service} index={i} />
-                        ) : (
-                            <FlagshipCard key={service.slug} service={service} index={i} />
-                        ),
-                    )}
+                    {FLAGSHIP_SERVICES.map((service, i) => (
+                        <ServiceCard key={service.slug} service={service} index={i} />
+                    ))}
                 </div>
 
                 {/* Expandable drawer — always in the DOM, CSS-collapsed */}
                 <div
                     id="more-services"
                     aria-hidden={!expanded}
-                    className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+                    className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out motion-reduce:transition-none ${
                         expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                     }`}
                 >
                     <div className="overflow-hidden">
                         {/* Same card treatment + accordion row as the flagship four */}
                         <div className="grid grid-cols-1 gap-5 pt-5 sm:grid-cols-2 lg:flex">
-                            {MORE_SERVICES.map((service, i) =>
-                                service.image ? (
-                                    <ImageFlagshipCard
-                                        key={service.slug}
-                                        service={service}
-                                        index={i + FLAGSHIP_SERVICES.length}
-                                        tabIndex={expanded ? undefined : -1}
-                                    />
-                                ) : (
-                                    <FlagshipCard
-                                        key={service.slug}
-                                        service={service}
-                                        index={i + FLAGSHIP_SERVICES.length}
-                                        tabIndex={expanded ? undefined : -1}
-                                    />
-                                ),
-                            )}
+                            {MORE_SERVICES.map((service, i) => (
+                                <ServiceCard
+                                    key={service.slug}
+                                    service={service}
+                                    index={i + FLAGSHIP_SERVICES.length}
+                                    tabIndex={expanded ? undefined : -1}
+                                />
+                            ))}
                         </div>
 
                         {/* Third row: the other two sectors we serve */}
                         <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:flex">
-                            {SECTOR_SERVICES.map((service, i) =>
-                                service.image ? (
-                                    <ImageFlagshipCard
-                                        key={service.slug}
-                                        service={service}
-                                        index={i + FLAGSHIP_SERVICES.length + MORE_SERVICES.length}
-                                        tabIndex={expanded ? undefined : -1}
-                                    />
-                                ) : (
-                                    <FlagshipCard
-                                        key={service.slug}
-                                        service={service}
-                                        index={i + FLAGSHIP_SERVICES.length + MORE_SERVICES.length}
-                                        tabIndex={expanded ? undefined : -1}
-                                    />
-                                ),
-                            )}
+                            {SECTOR_SERVICES.map((service, i) => (
+                                <ServiceCard
+                                    key={service.slug}
+                                    service={service}
+                                    index={i + FLAGSHIP_SERVICES.length + MORE_SERVICES.length}
+                                    tabIndex={expanded ? undefined : -1}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -316,7 +351,7 @@ export default function WhatWeDo() {
                     >
                         <span
                             aria-hidden="true"
-                            className={`text-base leading-none text-main-blue transition-transform duration-300 ${
+                            className={`text-base leading-none text-main-blue transition-transform duration-300 motion-reduce:transition-none ${
                                 expanded ? "rotate-45" : ""
                             }`}
                         >

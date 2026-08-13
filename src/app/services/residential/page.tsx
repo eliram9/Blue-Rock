@@ -15,7 +15,7 @@ export const metadata: Metadata = {
         description:
             "Kitchen and bathroom remodeling, home additions, basement finishing, and more across Maryland and Washington, DC.",
         url: `${SITE_URL}/services/residential`,
-        images: [{ url: "/images/hero/residential.png", alt: "Residential remodeling by Blue Rock Remodeling" }],
+        images: [{ url: "/images/hero/residential.webp", alt: "Residential remodeling by Blue Rock Remodeling" }],
     },
 };
 
@@ -35,7 +35,7 @@ export default function ResidentialServices() {
             <MiniHero
                 title="RESIDENTIAL SERVICES"
                 subtitle="Transforming Houses into Dream Homes"
-                imageSrc="/images/hero/residential.png"
+                imageSrc="/images/hero/residential.webp"
                 tint
             />
 

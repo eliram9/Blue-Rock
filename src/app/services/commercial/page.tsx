@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         description:
             "Office build-outs, retail renovations, restaurant interiors, and commercial kitchen upgrades across Maryland and Washington, DC - scheduled around your operating hours.",
         url: PAGE_URL,
-        images: [{ url: "/images/hero/commercial.png", alt: `Commercial construction by ${BUSINESS.name}` }],
+        images: [{ url: "/images/hero/commercial.webp", alt: `Commercial construction by ${BUSINESS.name}` }],
     },
 };
 
@@ -68,7 +68,7 @@ export default function CommercialServices() {
             <MiniHero
                 title="COMMERCIAL SERVICES"
                 subtitle="Spaces That Work as Hard as Your Business"
-                imageSrc="/images/hero/commercial.png"
+                imageSrc="/images/hero/commercial.webp"
                 tint
             />
 
