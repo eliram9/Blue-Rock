@@ -37,7 +37,7 @@ const serviceSchema = {
         name,
     })),
     description:
-        "Full-service construction and facilities contracting for federal, state, local government, and institutional clients — SAM registered with active procurement eligibility.",
+        "Full-service construction and facilities contracting for federal, state, local government, and institutional clients. SAM registered with active procurement eligibility.",
     identifier: [
         { "@type": "PropertyValue", propertyID: "CAGE", value: "9U3H6" },
         { "@type": "PropertyValue", propertyID: "UEI", value: "VSCDRQLFUAW3" },

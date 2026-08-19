@@ -55,7 +55,7 @@ const timeline = [
     {
         year: "Today",
         title: "One contractor, every sector",
-        desc: "Residential, commercial, and government projects — licensed, insured, and handled end to end.",
+        desc: "Residential, commercial, and government projects. Licensed, insured, and handled end to end.",
     },
 ];
 
@@ -129,8 +129,8 @@ export default function OurStory() {
                         className="md:col-span-6 md:pt-2 text-blue-100/65 leading-relaxed text-base md:text-lg md:border-l md:border-dashed md:border-brand-light/30 md:pl-10"
                     >
                         Over 15 years we&apos;ve grown from single-room renovations into additions,
-                        basements, exteriors, and ground-up builds — carrying the same crew, standards,
-                        and accountability into every sector we serve.
+                        basements, exteriors, and ground-up builds. The same crew, standards, and
+                        accountability carry into every sector we serve.
                     </motion.p>
                 </div>
 

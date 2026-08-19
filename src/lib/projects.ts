@@ -144,6 +144,19 @@ export const KITCHEN_8: Project = {
     featured: false,
 };
 
+export const KITCHEN_9: Project = {
+    slug: "kitchen-vaulted-white",
+    title: "Vaulted White Kitchen",
+    summary:
+        "A white kitchen under a vaulted ceiling with a gable window wall - a waterfall quartz island seating four, black lantern pendants, a pot filler over the gas cooktop, and light oak floors.",
+    location: "TBD",
+    completedAt: "TBD",
+    cover: {
+        src: "/images/projects/kitchen/kitchen9.jpg",
+        alt: "White shaker kitchen under a vaulted ceiling with a gable window wall, waterfall quartz island with black bar stools, lantern pendants, and light oak floors",
+    },
+    featured: false,
+};
 
 /* ── Bathrooms ─────────────────────────────────────────────────────────────
    Same TODO as the kitchens above: locations are unconfirmed, so these render
@@ -345,6 +358,7 @@ export const PROJECTS: Project[] = [
     KITCHEN_6,
     KITCHEN_7,
     KITCHEN_8,
+    KITCHEN_9,
     BATH_1,
     BATH_2,
     BATH_3,

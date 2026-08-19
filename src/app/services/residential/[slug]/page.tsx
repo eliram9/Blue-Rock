@@ -22,12 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!service) return {};
 
     return {
-        title: service.title,
-        description: `${service.blurb} Licensed general contractor serving ${BUSINESS.areaServed.join(", ")}.`,
+        title: service.seoTitle ?? service.title,
+        description:
+            service.seoDescription ??
+            `${service.blurb} Licensed general contractor serving ${BUSINESS.areaServed.join(", ")}.`,
         alternates: { canonical: `${SITE_URL}${service.href}` },
         openGraph: {
-            title: service.title,
-            description: service.blurb,
+            title: service.seoTitle ?? service.title,
+            description: service.seoDescription ?? service.blurb,
             url: `${SITE_URL}${service.href}`,
             ...(service.image && {
                 images: [{ url: service.image, alt: `${service.title} by ${BUSINESS.name}` }],

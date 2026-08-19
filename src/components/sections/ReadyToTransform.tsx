@@ -140,13 +140,10 @@ export default function ReadyToTransform() {
                         variants={fadeUp}
                         className="relative mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-blue-100/80 md:text-xl"
                     >
-                        Whether you&apos;re planning a new kitchen, a spa-inspired bathroom, or a full
-                        home makeover, {BUSINESS.name} turns your vision into finished work. As a
-                        licensed general contractor serving{" "}
-                        {BUSINESS.areaServed.join(", ")} since {BUSINESS.foundingYear} — MHIC,
-                        General Contractor, and New Home Builder licensed — we deliver residential,
-                        commercial, and government projects with transparent pricing and one
-                        accountable team from design to final walkthrough.
+                        {BUSINESS.name} is an MHIC-licensed general contractor working across{" "}
+                        {BUSINESS.areaServed.join(" and ")} since {BUSINESS.foundingYear}. We take
+                        on kitchens, bathrooms, basements, additions, and whole-home renovations,
+                        with clear pricing and one crew from first drawing to final walkthrough.
                     </motion.p>
 
                     {/* CTA prompt */}
@@ -154,8 +151,7 @@ export default function ReadyToTransform() {
                         variants={fadeUp}
                         className="relative mx-auto mt-4 max-w-xl text-base text-blue-100/60"
                     >
-                        Contact us today for a free consultation and start building the home
-                        you&apos;ve always wanted.
+                        Book a free consultation and get a written estimate.
                     </motion.p>
 
                     {/* Actions */}

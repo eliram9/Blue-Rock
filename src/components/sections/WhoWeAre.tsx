@@ -192,8 +192,8 @@ export default function WhoWeAre() {
                     >
                         <p className="text-foreground/80 leading-relaxed text-base md:text-lg">
                             Founded in 2010, <span className="font-semibold">Blue Rock Remodeling &amp; Construction</span>{" "}
-                            handles the full scope of work — kitchen and bath remodels, additions, basements,
-                            exteriors, and new-home builds — across Maryland and Washington DC.
+                            handles the full scope of work across Maryland and Washington DC: kitchen and
+                            bath remodels, additions, basements, exteriors, and new-home builds.
                         </p>
                         <p className="text-foreground/80 leading-relaxed text-base md:text-lg">
                             We&apos;re licensed by the Maryland Home Improvement Commission (MHIC) and hold

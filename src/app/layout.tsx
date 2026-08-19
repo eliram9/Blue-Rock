@@ -39,14 +39,14 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: `${BUSINESS.name} | Licensed DMV Contractor`,
     description:
-      "Licensed general contractor serving the DMV — residential, commercial, and government projects since 2010.",
+      "Licensed general contractor serving the DMV since 2010. Residential, commercial, and government projects.",
     images: [{ url: "/kitchen.jpg", width: 1200, height: 630, alt: BUSINESS.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: BUSINESS.name,
     description:
-      "Licensed general contractor serving the DMV since 2010 — residential, commercial, and government.",
+      "Licensed general contractor serving the DMV since 2010. Residential, commercial, and government.",
     images: ["/kitchen.jpg"],
   },
 };

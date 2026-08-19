@@ -27,6 +27,7 @@ import {
     KITCHEN_6,
     KITCHEN_7,
     KITCHEN_8,
+    KITCHEN_9,
     POTOMAC_KITCHEN,
 } from "@/lib/projects";
 
@@ -41,6 +42,11 @@ export interface Service {
     image?: string;
     /** Two answer-first paragraphs for the service's subcategory page. */
     intro: [string, string];
+    /** Optional overrides for the subcategory page's <title> and meta
+        description, for services whose search demand is phrased differently
+        from the nav label. Falls back to `title` and `blurb` when absent. */
+    seoTitle?: string;
+    seoDescription?: string;
 }
 
 export const SERVICES: Service[] = [
@@ -75,10 +81,13 @@ export const SERVICES: Service[] = [
         flagship: true,
         href: "/services/residential/home-additions",
         intro: [
-            "Blue Rock designs and builds home additions across the DMV - extra bedrooms, expanded kitchens, second stories, and in-law suites that blend seamlessly with your home's existing structure and style.",
-            "From permits and foundation to framing, roofing, and finish work, one accountable team carries the project from drawings to a finished space that feels like it was always there.",
+            "Blue Rock Remodeling & Construction designs and builds home additions in Rockville and across the DMV, including extra bedrooms, expanded kitchens, sunrooms, in-law suites, and full second stories built over an existing garage. Every addition is matched to the home's roofline, siding, and trim so it reads as original construction.",
+            "One licensed team carries the project from permit drawings through foundation or structural tie-in, framing, roofing, mechanical rough-in, and finish work, ending at a final walkthrough and closed-out permits.",
         ],
         image: "/images/hero/addition.webp",
+        seoTitle: "Home Addition Services in Rockville, MD",
+        seoDescription:
+            "Licensed home addition contractor in Rockville, MD. Blue Rock builds second stories, in-law suites, sunrooms, and room additions across Montgomery County and the DMV, matched to your home's existing structure.",
     },
     {
         slug: "basement-finishing",
@@ -188,6 +197,29 @@ export const SECTOR_SERVICES: Service[] = [
    also emitted as FAQPage JSON-LD, so answers must stay self-contained and
    match the visible text. */
 
+/**
+ * One documented before/after project inside the `beforeAfter` band.
+ *
+ * `mode` is the important field. Pick it from the photographs, not from
+ * preference: "wipe" needs a registered pair (same camera position, same
+ * framing, ideally the same season) or the divider seam reads as two
+ * unrelated photographs. Anything else is "pair", which shows both frames
+ * side by side and compares cleanly regardless of how the shots were taken.
+ */
+export interface BeforeAfterProject {
+    /** Project name, rendered as the sheet title above the frames. */
+    title: string;
+    /** City + state. Omit when the city is still unconfirmed. */
+    location?: string;
+    mode: "wipe" | "pair";
+    lead: string;
+    before: { src: string; alt: string; label: string; note: string };
+    after: { src: string; alt: string; label: string; note: string };
+    caption: string;
+    /** Drafting readouts describing the scope, shown under the frames. */
+    specs: { label: string; value: string }[];
+}
+
 export interface ServiceDetail {
     /** Word before the sheet number in section labels, e.g. "Kitchen" →
         "Kitchen 01.01 · Design & Materials". */
@@ -230,11 +262,24 @@ export interface ServiceDetail {
         paragraphs: string[];
         stats: { value: string; label: string; note: string }[];
     };
-    /** 04 - project carousel. */
-    gallery: {
+    /** 04 - project carousel. Optional: a service with a single documented
+        project uses `beforeAfter` instead of a thin carousel. */
+    gallery?: {
         kicker: string;
         heading: string;
         slides: { src: string; alt: string; tag?: string; title?: string }[];
+    };
+    /** Ink band of documented projects, each compared before and after.
+        Optional, and mutually exclusive with `gallery` in practice: use it
+        when there are individually documented projects rather than a
+        gallery's worth of finished shots. */
+    beforeAfter?: {
+        kicker: string;
+        heading: string;
+        /** Intro for the band as a whole. Per-project detail goes on the
+            project's own `lead`. */
+        lead: string;
+        projects: BeforeAfterProject[];
     };
     /** 05 - visible Q&A, mirrored as FAQPage schema. */
     faq: { question: string; answer: string }[];
@@ -305,7 +350,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                     tag: DC_KITCHEN.location,
                     title: "Two-Tone Cabinetry & Quartz",
                 },
-                /* No `tag` on these four yet - the chip renders a project's
+                /* No `tag` on the rest yet - the chip renders a project's
                    location, and theirs are still TBD in projects.ts. */
                 {
                     src: KITCHEN_3.cover.src,
@@ -336,6 +381,11 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                     src: KITCHEN_8.cover.src,
                     alt: KITCHEN_8.cover.alt,
                     title: KITCHEN_8.title,
+                },
+                {
+                    src: KITCHEN_9.cover.src,
+                    alt: KITCHEN_9.cover.alt,
+                    title: KITCHEN_9.title,
                 },
             ],
         },
@@ -478,13 +528,13 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             kicker: "Design & Materials",
             heading: "Design & Materials",
             paragraphs: [
-                "Every home addition we build is designed to integrate seamlessly with your existing home - matching rooflines, siding, and finishes so it feels original, not tacked on.",
-                "Whether it's a sunroom, an extra bedroom, a home office, or a family room, Blue Rock Remodeling sources materials across Maryland and DC to match your home's structure and style.",
+                "A home addition adds finished square footage to a house you already like, in a neighborhood you already chose. For most families in Rockville and the surrounding Montgomery County suburbs, building up or out costs less disruption than moving, and it keeps the schools, the commute, and the neighbors exactly where they are.",
+                "Blue Rock designs every addition to read as original construction. We match the existing roofline, siding profile, trim, and shutters, then source materials across Maryland and DC to match what is already on the house. Sunrooms, extra bedrooms, home offices, family rooms, primary suites, in-law suites, and full second stories all follow the same rule: the finished elevation should look like the house was drawn that way.",
             ],
             pullQuote:
-                "A great addition doesn't look like an addition - it looks like your home was always meant to have it.",
+                "A great addition does not look like an addition. It looks like your home was always meant to have it.",
             image: {
-                /* Placeholder render - swap for a real project photo. */
+                /* Placeholder render. Swap for a real project photo. */
                 src: "/images/hero/addition.webp",
                 alt: "Seamless home addition matching existing rooflines and siding by Blue Rock Remodeling",
                 caption: "Structural integration · Rooflines & siding",
@@ -493,7 +543,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         process: {
             kicker: "The Process",
             heading: "The Remodeling Process",
-            lead: "An addition starts with foundation and framing, then moves through electrical, plumbing, insulation, and finishes - all tied into your home's existing systems. Home additions take longer than interior remodels since they involve new structure, permitting, and inspections. We keep homeowners across Maryland and DC informed at every stage, from permits to final walkthrough, so there are no surprises - just a new space that adds real living area and real value to your home.",
+            lead: "An addition starts with drawings and permits, then moves through structure, roofing, mechanical rough-in, and finishes, all tied into the systems your home already runs on. Additions take longer than interior remodels because they involve new structure, permit review, and inspections at fixed checkpoints. Blue Rock keeps homeowners across Maryland and DC informed at every stage, from approved drawings to the final walkthrough, so the schedule holds no surprises.",
             phases: [
                 { title: "Permits & Site Prep", note: "Drawings approved, utilities marked, site protected" },
                 { title: "Foundation", note: "Footings and foundation poured and inspected" },
@@ -506,67 +556,102 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             ],
             close: "We coordinate every phase across Maryland and DC so the new space functions as one with the rest of your home, not as a separate structure.",
         },
-        gallery: {
-            kicker: "Recent Work",
-            heading: "Recent Addition Projects",
-            /* Placeholder slides - swap src/alt per real project photo. */
-            slides: [
+        beforeAfter: {
+            kicker: "Before & After",
+            heading: "Additions, Before & After",
+            lead: "Two Montgomery County additions, each documented before construction and again after the final walkthrough. Both added a full upper level over an existing garage without extending the foundation or taking a foot of yard or driveway.",
+            projects: [
                 {
-                    src: "/images/hero/addition.webp",
-                    alt: "Two-story rear home addition with matched roofline and siding",
-                    tag: "Home Addition",
-                    title: "Two-Story Rear Addition",
+                    title: "Second Story Over The Garage",
+                    /* Registered pair: same vantage point, same season, so the
+                       divider seam holds together across the elevation. */
+                    mode: "wipe",
+                    lead: "This colonial had a single-story two-car garage wing and a half-width second floor. Blue Rock built a full second story over the existing garage, which added an upper level of finished living space without extending the foundation or giving up a foot of yard or driveway. Drag the revision line to compare the original elevation with the finished one.",
+                    before: {
+                        src: "/images/projects/addition/pro1-before.webp",
+                        alt: "Two-story colonial home before construction, with a single-story attached two-car garage and a lower roofline over the garage wing",
+                        label: "Rev. A",
+                        note: "Existing elevation",
+                    },
+                    after: {
+                        src: "/images/projects/addition/pro1-after.webp",
+                        alt: "The same colonial home after Blue Rock built a second story over the attached garage, with the roofline carried across the full width and siding, trim, and shutters matched to the original house",
+                        label: "Rev. B",
+                        note: "As built",
+                    },
+                    caption:
+                        "Second story framed over the existing attached garage, with the main roofline extended across the full elevation and a rebuilt entry porch roof.",
+                    specs: [
+                        { label: "Scope", value: "Full second story over an attached two-car garage" },
+                        { label: "Added", value: "Upper level living space with two new front windows" },
+                        { label: "Matched", value: "Roofline, siding profile, trim, and shutters" },
+                        { label: "Footprint", value: "Unchanged, built over the existing garage" },
+                    ],
                 },
                 {
-                    src: "/images/hero/addition.webp",
-                    alt: "Sunroom addition with full-height windows and matched exterior finishes",
-                    tag: "Home Addition",
-                    title: "Sunroom Addition",
-                },
-                {
-                    src: "/images/hero/addition.webp",
-                    alt: "Primary suite addition with bedroom and en-suite bathroom",
-                    tag: "Home Addition",
-                    title: "Primary Suite Addition",
-                },
-                {
-                    src: "/images/hero/addition.webp",
-                    alt: "Family room extension tied into the home's existing structure",
-                    tag: "Home Addition",
-                    title: "Family Room Extension",
-                },
-                {
-                    src: "/images/hero/addition.webp",
-                    alt: "In-law suite addition with separate living space",
-                    tag: "Home Addition",
-                    title: "In-Law Suite Addition",
+                    title: "Mid-Century Second Story",
+                    location: "Rockville, MD",
+                    /* Unregistered pair: the record shot and the finished shot
+                       were taken from different positions and in different
+                       seasons, so these run side by side instead of behind a
+                       wipe divider. See SheetPair for why. */
+                    mode: "pair",
+                    lead: "This split-level had a low single-story garage wing that stopped well short of the two-story brick section. Rather than sit an addition on top of the house, Blue Rock drew the new upper level in the home's own mid-century vocabulary, so the finished elevation reads as one design instead of two eras.",
+                    before: {
+                        src: "/images/projects/addition/pro2-before.webp",
+                        alt: "Mid-century split-level brick home before construction, with a low single-story attached garage wing under a shingled roof and a bare autumn treeline behind it",
+                        label: "Rev. A",
+                        note: "Existing elevation",
+                    },
+                    after: {
+                        src: "/images/projects/addition/pro2-after.webp",
+                        alt: "The same split-level home after Blue Rock built a second story over the garage wing, with an angled mid-century roofline, full-height glazing, tan panel cladding, and teal accent panels matching the original entry band",
+                        label: "Rev. B",
+                        note: "As built",
+                    },
+                    caption:
+                        "Second story framed over the existing garage wing and drawn in the home's own mid-century vocabulary: an angled roofline, full-height glazing, and teal accent panels picked up from the original entry band.",
+                    specs: [
+                        { label: "Scope", value: "Full second story over an attached garage wing" },
+                        { label: "Added", value: "Upper level living space behind full-height glazing" },
+                        { label: "Matched", value: "Mid-century roof pitch, brickwork, and teal accent panels" },
+                        { label: "Site", value: "New planting beds and a resurfaced driveway" },
+                    ],
                 },
             ],
         },
         faq: [
             {
                 question: "How long does a home addition take in Maryland or DC?",
-                answer: "Home additions take longer than interior remodels because they involve new structure, permitting, and inspections. The exact timeline depends on the size and scope of the addition. Blue Rock keeps homeowners informed at every stage, from permits to final walkthrough, so there are no surprises.",
+                answer: "Home additions take longer than interior remodels because they involve new structure, permit review, and inspections that happen on the county's schedule rather than ours. The exact timeline depends on the size and scope of the addition. Blue Rock keeps homeowners informed at every stage, from approved drawings to the final walkthrough, so you always know which phase is running and what comes next.",
+            },
+            {
+                question: "Can you build a second story over an existing garage?",
+                answer: "Yes. Building over an attached garage is one of the most efficient ways to add finished square footage, because the addition uses the garage's existing footprint instead of extending the foundation into the yard. Blue Rock recently framed a full second story over a two-car garage, carried the main roofline across the whole elevation, and matched the siding, trim, and shutters to the original house.",
             },
             {
                 question: "Will my addition match the rest of my house?",
-                answer: "Yes. Every addition Blue Rock builds is designed to integrate seamlessly with the existing home - matching rooflines, siding, and finishes so it feels original, not tacked on. Materials are sourced from suppliers across Maryland and DC to match your home's structure and style.",
+                answer: "Yes. Every addition Blue Rock builds is designed to integrate with the existing home, matching rooflines, siding profiles, trim, and shutters so the finished elevation reads as original construction. Materials are sourced from suppliers across Maryland and DC to match your home's structure and style.",
             },
             {
-                question: "Do I need a permit for a home addition?",
-                answer: "Yes. Home additions add new structure, so they require building permits and inspections. Blue Rock handles the permitting process from approved drawings through final inspection for homes across Maryland and Washington, DC.",
+                question: "Do I need a permit for a home addition in Montgomery County?",
+                answer: "Yes. A home addition creates new structure, so it requires building permits and inspections, and Rockville sits within Montgomery County's permitting jurisdiction. Blue Rock handles the process from approved drawings through final inspection for homes across Maryland and Washington, DC.",
+            },
+            {
+                question: "Is a home addition cheaper than moving?",
+                answer: "For many homeowners it is. An addition avoids agent commissions, closing costs, moving expenses, and the price difference on a larger house in the same area. It also lets you keep the location, the schools, and the community you already chose, which is the part a bigger house somewhere else cannot replace.",
             },
             {
                 question: "What types of home additions does Blue Rock build?",
-                answer: "Sunrooms, extra bedrooms, home offices, family rooms, expanded kitchens, second stories, primary suites, and in-law suites - from single-room additions to full second-story projects across Maryland and Washington, DC.",
+                answer: "Sunrooms, extra bedrooms, home offices, family rooms, expanded kitchens, second stories, primary suites, and in-law suites. Projects range from a single new room to a full second story across Maryland and Washington, DC.",
             },
             {
                 question: "Does a home addition add value to my home?",
-                answer: "A well-built addition adds real living area and real value. Because the new space is tied into the home's existing systems and matched to its structure and style, it functions as one with the rest of your home - not as a separate structure.",
+                answer: "A well-built addition adds both finished living area and resale value. Because the new space is tied into the home's existing systems and matched to its structure and style, it functions as one with the rest of the house rather than as a separate structure a future buyer has to explain.",
             },
             {
                 question: "Which areas does Blue Rock serve for home additions?",
-                answer: "Blue Rock Remodeling & Construction builds home additions in Rockville, Silver Spring, Chevy Chase, and homes throughout Maryland and Washington, DC.",
+                answer: "Blue Rock Remodeling & Construction builds home additions in Rockville, Potomac, Bethesda, Silver Spring, Gaithersburg, Chevy Chase, and homes throughout Maryland and Washington, DC.",
             },
         ],
     },

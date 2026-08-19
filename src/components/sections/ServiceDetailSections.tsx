@@ -4,10 +4,12 @@ import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import Blueprint from "../../../public/svg/test3";
 import BlueprintGrid from "../../../public/svg/test1";
+import BeforeAfter from "@/components/ui/BeforeAfter";
 import Carousel from "@/components/ui/Carousel";
 import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";
 import SectionHeader from "@/components/ui/SectionHeader";
+import SheetPair from "@/components/ui/SheetPair";
 import { EASE, fadeUp, stagger, viewport } from "@/lib/motion";
 import type { ServiceDetail } from "@/lib/services";
 
@@ -18,7 +20,7 @@ const lineDraw: Variants = {
 };
 
 export default function ServiceDetailSections({ detail }: { detail: ServiceDetail }) {
-    const { materials, process, care, timeline, gallery, faq } = detail;
+    const { materials, process, care, timeline, gallery, beforeAfter, faq } = detail;
     /* Single-open FAQ accordion; answers stay in the DOM (CSS-collapsed, same
        as the home-page services drawer) so they keep matching the FAQPage
        JSON-LD for search and AI crawlers. */
@@ -27,6 +29,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
        sequential across whichever sections a service actually has. */
     let sheet = 1; // materials is always 01
     const pad = (n: number) => String(n).padStart(2, "0");
+    const beforeAfterIndex = beforeAfter ? pad(++sheet) : "";
     const processIndex = process ? pad(++sheet) : "";
     const careIndex = care ? pad(++sheet) : "";
     const timelineIndex = timeline ? pad(++sheet) : "";
@@ -67,13 +70,17 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
 
                             {/* Project carousel — same component and sizing that
                                 used to render as its own section further down the
-                                page; it now closes out 01 under the narrative. */}
-                            <motion.div variants={fadeUp} className="mt-12">
-                                <Carousel
-                                    images={gallery.slides}
-                                    autoplayInterval={6000}
-                                />
-                            </motion.div>
+                                page; it now closes out 01 under the narrative.
+                                Services documenting a single project ship a
+                                `beforeAfter` band instead and skip this. */}
+                            {gallery && (
+                                <motion.div variants={fadeUp} className="mt-12">
+                                    <Carousel
+                                        images={gallery.slides}
+                                        autoplayInterval={6000}
+                                    />
+                                </motion.div>
+                            )}
                         </div>
 
                         {/* Optional choice cards — e.g. wood vs. composite */}
@@ -112,6 +119,90 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                     </motion.div>
                 </Container>
             </section>
+
+            {/* ── Before & after — ink band of documented projects. Each one
+                 picks its own frame treatment from `mode`: a registered pair
+                 gets the draggable revision line, everything else runs as two
+                 sheets side by side. ── */}
+            {beforeAfter && (
+            <section className="relative overflow-hidden bg-ink py-16 md:py-24">
+                <Blueprint
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-[0.30]"
+                />
+                {/* Vignette keeps the eye on the frame without hiding the grid */}
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,var(--color-ink)_100%)]" />
+
+                <Container className="relative z-10">
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={viewport}
+                        className="mx-auto max-w-6xl"
+                    >
+                        <SectionHeader
+                            prefix={detail.sheetName}
+                            index={beforeAfterIndex}
+                            kicker={beforeAfter.kicker}
+                            title={beforeAfter.heading}
+                            tone="ink"
+                        />
+
+                        <motion.p
+                            variants={fadeUp}
+                            className="mt-8 max-w-3xl pt-6 text-base leading-relaxed text-blue-100/80 md:text-lg"
+                        >
+                            {beforeAfter.lead}
+                        </motion.p>
+
+                        {/* Scope readouts ride inside each frame's title
+                            block: short factual pairs in a <dl> are the
+                            cleanest thing for search and AI engines to lift,
+                            so the content stays and only the visual weight
+                            comes off. */}
+                        <div className="mt-14 space-y-20 md:space-y-24">
+                            {beforeAfter.projects.map((project) => (
+                                <motion.div variants={fadeUp} key={project.title}>
+                                    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-dashed border-brand-light/20 pb-4">
+                                        <h3 className="font-title text-xl font-bold uppercase tracking-tight text-white md:text-2xl">
+                                            {project.title}
+                                        </h3>
+                                        {project.location && (
+                                            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-brand-light">
+                                                {project.location}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <p className="mt-6 max-w-3xl text-base leading-relaxed text-blue-100/80">
+                                        {project.lead}
+                                    </p>
+
+                                    <div className="mt-10">
+                                        {project.mode === "wipe" ? (
+                                            <BeforeAfter
+                                                before={project.before}
+                                                after={project.after}
+                                                caption={project.caption}
+                                                specs={project.specs}
+                                            />
+                                        ) : (
+                                            <SheetPair
+                                                before={project.before}
+                                                after={project.after}
+                                                caption={project.caption}
+                                                specs={project.specs}
+                                            />
+                                        )}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </motion.div>
+                </Container>
+            </section>
+            )}
 
             {/* ── The process — ordered phase log ── */}
             {process && (

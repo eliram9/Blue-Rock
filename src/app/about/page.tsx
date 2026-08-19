@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: `About ${BUSINESS.name}`,
         description:
-            "Licensed DMV general contractor since 2010 — residential, commercial, and government projects. MHIC, GC, and New Home Builder licensed.",
+            "Licensed DMV general contractor since 2010, handling residential, commercial, and government projects. MHIC, GC, and New Home Builder licensed.",
         url: `${SITE_URL}/about`,
         type: "website",
         images: [{ url: "/kitchen.jpg", width: 1200, height: 630, alt: BUSINESS.name }],

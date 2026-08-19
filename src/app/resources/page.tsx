@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
     title: "Resources",
     description:
-        "Guides and helpful information on remodeling, permits, and planning from Blue Rock Remodeling — licensed general contractor in Rockville, MD.",
+        "Guides and helpful information on remodeling, permits, and planning from Blue Rock Remodeling, a licensed general contractor in Rockville, MD.",
     alternates: { canonical: `${SITE_URL}/resources` },
 };
 

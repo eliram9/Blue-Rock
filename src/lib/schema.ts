@@ -50,7 +50,7 @@ export const organizationSchema: Record<string, unknown> = {
 export const servicesCatalogSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
-    name: `${BUSINESS.name} — Construction & Remodeling Services`,
+    name: `${BUSINESS.name}: Construction & Remodeling Services`,
     itemListElement: SERVICES.map((service) => ({
         "@type": "Offer",
         itemOffered: {
@@ -92,7 +92,7 @@ export const aboutFaqSchema: Record<string, unknown> = {
             name: "Where does Blue Rock Remodeling & Construction work?",
             acceptedAnswer: {
                 "@type": "Answer",
-                text: "Blue Rock serves the DMV area — Maryland and Washington DC — including Rockville, Potomac, Bethesda, Silver Spring, and Gaithersburg.",
+                text: "Blue Rock serves the DMV area, covering Maryland and Washington DC, including Rockville, Potomac, Bethesda, Silver Spring, and Gaithersburg.",
             },
         },
         {
@@ -108,7 +108,7 @@ export const aboutFaqSchema: Record<string, unknown> = {
             name: "What types of clients does Blue Rock work with?",
             acceptedAnswer: {
                 "@type": "Answer",
-                text: "Blue Rock takes on residential, commercial, and government projects — one contractor covering all three sectors across the DMV.",
+                text: "Blue Rock takes on residential, commercial, and government projects, so one contractor covers all three sectors across the DMV.",
             },
         },
         {
