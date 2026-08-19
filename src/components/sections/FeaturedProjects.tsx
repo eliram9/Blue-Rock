@@ -130,7 +130,6 @@ export default function FeaturedProjects() {
                         autoplay={true}
                         autoplayInterval={5000}
                         showArrows={true}
-                        height="h-[440px] md:h-[560px]"
                     />
                 </motion.div>
             </motion.div>

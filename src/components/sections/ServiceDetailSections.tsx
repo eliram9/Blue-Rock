@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import Blueprint from "../../../public/svg/test3";
 import BlueprintGrid from "../../../public/svg/test1";
@@ -31,7 +30,8 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
     const processIndex = process ? pad(++sheet) : "";
     const careIndex = care ? pad(++sheet) : "";
     const timelineIndex = timeline ? pad(++sheet) : "";
-    const galleryIndex = pad(++sheet);
+    /* The carousel now lives inside 01, so it no longer takes a sheet number
+       of its own — FAQ closes the sequence. */
     const faqIndex = pad(++sheet);
 
     return (
@@ -48,43 +48,32 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                     >
                         <SectionHeader prefix={detail.sheetName} index="01" kicker={materials.kicker} title={materials.heading} />
 
-                        <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-12 py-10">
-                            <div className="lg:col-span-6">
-                                {materials.paragraphs.map((paragraph) => (
-                                    <motion.p
-                                        key={paragraph.slice(0, 32)}
-                                        variants={fadeUp}
-                                        className="mt-6 text-base leading-relaxed text-muted first:mt-0 md:text-lg"
-                                    >
-                                        {paragraph}
-                                    </motion.p>
-                                ))}
+                        <div className="mt-12 py-10">
+                            {materials.paragraphs.map((paragraph) => (
                                 <motion.p
+                                    key={paragraph.slice(0, 32)}
                                     variants={fadeUp}
-                                    className="mt-8 border-l-2 border-main-blue pl-5 text-lg font-medium leading-relaxed text-foreground md:text-xl"
+                                    className="mt-6 text-base leading-relaxed text-muted first:mt-0 md:text-lg"
                                 >
-                                    {materials.pullQuote}
+                                    {paragraph}
                                 </motion.p>
-                            </div>
+                            ))}
+                            <motion.p
+                                variants={fadeUp}
+                                className="mt-8 border-l-2 border-main-blue pl-5 text-lg font-medium leading-relaxed text-foreground md:text-xl"
+                            >
+                                {materials.pullQuote}
+                            </motion.p>
 
-                            {/* Framed photo — drafting-sheet corners + caption strip */}
-                            <motion.figure variants={fadeUp} className="lg:col-span-6">
-                                <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-border">
-                                    <Corners />
-                                    <Image
-                                        src={materials.image.src}
-                                        alt={materials.image.alt}
-                                        fill
-                                        sizes="(max-width: 1024px) 100vw, 50vw"
-                                        className="object-cover"
-                                        quality={85}
-                                    />
-                                </div>
-                                <figcaption className="mt-3 flex items-center justify-between gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                                    <span>{materials.image.caption}</span>
-                                    <span>Fig. 01</span>
-                                </figcaption>
-                            </motion.figure>
+                            {/* Project carousel — same component and sizing that
+                                used to render as its own section further down the
+                                page; it now closes out 01 under the narrative. */}
+                            <motion.div variants={fadeUp} className="mt-12">
+                                <Carousel
+                                    images={gallery.slides}
+                                    autoplayInterval={6000}
+                                />
+                            </motion.div>
                         </div>
 
                         {/* Optional choice cards — e.g. wood vs. composite */}
@@ -355,29 +344,6 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                 </Container>
             </section>
             )}
-
-            {/* ── Recent work — project carousel ── */}
-            <section className="bg-surface py-16 transition-colors md:py-24">
-                <Container>
-                    <motion.div
-                        variants={stagger}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={viewport}
-                        className="mx-auto max-w-5xl"
-                    >
-                        <SectionHeader prefix={detail.sheetName} index={galleryIndex} kicker={gallery.kicker} title={gallery.heading} />
-
-                        <motion.div variants={fadeUp} className="mt-12 py-10">
-                            <Carousel
-                                images={gallery.slides}
-                                height="h-[380px] md:h-[520px]"
-                                autoplayInterval={6000}
-                            />
-                        </motion.div>
-                    </motion.div>
-                </Container>
-            </section>
 
             {/* ── FAQ — visible Q&A, mirrored as FAQPage JSON-LD ── */}
             <section className="bg-surface-muted py-16 transition-colors md:py-24">

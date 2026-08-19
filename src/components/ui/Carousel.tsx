@@ -18,6 +18,8 @@ interface CarouselProps {
     autoplayInterval?: number;
     showDots?: boolean;
     showArrows?: boolean;
+    /** Frame height. Leave unset — every carousel on the site shares one
+        height so slides read as the same size from section to section. */
     height?: string;
 }
 
@@ -27,7 +29,7 @@ export default function Carousel({
     autoplayInterval = 5000,
     showDots = true,
     showArrows = true,
-    height = "h-[500px]",
+    height = "h-[460px] md:h-[580px]",
 }: CarouselProps): React.ReactElement {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
@@ -106,6 +108,19 @@ export default function Carousel({
         return <div className="text-gray-500">No images available</div>;
     }
 
+    /* Every image stays reachable in the main frame (arrows, swipe, autoplay,
+       counter), but the strip below it never grows past MAX_THUMBS — past that
+       it becomes a window that slides to keep the active slide in view. */
+    const MAX_THUMBS = 8;
+    const thumbStart =
+        images.length <= MAX_THUMBS
+            ? 0
+            : Math.min(
+                  Math.max(0, currentIndex - Math.floor(MAX_THUMBS / 2)),
+                  images.length - MAX_THUMBS,
+              );
+    const visibleThumbs = images.slice(thumbStart, thumbStart + MAX_THUMBS);
+
     return (
         <div
             className="relative w-full group"
@@ -139,6 +154,10 @@ export default function Carousel({
                             src={images[currentIndex].src}
                             alt={images[currentIndex].alt}
                             fill
+                            /* Carousel frames sit in max-w-6xl containers, so the
+                               slide never renders wider than ~1150px. Without this
+                               Next assumes 100vw and ships a full-viewport file. */
+                            sizes="(max-width: 1200px) 100vw, 1150px"
                             className="object-cover"
                             priority={currentIndex === 0}
                             quality={90}
@@ -177,16 +196,25 @@ export default function Carousel({
                     </motion.div>
                 </AnimatePresence>
 
-                {/* Autoplay progress hairline — restarts each slide */}
-                {autoplay && !isAutoplayPaused && (
-                    <motion.span
-                        key={currentIndex}
+                {/* Autoplay progress hairline — restarts each slide. The track
+                    stays painted at all times so there is always a bar on the
+                    image; only the fill moves. Hover-pause freezes the fill via
+                    animation-play-state rather than unmounting it, which is what
+                    used to make the bar disappear under the cursor. */}
+                {autoplay && (
+                    <span
                         aria-hidden="true"
-                        className="absolute bottom-0 left-0 z-20 h-0.5 bg-brand-light"
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: autoplayInterval / 1000, ease: "linear" }}
-                    />
+                        className="absolute bottom-0 left-0 z-20 h-1 w-full bg-ink/45"
+                    >
+                        <span
+                            key={currentIndex}
+                            className="block h-full bg-brand-light shadow-[0_0_8px_rgba(90,135,221,0.9)]"
+                            style={{
+                                animation: `carousel-progress ${autoplayInterval}ms linear forwards`,
+                                animationPlayState: isAutoplayPaused ? "paused" : "running",
+                            }}
+                        />
+                    </span>
                 )}
 
                 {/* Navigation Arrows — inside the frame so top-1/2 centers on
@@ -222,15 +250,18 @@ export default function Carousel({
                 {String(currentIndex + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
             </div>
 
-            {/* Thumbnail Row — fills the full frame width: 5-per-row grid on
-                phones (tappable), equal flex-1 strip from sm up */}
+            {/* Thumbnail Row — fills the full frame width: 4-per-row grid on
+                phones (tappable), equal flex-1 strip from sm up. Capped at
+                MAX_THUMBS so a long gallery does not shrink these to slivers. */}
             {images.length > 1 && (
-                <div className="mt-4 grid grid-cols-5 gap-2 sm:flex md:gap-3 [&>*]:min-w-0 sm:[&>*]:flex-1">
-                    {images.map((image, index) => (
+                <div className="mt-4 grid grid-cols-4 gap-2 sm:flex md:gap-3 [&>*]:min-w-0 sm:[&>*]:flex-1">
+                    {visibleThumbs.map((image, i) => {
+                        const index = thumbStart + i;
+                        return (
                         <button
                             key={index}
                             onClick={() => goToSlide(index)}
-                            aria-label={`Go to slide ${index + 1}`}
+                            aria-label={`Go to slide ${index + 1} of ${images.length}`}
                             className={`relative aspect-[16/10] overflow-hidden rounded-sm border transition-all duration-300 ${
                                 index === currentIndex
                                     ? "border-main-blue opacity-100 ring-1 ring-main-blue"
@@ -241,11 +272,15 @@ export default function Carousel({
                                 src={image.src}
                                 alt={image.alt}
                                 fill
+                                /* Four across on mobile, up to eight in an even
+                                   flex row above that - never wider than ~150px. */
+                                sizes="(max-width: 640px) 25vw, 150px"
                                 className="object-cover"
                                 quality={60}
                             />
                         </button>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
         </div>

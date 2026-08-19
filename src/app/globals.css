@@ -128,6 +128,40 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ── Theme wipe ───────────────────────────────────────────────────────────
+   ThemeToggle swaps the theme inside a View Transition and reveals the
+   incoming theme as a circle growing out of the switch (the clip-path
+   animation itself lives in `useThemeToggle`). Here we only kill the default
+   cross-fade and stack the new snapshot on top, so the circle is the only
+   thing the eye sees. Unsupported browsers never enter this state. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+    z-index: 0;
+}
+
+::view-transition-new(root) {
+    z-index: 1;
+}
+
+/* The root snapshot renders live content, so body's own colour transition
+   would run underneath the wipe and muddy it. Parked while the wipe plays. */
+[data-theme-wipe] body {
+    transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
+    }
+}
+
 /* Running-border hover effect: a conic-gradient ring whose bright segments
    chase around the element's edge. Registered so the angle interpolates. */
 @property --border-angle {
@@ -147,6 +181,19 @@ body {
 @keyframes marquee-scroll {
     to {
         transform: translateX(-50%);
+    }
+}
+
+/* Carousel autoplay readout: the hairline fills across one slide interval.
+   Driven by CSS rather than Framer so hover-pause can freeze it in place with
+   animation-play-state instead of unmounting it — the bar used to blink out
+   entirely whenever the cursor entered the carousel. */
+@keyframes carousel-progress {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
     }
 }
 

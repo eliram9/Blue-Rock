@@ -6,6 +6,30 @@
  * pages here when those routes exist.
  */
 
+import {
+    BASEMENT_1,
+    BASEMENT_2,
+    BASEMENT_3,
+    BASEMENT_4,
+    BATH_1,
+    BATH_2,
+    BATH_3,
+    BATH_4,
+    BATH_5,
+    BATH_6,
+    BATH_7,
+    BATH_8,
+    BATH_9,
+    DC_KITCHEN,
+    KITCHEN_3,
+    KITCHEN_4,
+    KITCHEN_5,
+    KITCHEN_6,
+    KITCHEN_7,
+    KITCHEN_8,
+    POTOMAC_KITCHEN,
+} from "@/lib/projects";
+
 export interface Service {
     slug: string;
     title: string;
@@ -266,38 +290,52 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         gallery: {
             kicker: "Recent Work",
             heading: "Recent Kitchen Projects",
-            /* Placeholder slides - same /kitchen.jpg the home-page carousel
-               uses. Swap src/alt per real project photo. */
+            /* Every slide is a real project pulled from projects.ts, so photos,
+               alt text, and location chips stay in sync with the portfolio. */
             slides: [
                 {
-                    src: "/kitchen.jpg",
-                    alt: "Full kitchen renovation with white cabinetry and stone countertops",
-                    tag: "Kitchen Remodel",
+                    src: POTOMAC_KITCHEN.cover.src,
+                    alt: POTOMAC_KITCHEN.cover.alt,
+                    tag: POTOMAC_KITCHEN.location,
                     title: "Full Gut Renovation",
                 },
                 {
-                    src: "/kitchen.jpg",
-                    alt: "Kitchen remodel with two-tone cabinets and quartz countertops",
-                    tag: "Kitchen Remodel",
+                    src: DC_KITCHEN.cover.src,
+                    alt: DC_KITCHEN.cover.alt,
+                    tag: DC_KITCHEN.location,
                     title: "Two-Tone Cabinetry & Quartz",
                 },
+                /* No `tag` on these four yet - the chip renders a project's
+                   location, and theirs are still TBD in projects.ts. */
                 {
-                    src: "/kitchen.jpg",
-                    alt: "Open-layout kitchen reconfiguration with island seating",
-                    tag: "Kitchen Remodel",
-                    title: "Open-Layout Reconfiguration",
+                    src: KITCHEN_3.cover.src,
+                    alt: KITCHEN_3.cover.alt,
+                    title: KITCHEN_3.title,
                 },
                 {
-                    src: "/kitchen.jpg",
-                    alt: "Classic white shaker kitchen with tile backsplash",
-                    tag: "Kitchen Remodel",
-                    title: "Classic Shaker Kitchen",
+                    src: KITCHEN_4.cover.src,
+                    alt: KITCHEN_4.cover.alt,
+                    title: KITCHEN_4.title,
                 },
                 {
-                    src: "/kitchen.jpg",
-                    alt: "Kitchen island and lighting upgrade with new hardware and fixtures",
-                    tag: "Kitchen Remodel",
-                    title: "Island & Lighting Upgrade",
+                    src: KITCHEN_5.cover.src,
+                    alt: KITCHEN_5.cover.alt,
+                    title: KITCHEN_5.title,
+                },
+                {
+                    src: KITCHEN_6.cover.src,
+                    alt: KITCHEN_6.cover.alt,
+                    title: KITCHEN_6.title,
+                },
+                {
+                    src: KITCHEN_7.cover.src,
+                    alt: KITCHEN_7.cover.alt,
+                    title: KITCHEN_7.title,
+                },
+                {
+                    src: KITCHEN_8.cover.src,
+                    alt: KITCHEN_8.cover.alt,
+                    title: KITCHEN_8.title,
                 },
             ],
         },
@@ -360,37 +398,54 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         gallery: {
             kicker: "Recent Work",
             heading: "Recent Bathroom Projects",
-            /* Placeholder slides - swap src/alt per real project photo. */
+            /* Every slide is a real project pulled from projects.ts, so photos
+               and alt text stay in sync with the portfolio. No `tag` yet - the
+               chip renders a location and these are still TBD. */
             slides: [
                 {
-                    src: "/images/hero/bathroom.webp",
-                    alt: "Primary suite bathroom renovation with custom tile and double vanity",
-                    tag: "Bathroom Remodel",
-                    title: "Primary Suite Renovation",
+                    src: BATH_1.cover.src,
+                    alt: BATH_1.cover.alt,
+                    title: BATH_1.title,
                 },
                 {
-                    src: "/images/hero/bathroom.webp",
-                    alt: "Walk-in shower conversion with frameless glass enclosure",
-                    tag: "Bathroom Remodel",
-                    title: "Walk-In Shower Conversion",
+                    src: BATH_2.cover.src,
+                    alt: BATH_2.cover.alt,
+                    title: BATH_2.title,
                 },
                 {
-                    src: "/images/hero/bathroom.webp",
-                    alt: "Spa-inspired bathroom with freestanding tub and stone tile",
-                    tag: "Bathroom Remodel",
-                    title: "Spa-Inspired Primary Bath",
+                    src: BATH_3.cover.src,
+                    alt: BATH_3.cover.alt,
+                    title: BATH_3.title,
                 },
                 {
-                    src: "/images/hero/bathroom.webp",
-                    alt: "Powder room refresh with new vanity, lighting, and fixtures",
-                    tag: "Bathroom Remodel",
-                    title: "Powder Room Refresh",
+                    src: BATH_4.cover.src,
+                    alt: BATH_4.cover.alt,
+                    title: BATH_4.title,
                 },
                 {
-                    src: "/images/hero/bathroom.webp",
-                    alt: "Tub-to-shower conversion with custom tile surround",
-                    tag: "Bathroom Remodel",
-                    title: "Tub-to-Shower Conversion",
+                    src: BATH_5.cover.src,
+                    alt: BATH_5.cover.alt,
+                    title: BATH_5.title,
+                },
+                {
+                    src: BATH_6.cover.src,
+                    alt: BATH_6.cover.alt,
+                    title: BATH_6.title,
+                },
+                {
+                    src: BATH_7.cover.src,
+                    alt: BATH_7.cover.alt,
+                    title: BATH_7.title,
+                },
+                {
+                    src: BATH_8.cover.src,
+                    alt: BATH_8.cover.alt,
+                    title: BATH_8.title,
+                },
+                {
+                    src: BATH_9.cover.src,
+                    alt: BATH_9.cover.alt,
+                    title: BATH_9.title,
                 },
             ],
         },
@@ -551,37 +606,30 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         gallery: {
             kicker: "Recent Work",
             heading: "Recent Basement Projects",
-            /* Placeholder slides - swap src/alt per real project photo. */
+            /* Every slide is a real project pulled from projects.ts, so photos
+               and alt text stay in sync with the portfolio. No `tag` yet - the
+               chip renders a location and these are still TBD. Slides 1, 3, and
+               4 are three rooms of the same finished basement. */
             slides: [
                 {
-                    src: "/images/hero/basement.webp",
-                    alt: "Basement home theater conversion with recessed lighting",
-                    tag: "Basement Finishing",
-                    title: "Home Theater Conversion",
+                    src: BASEMENT_1.cover.src,
+                    alt: BASEMENT_1.cover.alt,
+                    title: BASEMENT_1.title,
                 },
                 {
-                    src: "/images/hero/basement.webp",
-                    alt: "Basement guest suite build-out with bedroom and full bath",
-                    tag: "Basement Finishing",
-                    title: "Guest Suite Build-Out",
+                    src: BASEMENT_2.cover.src,
+                    alt: BASEMENT_2.cover.alt,
+                    title: BASEMENT_2.title,
                 },
                 {
-                    src: "/images/hero/basement.webp",
-                    alt: "Basement home office conversion with built-in lighting",
-                    tag: "Basement Finishing",
-                    title: "Home Office Conversion",
+                    src: BASEMENT_3.cover.src,
+                    alt: BASEMENT_3.cover.alt,
+                    title: BASEMENT_3.title,
                 },
                 {
-                    src: "/images/hero/basement.webp",
-                    alt: "Basement home gym with durable flooring and utility space",
-                    tag: "Basement Finishing",
-                    title: "Home Gym & Utility Space",
-                },
-                {
-                    src: "/images/hero/basement.webp",
-                    alt: "Rental-ready basement in-law suite with separate living area",
-                    tag: "Basement Finishing",
-                    title: "Rental-Ready In-Law Suite",
+                    src: BASEMENT_4.cover.src,
+                    alt: BASEMENT_4.cover.alt,
+                    title: BASEMENT_4.title,
                 },
             ],
         },

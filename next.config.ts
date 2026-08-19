@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* Rewrites `import { IconSun } from "@tabler/icons-react"` to per-icon
+     module paths. Without it the barrel pulls ~5k icon modules into every
+     dev compile that touches the header. */
+  experimental: {
+    optimizePackageImports: ["@tabler/icons-react"],
+  },
   /* NOTE: `output: 'export'` was disabled here so the site runs on a Node
      server (`next start`) — which is what makes the image optimizer below
      work. The two are coupled: static export has no image server, so
