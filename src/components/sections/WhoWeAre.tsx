@@ -112,8 +112,8 @@ export default function WhoWeAre() {
                         <div className="overflow-hidden">
                             <motion.img
                                 variants={imageReveal}
-                                src="/kitchen.jpg"
-                                alt="Blue Rock kitchen remodeling project"
+                                src="/bluerock-team.webp"
+                                alt="Three members of the Blue Rock Remodeling & Construction crew standing beside a branded company van outside a Maryland home with an open garage"
                                 className="w-full object-cover aspect-[16/9] transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
                             />
                         </div>

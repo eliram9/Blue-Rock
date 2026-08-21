@@ -4,6 +4,9 @@ type BlueprintProps = {
   /** Grid cell size in canvas units (canvas is 2611×1206). Smaller = denser
    *  squares. The original hand-drawn grid used 117.07. */
   gridStep?: number;
+  /** Set false to drop the drafting title block (the SCALE / SHEET and REV. A
+   *  boxes). They read as stray rectangles on bands where copy sits over them. */
+  titleBlock?: boolean;
 } & React.SVGProps<SVGSVGElement>;
 
 const CANVAS_W = 2611;
@@ -32,7 +35,7 @@ const crossesPath = (step: number) => {
 
 /** `zoom` crops a centered window of the 2611×1206 canvas: 1 = full drawing,
  *  1.4 = grid squares ~40% larger. Clamped ≥1 so blank canvas never shows. */
-const Blueprint3Bright = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
+const Blueprint3Bright = ({ zoom = 1, gridStep = 88, titleBlock = true, ...props }: BlueprintProps) => {
   const z = Math.max(1, zoom);
   const w = CANVAS_W / z;
   const h = CANVAS_H / z;
@@ -296,6 +299,7 @@ const Blueprint3Bright = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps)
       <circle cx={snap(234.1)} cy={snap(234.1)} r={2.5} opacity={0.71} />
       <circle cx={snap(1639)} cy={snap(234.1)} r={2.5} opacity={0.32} />
     </g>
+    {titleBlock && (
     <g
     >
       <g opacity={0.85}>
@@ -336,6 +340,7 @@ const Blueprint3Bright = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps)
         </text>
       </g>
     </g>
+    )}
   </svg>
   );
 };

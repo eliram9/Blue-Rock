@@ -3,12 +3,13 @@ import { notFound } from "next/navigation";
 import MiniHero from "@/components/sections/MiniHero";
 import ReadyToTransform from "@/components/sections/ReadyToTransform";
 import ServiceDetailSections from "@/components/sections/ServiceDetailSections";
+import ServiceSplitSections from "@/components/sections/ServiceSplitSections";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Container from "@/components/ui/Container";
 import JsonLd from "@/components/seo/JsonLd";
 import { SITE_URL, BUSINESS } from "@/lib/site";
 import { ORG_ID } from "@/lib/schema";
-import { SERVICES, SERVICE_DETAILS } from "@/lib/services";
+import { SERVICES, SERVICE_DETAILS, SERVICE_SPLITS } from "@/lib/services";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -44,6 +45,7 @@ export default async function ServicePage({ params }: Props) {
     if (!service) notFound();
 
     const detail = SERVICE_DETAILS[slug];
+    const split = SERVICE_SPLITS[slug];
     const pageUrl = `${SITE_URL}${service.href}`;
 
     const breadcrumbSchema = {
@@ -75,17 +77,22 @@ export default async function ServicePage({ params }: Props) {
         description: service.intro[0],
     };
 
-    /* FAQPage schema mirrors the visible Q&A rendered by ServiceDetailSections
-       — answers must stay identical in meaning to the on-page text. */
-    const faqSchema = detail && {
+    /* FAQPage schema mirrors the visible Q&A, whichever component renders it
+       — answers must stay identical in meaning to the on-page text. A service
+       has one layout or the other, so the two never both supply questions. */
+    const faqItems = detail?.faq ?? split?.faq;
+    /* Length-checked, not just truthy: an empty `faq: []` would otherwise emit
+       an FAQPage carrying no questions while the component renders no visible
+       Q&A - markup with nothing behind it. */
+    const faqSchema = faqItems?.length ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        mainEntity: detail.faq.map((item) => ({
+        mainEntity: faqItems.map((item) => ({
             "@type": "Question",
             name: item.question,
             acceptedAnswer: { "@type": "Answer", text: item.answer },
         })),
-    };
+    } : undefined;
 
     return (
         <main className="min-h-screen bg-background transition-colors">
@@ -113,6 +120,10 @@ export default async function ServicePage({ params }: Props) {
  
             {/* Designed detail sections — only for services with rich content */}
             {detail && <ServiceDetailSections detail={detail} />}
+
+            {/* Photo/copy bands — the lighter treatment for services with
+                photography but no documented process or before/after set */}
+            {split && <ServiceSplitSections band={split} />}
 
             {/* CTA band */}
             <ReadyToTransform />

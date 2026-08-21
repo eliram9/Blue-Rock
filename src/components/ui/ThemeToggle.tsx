@@ -70,27 +70,18 @@ export default function ThemeToggle(): React.ReactElement {
                 visible in both modes, without competing with the Contact plate. */}
             <span
                 aria-hidden="true"
-                className="relative block h-[2.425rem] w-[4.85rem] border border-muted/40 bg-surface-muted transition-colors duration-300 group-hover:border-main-blue group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-main-blue"
+                className="relative block h-[2.425rem] w-[4.85rem] border border-muted/40 bg-surface-muted transition-[border-color,transform] duration-300 ease-out group-hover:border-main-blue/45 group-active:scale-[0.97] group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-main-blue"
             >
-                {/* Corner brackets — the site's drafting motif, surfacing on
-                    hover so the plate reads as a selected drawing element. */}
-                {[
-                    "-top-[3px] -left-[3px] border-t border-l",
-                    "-top-[3px] -right-[3px] border-t border-r",
-                    "-bottom-[3px] -left-[3px] border-b border-l",
-                    "-bottom-[3px] -right-[3px] border-b border-r",
-                ].map((position) => (
-                    <span
-                        key={position}
-                        className={`absolute h-2.5 w-2.5 border-main-blue opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${position}`}
-                    />
-                ))}
+                {/* A single hairline frame, offset outward — the drafting
+                    motif kept, but as one calm outline instead of four
+                    brackets snapping in at the corners. */}
+                <span className="pointer-events-none absolute -inset-[3px] border border-main-blue/0 transition-colors duration-300 group-hover:border-main-blue/20" />
 
                 {/* Resting icons, sitting in the track. `inset-0` spans the
                     full padding box so these cells line up exactly with the
                     plate's copy below — any mismatch shows as a jump when the
                     plate crosses a glyph. */}
-                <span className="absolute inset-0 flex text-muted transition-colors duration-300">
+                <span className="absolute inset-0 flex text-muted transition-colors duration-300 group-hover:text-main-blue">
                     {icons}
                 </span>
 
@@ -99,7 +90,7 @@ export default function ThemeToggle(): React.ReactElement {
                     glyph, so it renders identically in both modes and takes no
                     `dark:` colour variant. */}
                 <span
-                    className={`absolute inset-y-0 left-0 w-1/2 overflow-hidden bg-brand-light dark:translate-x-full ${glide}`}
+                    className={`absolute inset-y-0 left-0 w-1/2 overflow-hidden bg-brand-light shadow-sm transition-shadow duration-300 group-hover:shadow-md dark:translate-x-full ${glide}`}
                 >
                     <span
                         className={`absolute inset-y-0 left-0 flex w-[200%] text-white dark:-translate-x-1/2 ${glide}`}

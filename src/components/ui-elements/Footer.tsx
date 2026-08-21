@@ -18,13 +18,8 @@ const SOCIAL_ICONS = [
 
 /* Weekly schedule for the "Working Hours" column */
 const WORKING_HOURS = [
-    { day: "Monday", hours: "9:00AM - 5:00PM" },
-    { day: "Tuesday", hours: "9:00AM - 5:00PM" },
-    { day: "Wednesday", hours: "9:00AM - 5:00PM" },
-    { day: "Thursday", hours: "9:00AM - 5:00PM" },
-    { day: "Friday", hours: "9:00AM - 5:00PM" },
+    { day: "Sunday - Friday", hours: "9:00AM - 5:00PM" },
     { day: "Saturday", hours: "Closed" },
-    { day: "Sunday", hours: "Closed" },
 ];
 
 /* Credential badges above the "Built by" line — add new badges here */

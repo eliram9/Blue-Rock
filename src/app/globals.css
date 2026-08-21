@@ -11,6 +11,9 @@
     --color-brand-light: #5A87DD;   /* light brand-blue accent on ink */
     --color-ink: #0a1628;           /* navy dark ground */
     --color-ink-soft: #0d1c30;      /* navy card/panel variant */
+    --color-ink-raised: #0f1e35;    /* lifted navy band (Our Story): lighter than
+                                       ink, but held dark enough that brand-light
+                                       small text still clears WCAG AA (4.7:1) */
     --color-steel-top: #2a4a7a;     /* CTA gradient top */
     --color-steel-bottom: #1b3357;  /* CTA gradient bottom */
 

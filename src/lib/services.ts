@@ -104,14 +104,17 @@ export const SERVICES: Service[] = [
     {
         slug: "exterior-renovations",
         title: "Exterior Renovations",
-        blurb: "Boost curb appeal with siding, trim, and professional exterior painting and upgrades.",
+        blurb: "Siding, trim, windows, doors, and professional exterior painting that protect your home and lift its curb appeal.",
         flagship: false,
         href: "/services/residential/exterior-renovations",
         intro: [
-            "Curb appeal is more than paint. Blue Rock renovates exteriors across the DMV - siding, trim, windows, doors, and professional exterior painting that protect your home and lift its value.",
-            "We combine durable materials with meticulous installation, so the first impression your home makes lasts through every season.",
+            "Blue Rock Remodeling & Construction renovates home exteriors across Maryland and Washington, DC - siding, trim, soffit and fascia, windows, entry doors, roofline repairs, and professional exterior painting, handled by one MHIC-licensed general contractor working in the region since 2010.",
+            "We specify materials rated for the DMV's mixed-humid climate and flash and seal every opening to the manufacturer's warranty requirements, so the first impression your home makes holds up through every season.",
         ],
         image: "/images/hero/exterior.webp",
+        seoTitle: "Exterior Renovation Services in Rockville, MD",
+        seoDescription:
+            "Licensed exterior renovation contractor in Rockville, MD. Blue Rock replaces siding, trim, windows, and entry doors across Montgomery County and the DMV.",
     },
     {
         slug: "demolition-services",
@@ -189,6 +192,132 @@ export const SECTOR_SERVICES: Service[] = [
         image: "/images/hero/government.webp",
     },
 ];
+
+/* ── Photo + narrative bands ───────────────────────────────────────────────
+   The lightweight alternative to SERVICE_DETAILS: a service with real
+   photography but no documented process, before/after set, or FAQ gets one
+   or two alternating photo/copy bands instead of the full designed page.
+   Rendered by ServiceSplitSections; a service can have a SERVICE_SPLITS
+   entry, a SERVICE_DETAILS entry, or neither. */
+
+export interface ServiceSplit {
+    /** Sheet number inside the band, e.g. "01" → "Exterior 01.01 · Kicker". */
+    index: string;
+    kicker: string;
+    /** The section headline, rendered full width at display scale above the
+        photo/copy pair - same shape as ResidentialShowcase's "Expert
+        Residential Remodeling". Two to four words. */
+    heading: string;
+    /** Answer-first, then detail. Each paragraph has to survive being lifted
+        on its own: AI answer engines quote single passages, not sections, so
+        no "as mentioned above" and no unresolved pronouns. */
+    paragraphs: string[];
+    /** Dashed scope list. Optional, and mutually exclusive with `pullQuote`
+        in practice - one band gets the list, the next gets the quote, so the
+        two bands don't read as the same block twice. */
+    points?: string[];
+    /** Accent pull-quote closing the column. Optional. */
+    pullQuote?: string;
+    image: {
+        src: string;
+        alt: string;
+        /** Mono label in the frame's title block. Describes what the photo
+            shows; it is not a location or a project claim. */
+        caption: string;
+        /** `object-position` for the 4:3 crop, e.g. "60% 50%". The source
+            renders are 2:1, so a centered crop drops a third of the width -
+            set this to whichever third actually holds the subject. */
+        focus?: string;
+    };
+    /** Photo on the right instead of the left. Alternate it down the page. */
+    flip?: boolean;
+}
+
+export interface ServiceSplitBand {
+    /** Word before the sheet number in section labels, e.g. "Exterior". */
+    sheetName: string;
+    /** Two-letter code in each frame's title block, e.g. "EX" → "Sheet EX—1.1".
+        Explicit rather than derived from `sheetName`, so two services starting
+        with the same letters don't silently share a code. */
+    sheetCode: string;
+    sections: ServiceSplit[];
+    /** Visible Q&A closing the page, mirrored as FAQPage JSON-LD. Answers
+        must stay self-contained and match the visible text - the schema and
+        the page have to agree or the markup reads as a mismatch. Optional;
+        the band renders without it. */
+    faq?: { question: string; answer: string }[];
+}
+
+export const SERVICE_SPLITS: Record<string, ServiceSplitBand> = {
+    "exterior-renovations": {
+        sheetName: "Exterior",
+        sheetCode: "EX",
+        sections: [
+            {
+                index: "01",
+                kicker: "Overview",
+                heading: "Siding, Windows & Doors",
+                paragraphs: [
+                    "Blue Rock Remodeling & Construction replaces siding, trim, windows, and entry doors on homes in Rockville, Bethesda, Potomac, Silver Spring, Gaithersburg, and across Washington, DC. One MHIC-licensed crew handles the whole exterior - tear-off, moisture barrier, flashing, insulation, and finish - so there is no seam between trades for water to find.",
+                    "New trim profiles are matched to the home's existing roofline and detailing rather than to whatever stock the supplier has on the shelf, which is what keeps a re-clad house from reading as a re-clad house.",
+                ],
+                points: [
+                    "Siding in fiber cement, engineered wood, and vinyl",
+                    "Trim, soffit, fascia, and gutter replacement",
+                    "Window and entry door replacement",
+                    "Roofline repairs and roofing upgrades",
+                    "Professional exterior painting, prep included",
+                ],
+                image: {
+                    src: "/images/projects/exterior/exterior1.webp",
+                    alt: "Stone-clad home exterior at dusk with a rebuilt entry landing, wide stair treads, a dark full-height front door, and recessed landscape lighting along the planting bed",
+                    caption: "Entry, cladding & hardscape",
+                    focus: "60% 50%",
+                },
+            },
+            {
+                index: "02",
+                kicker: "Durability & Efficiency",
+                heading: "Built To Last",
+                flip: true,
+                paragraphs: [
+                    "A well-built exterior does two jobs at once: it changes how a house reads from the street, and it lowers what the house costs to run. Air-sealing, continuous insulation behind the cladding, and correctly flashed window and door openings cut drafts and reduce heating and cooling load through Maryland's humid summers and freeze-thaw winters.",
+                    "We specify for this climate rather than for the fastest install - cladding that resists moisture and impact, coatings that hold their color in direct sun, and flashing and fasteners that will not corrode behind the wall where nobody can see them fail.",
+                ],
+                pullQuote:
+                    "One licensed crew from tear-off to final walkthrough, so the siding, windows, trim, and paint all answer to the same standard.",
+                image: {
+                    src: "/images/projects/exterior/exterior2.webp",
+                    alt: "Corner elevation of a renovated home exterior with large-format stone cladding, a continuous lit soffit line, wall sconces between windows, and a paver walkway",
+                    caption: "Corner elevation & lighting",
+                    focus: "38% 50%",
+                },
+            },
+        ],
+        faq: [
+            {
+                question: "What siding materials do you install?",
+                answer:
+                    "Blue Rock installs fiber cement, engineered wood, and vinyl siding, and helps you choose between them based on the house and the budget rather than on what is fastest to hang. Fiber cement holds paint well and resists impact and moisture, engineered wood gives a deeper grain at lower weight, and vinyl is the least expensive to install and maintain. Trim, soffit, fascia, and gutters are replaced as part of the same scope.",
+            },
+            {
+                question: "Should I replace siding and windows at the same time?",
+                answer:
+                    "Yes, when both are due. Windows and doors are flashed into the same water-resistive barrier that sits behind the siding, so doing them together produces one continuous drainage plane instead of two that have to be patched into each other later. It also means one crew, one schedule, and one company accountable if something needs correcting.",
+            },
+            {
+                question: "Do I need a permit for exterior work in Montgomery County?",
+                answer:
+                    "It depends on the scope. Like-for-like siding or window replacement often does not require a permit, while structural changes, new openings, and additions do. Blue Rock is licensed by the Maryland Home Improvement Commission, confirms what your jurisdiction requires before work starts, and pulls and closes out the permits as part of the project.",
+            },
+            {
+                question: "What areas do you serve for exterior renovations?",
+                answer:
+                    "Blue Rock Remodeling & Construction works throughout Maryland and Washington, DC, including Rockville, Bethesda, Potomac, Silver Spring, and Gaithersburg. The company has been based in Rockville since 2010.",
+            },
+        ],
+    },
+};
 
 /* ── Rich subcategory-page content ─────────────────────────────────────────
    Services with an entry in SERVICE_DETAILS get the full designed page
