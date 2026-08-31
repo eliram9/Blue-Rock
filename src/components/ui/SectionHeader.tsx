@@ -39,12 +39,12 @@ export default function SectionHeader({
 
             <motion.div variants={fadeUp} className="relative">
                 <span
-                    className={`pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none md:text-[11rem] ${ink ? "text-brand-light/[0.09]" : "text-light-blue/[0.25]"}`}
+                    className={`pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none md:text-[11rem] ${ink ? "text-brand-light/[0.09]" : "text-light-blue/[0.25]"}`}
                 >
                     {index}
                 </span>
                 <h2
-                    className={`relative ml-20 font-title text-3xl font-bold uppercase tracking-tight md:text-5xl ${ink ? "text-white" : "text-foreground"}`}
+                    className={`relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] md:text-5xl ${ink ? "text-white" : "text-foreground"}`}
                 >
                     {title}
                 </h2>

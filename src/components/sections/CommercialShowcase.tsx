@@ -74,7 +74,7 @@ export default function CommercialShowcase() {
                                     variants={fadeUp}
                                     className="group relative border border-border bg-surface p-5 transition-colors hover:border-main-blue/40"
                                 >
-                                    <span className="pointer-events-none absolute right-3 top-2 select-none font-title text-4xl font-bold leading-none text-light-blue/15">
+                                    <span className="pointer-events-none absolute right-3 top-2 select-none font-title text-4xl font-normal leading-none text-light-blue/15">
                                         {String(i + 1).padStart(2, "0")}
                                     </span>
                                     <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
@@ -99,7 +99,7 @@ export default function CommercialShowcase() {
                                         key={cred.label}
                                         className={`group px-6 py-6 transition-colors duration-300 hover:bg-light-blue/[0.07] md:py-8 ${i !== CREDENTIALS.length - 1 ? "max-sm:border-b sm:border-r" : ""} border-border`}
                                     >
-                                        <div className="font-title text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 group-hover:text-main-blue md:text-4xl">
+                                        <div className="font-title text-3xl font-normal tracking-[0.015em] text-foreground transition-colors duration-300 group-hover:text-main-blue md:text-4xl">
                                             {cred.value}
                                         </div>
                                         {/* Measurement line — draws across on hover */}

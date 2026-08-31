@@ -40,18 +40,28 @@ export default function MiniHero({
 }: MiniHeroProps): React.ReactElement {
     const tier = tiers[size];
 
+    /* Two-tone display: the last word carries the accent, matching the heroes.
+       Single-word titles ("RESOURCES") keep all-white — colouring the only word
+       would tint the whole headline rather than highlight part of it. */
+    const words = title.trim().split(/\s+/);
+    const hasAccent = words.length > 1;
+    const head = hasAccent ? `${words.slice(0, -1).join(" ")} ` : title;
+    const accent = hasAccent ? words[words.length - 1] : null;
+
     return (
         <section
             className={`relative flex w-full items-center justify-center overflow-hidden ${tier.section}`}
         >
-            {/* Tinted renders stay razor-sharp (the wash handles text contrast);
-                plain photo heroes keep the soft blur treatment */}
+            {/* Both branches stay razor-sharp. The untinted branch used to carry a
+                blur-[1px], which is a full-viewport GPU blur on every composite;
+                the scrim below already does that separation work. */}
             <Image
                 src={imageSrc}
                 alt={title}
                 fill
                 priority
-                className={`object-cover ${tint ? "" : "blur-[1px]"}`}
+                sizes="100vw"
+                className="object-cover"
                 quality={tint ? 95 : 85}
             />
             {/* On-image overlays use fixed tokens — identical in light & dark */}
@@ -69,14 +79,27 @@ export default function MiniHero({
                     />
                 </>
             )}
-            {/* Base scrim */}
-            <div className="absolute inset-0 bg-ink/30" />
+            {/* Base scrim: flat wash plus a centre vignette in one element (two
+                background layers, one paint layer), so the copy block gains
+                contrast without flattening the whole render. Untinted renders need
+                a heavier wash than tinted ones: the accent word is a mid-tone blue
+                and only clears the 3:1 AA floor for large text once the composite
+                behind it is dark enough. Tinted renders already pass that on the
+                brand multiply alone, so they keep the lighter wash. */}
+            <div
+                aria-hidden="true"
+                className={
+                    tint
+                        ? "absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_50%,rgb(10_22_40/0.3),transparent_78%)] bg-ink/25"
+                        : "absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_50%,rgb(10_22_40/0.35),transparent_78%)] bg-ink/50"
+                }
+            />
 
             <div className="relative z-10 w-full py-12">
                 <Container className="text-center">
                     {breadcrumbs && breadcrumbs.length > 0 && (
-                        <nav aria-label="Breadcrumb" className="mb-4">
-                            <ol className="flex flex-wrap items-center justify-center gap-2 font-mono text-xs uppercase tracking-widest text-white/70">
+                        <nav aria-label="Breadcrumb" className="hero-rise mb-4">
+                            <ol className="flex flex-wrap items-center justify-center gap-2 font-mono text-xs uppercase tracking-widest text-white/75 hero-type-shadow-soft">
                                 {breadcrumbs.map((item, index) => {
                                     const isLast = index === breadcrumbs.length - 1;
 
@@ -105,11 +128,27 @@ export default function MiniHero({
                             </ol>
                         </nav>
                     )}
-                    <Display size={tier.display} className="text-white mb-4 bg-transparent rounded-md py-3 px-10">
-                        {title}
-                    </Display>
+                    {/* Single-phrase titles, so no two-register split here — the
+                        hierarchy runs breadcrumbs, headline, subtitle.
+                        break-words keeps a long service title inside the viewport
+                        at 320px. No animation-delay: the headline is the likeliest
+                        LCP element on the short subcategory tier, and a delayed
+                        fade from opacity 0 postpones the paint Chrome measures. */}
+                    <div className="hero-reveal mb-4">
+                        <Display
+                            size={tier.display}
+                            className="font-title uppercase break-words text-white hero-type-drop"
+                        >
+                            {head}
+                            {accent && <span className="text-brand-lighter">{accent}</span>}
+                        </Display>
+                    </div>
                     {subtitle && (
-                        <Text variant="lead" fluid className="text-white/90 max-w-2xl mx-auto">
+                        <Text
+                            variant="lead"
+                            fluid
+                            className="hero-rise [animation-delay:150ms] mx-auto max-w-2xl text-balance text-white/90 hero-type-shadow-soft"
+                        >
                             {subtitle}
                         </Text>
                     )}

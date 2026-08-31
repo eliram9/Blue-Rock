@@ -71,10 +71,10 @@ export default function WhoWeAre() {
                     viewport={viewport}
                     className="relative"
                 >
-                    <span className="pointer-events-none absolute -top-10 -left-2 font-title text-[7rem] md:text-[11rem] leading-none font-bold text-light-blue/[0.25] select-none">
+                    <span className="pointer-events-none absolute -top-10 -left-2 font-title text-[7rem] md:text-[11rem] leading-none font-normal text-light-blue/[0.25] select-none">
                         01
                     </span>
-                    <h2 className="relative font-title text-3xl md:text-5xl font-bold uppercase tracking-tight text-foreground ml-20">
+                    <h2 className="relative font-title text-3xl md:text-5xl font-normal uppercase tracking-[0.015em] text-foreground ml-20">
                         WHO WE ARE
                     </h2>
                     <div className="mt-15 flex items-center gap-4">
@@ -145,7 +145,7 @@ export default function WhoWeAre() {
                             className="absolute bottom-5 left-5 md:bottom-7 md:left-7"
                         >
                             <div className="flex items-center gap-4 rounded-sm border border-white/15 bg-white/10 px-5 py-3 backdrop-blur-md">
-                                <span className="font-title text-3xl md:text-4xl font-bold text-white leading-none">
+                                <span className="font-title text-3xl md:text-4xl font-normal text-white leading-none">
                                     2010
                                 </span>
                                 <span className="font-mono text-[11px] leading-tight tracking-wide text-white/80 uppercase">

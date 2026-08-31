@@ -86,7 +86,7 @@ export default function ResidentialShowcase() {
                                         key={cred.label}
                                         className={`group px-6 py-6 transition-colors duration-300 hover:bg-light-blue/[0.07] md:py-8 ${i !== CREDENTIALS.length - 1 ? "max-sm:border-b sm:border-r" : ""} border-border`}
                                     >
-                                        <div className="font-title text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 group-hover:text-main-blue md:text-4xl">
+                                        <div className="font-title text-3xl font-normal tracking-[0.015em] text-foreground transition-colors duration-300 group-hover:text-main-blue md:text-4xl">
                                             {cred.value}
                                         </div>
                                         {/* Measurement line — draws across on hover */}
@@ -152,7 +152,7 @@ export default function ResidentialShowcase() {
                                         {/* Ghost index */}
                                         <span
                                             aria-hidden="true"
-                                            className="pointer-events-none absolute right-4 top-2 select-none font-title text-7xl font-bold leading-none text-brand-light/10"
+                                            className="pointer-events-none absolute right-4 top-2 select-none font-title text-7xl font-normal leading-none text-brand-light/10"
                                         >
                                             {String(i + 1).padStart(2, "0")}
                                         </span>

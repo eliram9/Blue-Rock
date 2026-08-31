@@ -101,10 +101,10 @@ export default function OurStory() {
                                 viewport={viewport}
                                 className="relative"
                             >
-                                <span className="pointer-events-none absolute -top-8 -left-3 font-title text-[6.5rem] md:text-[8rem] leading-none font-bold text-brand-light/[0.12] select-none">
+                                <span className="pointer-events-none absolute -top-8 -left-3 font-title text-[6.5rem] md:text-[8rem] leading-none font-normal text-brand-light/[0.12] select-none">
                                     02
                                 </span>
-                                <h2 className="relative font-title text-3xl md:text-5xl font-bold uppercase tracking-tight text-white ml-12 md:ml-14">
+                                <h2 className="relative font-title text-3xl md:text-5xl font-normal uppercase tracking-[0.015em] text-white ml-12 md:ml-14">
                                     OUR STORY
                                 </h2>
                                 <div className="mt-10 flex flex-col items-start gap-4">

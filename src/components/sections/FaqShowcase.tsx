@@ -32,7 +32,7 @@ export default function FaqShowcase() {
                 {/* Oversized ghost question mark */}
                 <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -top-8 right-4 select-none font-title text-[14rem] font-bold leading-none text-brand-light/[0.08] md:right-16 md:text-[22rem]"
+                    className="pointer-events-none absolute -top-8 right-4 select-none font-title text-[14rem] font-normal leading-none text-brand-light/[0.08] md:right-16 md:text-[22rem]"
                 >
                     ?
                 </span>
@@ -52,11 +52,14 @@ export default function FaqShowcase() {
                             <div className="flex-1 border-t border-dashed border-brand-light/25" />
                         </motion.div>
 
+                        {/* Two-tone display: the accent word carries the brand
+                            rather than the whole line, so the headline reads as one
+                            shape with a highlight instead of a block of blue. */}
                         <motion.h1
                             variants={fadeUp}
-                            className="font-title text-fluid-5xl font-bold uppercase tracking-tight text-white md:text-6xl"
+                            className="font-title text-fluid-5xl font-normal uppercase tracking-[0.015em] text-balance text-white hero-type-drop md:text-6xl"
                         >
-                            Questions &amp; <span className="text-brand-light">Answers</span>
+                            Questions &amp; <span className="text-brand-lighter">Answers</span>
                         </motion.h1>
 
                         <motion.p

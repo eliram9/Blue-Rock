@@ -9,6 +9,10 @@
        the navy Story band, the steel CTA band, the Footer. */
     --color-brand: #0E48CC;         /* deep brand blue */
     --color-brand-light: #5A87DD;   /* light brand-blue accent on ink */
+    /* Accent word inside display headlines on ink. brand-light only measures
+       2.5:1 on the steel band's lighter end, under the 3:1 AA floor for large
+       text; this clears 4.25:1 at the worst point on that gradient. */
+    --color-brand-lighter: #93B4F0;
     --color-ink: #0a1628;           /* navy dark ground */
     --color-ink-soft: #0d1c30;      /* navy card/panel variant */
     --color-ink-raised: #0f1e35;    /* lifted navy band (Our Story): lighter than
@@ -211,8 +215,100 @@ body {
     }
 }
 
+/* Hero copy rises in reading order (eyebrow, headline, body, CTAs) so the eye
+   lands on the headline first instead of the whole block at once. CSS-only, so
+   both heroes stay Server Components. */
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* The headline gets its own reveal: it wipes up from its own baseline instead
+   of only fading, so the eye reads it as drawn rather than faded in. The `to`
+   frame leaves 30% slack below the box so the drop-shadow filter (which paints
+   inside the clip) is never cut off mid-animation. */
+@keyframes hero-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+        clip-path: inset(0 0 100% 0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+        clip-path: inset(0 0 -30% 0);
+    }
+}
+
 /* Fluid Typography Utilities */
 @layer utilities {
+    /* Type on photography: an ink-tinted shadow (never pure black, never a
+       glow) in two stops — a tight contact shadow for edge definition and a
+       wide soft one to separate the copy from a busy render. Fixed ink hex, so
+       it is identical in light and dark like the scrims it sits on. */
+    .hero-type-shadow {
+        text-shadow:
+            0 1px 2px rgb(10 22 40 / 0.55),
+            0 10px 30px rgb(10 22 40 / 0.45);
+    }
+
+    .hero-type-shadow-soft {
+        text-shadow: 0 1px 3px rgb(10 22 40 / 0.6);
+    }
+
+    /* Light raking down the caps: pure white through the cap-height, cooling to
+       a pale brand tint at the baseline. #c3d4f5 measures ~12:1 on the ink
+       scrim, so even the darkest stop stays in the same AAA band as flat white.
+       Solid white is the base declaration and the gradient is layered on top
+       only where background-clip:text exists, so unsupported browsers get
+       readable type rather than a gradient box. */
+    .hero-type-rake {
+        color: #ffffff;
+    }
+
+    @supports (-webkit-background-clip: text) or (background-clip: text) {
+        .hero-type-rake {
+            background-image: linear-gradient(180deg, #ffffff 0%, #ffffff 45%, #c3d4f5 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    }
+
+    /* Gradient-filled type needs a filter, not a text-shadow. text-shadow paints
+       behind the glyph, so against a transparent fill .hero-type-shadow would
+       bleed straight through the letterforms. drop-shadow follows the alpha
+       mask instead, hugging the caps the way the flat-white version does.
+       Same two stops as .hero-type-shadow: tight contact plus wide separation. */
+    .hero-type-drop {
+        filter:
+            drop-shadow(0 1px 2px rgb(10 22 40 / 0.55))
+            drop-shadow(0 10px 26px rgb(10 22 40 / 0.45));
+    }
+
+    /* `backwards` fill only, so at rest clip-path falls back to the element's
+       own value (none) and the drop-shadow is free again. */
+    .hero-reveal {
+        animation: hero-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    .hero-rise {
+        animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-rise,
+        .hero-reveal {
+            animation: none;
+        }
+    }
+
     /* Fixed brand-light/white streaks — tuned for ink surfaces (CTA band). */
     .running-border {
         position: relative;

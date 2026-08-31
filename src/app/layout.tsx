@@ -15,6 +15,10 @@ const unicaOne = Unica_One({
   display: "swap",
   variable: "--font-unica-one",
   weight: "400",
+  /* Unica One is condensed. next/font derives its size-adjust fallback from the
+     named fallback stack, and a normal-width default made the hero h1 visibly
+     reflow on swap. Condensed fallbacks keep the pre-swap metrics close. */
+  fallback: ["Arial Narrow", "Helvetica Neue Condensed", "sans-serif"],
 });
 
 const robotoFlex = Roboto_Flex({

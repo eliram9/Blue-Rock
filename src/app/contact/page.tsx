@@ -192,10 +192,10 @@ export default function Contact() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-light-blue/[0.25] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
                                 01
                             </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
+                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                 Start the Conversation
                             </h2>
                         </motion.div>
@@ -220,7 +220,7 @@ export default function Contact() {
                                 </div>
 
                                 <div className="p-6 md:p-8">
-                                    <h3 className="font-title text-2xl font-bold uppercase tracking-tight text-foreground md:text-3xl">
+                                    <h3 className="font-title text-2xl font-normal uppercase tracking-[0.015em] text-foreground md:text-3xl">
                                         Send Us a Message
                                     </h3>
                                     <p className="mt-2 mb-8 text-muted">
@@ -363,7 +363,7 @@ export default function Contact() {
                                         <div className="flex-1 border-t border-dashed border-brand-light/25" />
                                     </div>
 
-                                    <h2 className="font-title text-3xl font-bold uppercase tracking-tight text-white md:text-4xl">
+                                    <h2 className="font-title text-3xl font-normal uppercase tracking-[0.015em] text-white md:text-4xl">
                                         Need Immediate <span className="text-brand-light">Help?</span>
                                     </h2>
                                     <p className="mt-4 text-base leading-relaxed text-blue-100/80">

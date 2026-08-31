@@ -35,10 +35,12 @@ export default function About() {
                 ]}
             />
 
+            {/* Category-tier hero — brand tint over the light render */}
             <MiniHero
                 title="ABOUT US"
                 subtitle="Crafting Excellence, Constructing Trust"
-                imageSrc="/images/hero/blueprint_1.svg"
+                imageSrc="/images/hero/about.webp"
+                tint
             />
 
             {/* 01 · Who We Are */}

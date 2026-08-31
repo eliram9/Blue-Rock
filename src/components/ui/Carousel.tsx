@@ -181,7 +181,7 @@ export default function Carousel({
                             >
                                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                                     {images[currentIndex].title && (
-                                        <h3 className="mb-2 font-title text-2xl font-bold uppercase tracking-tight text-white md:text-3xl">
+                                        <h3 className="mb-2 font-title text-2xl font-normal uppercase tracking-[0.015em] text-white md:text-3xl">
                                             {images[currentIndex].title}
                                         </h3>
                                     )}

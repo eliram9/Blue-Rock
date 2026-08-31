@@ -95,7 +95,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                                         <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
                                             {option.label}
                                         </span>
-                                        <h3 className="mt-3 font-title text-xl font-bold uppercase tracking-tight text-foreground md:text-2xl">
+                                        <h3 className="mt-3 font-title text-xl font-normal uppercase tracking-[0.015em] text-foreground md:text-2xl">
                                             {option.title}
                                         </h3>
                                         <ul className="mt-5 space-y-3">
@@ -165,7 +165,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                             {beforeAfter.projects.map((project) => (
                                 <motion.div variants={fadeUp} key={project.title}>
                                     <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-dashed border-brand-light/20 pb-4">
-                                        <h3 className="font-title text-xl font-bold uppercase tracking-tight text-white md:text-2xl">
+                                        <h3 className="font-title text-xl font-normal uppercase tracking-[0.015em] text-white md:text-2xl">
                                             {project.title}
                                         </h3>
                                         {project.location && (
@@ -340,7 +340,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                                             <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-brand-light">
                                                 WS—{String(i + 1).padStart(2, "0")}
                                             </div>
-                                            <div className="mt-2 font-title text-lg font-bold uppercase tracking-tight text-white transition-colors duration-300 group-hover:text-brand-light">
+                                            <div className="mt-2 font-title text-lg font-normal uppercase tracking-[0.015em] text-white transition-colors duration-300 group-hover:text-brand-light">
                                                 {sign.title}
                                             </div>
                                             <div className="mt-2 text-xs leading-relaxed text-blue-100/60 transition-colors duration-300 group-hover:text-blue-100/85">
@@ -412,7 +412,7 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                                             key={stat.label}
                                             className={`group px-6 py-6 transition-colors duration-300 hover:bg-brand-light/[0.07] md:py-8 ${!last ? "lg:border-r" : ""} ${i % 2 === 0 && !last ? "sm:border-r" : ""} ${!last ? "max-lg:sm:border-b" : ""} ${last ? "max-lg:sm:col-span-2" : ""} border-brand-light/15`}
                                         >
-                                            <div className="font-title text-4xl font-bold tracking-tight text-white transition-all duration-300 group-hover:-translate-y-1 group-hover:text-brand-light md:text-5xl">
+                                            <div className="font-title text-4xl font-normal tracking-[0.015em] text-white transition-all duration-300 group-hover:-translate-y-1 group-hover:text-brand-light md:text-5xl">
                                                 {stat.value}
                                             </div>
                                             {/* Measurement line — draws across on hover */}

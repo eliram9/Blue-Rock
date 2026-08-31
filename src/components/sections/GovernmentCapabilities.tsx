@@ -72,10 +72,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-brand-light/[0.09] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-brand-light/[0.09] md:text-[11rem]">
                                 01
                             </span>
-                            <h2 className="relative ml-20 font-title text-4xl font-bold uppercase tracking-tight text-white md:text-6xl">
+                            <h2 className="relative ml-20 font-title text-4xl font-normal uppercase tracking-[0.015em] text-white md:text-6xl">
                                 Capability <span className="text-brand-light">Statement</span>
                             </h2>
                         </motion.div>
@@ -153,10 +153,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-light-blue/[0.25] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
                                 02
                             </span>
-                            <h2 className="relative text-center font-title text-3xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
+                            <h2 className="relative text-center font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                 Built for Government & Institutional Projects
                             </h2>
                         </motion.div>
@@ -208,10 +208,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-light-blue/[0.25] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
                                 03
                             </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
+                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                 What We Deliver
                             </h2>
                         </motion.div>
@@ -223,7 +223,7 @@ export default function GovernmentCapabilities() {
                                     variants={fadeUp}
                                     className="group relative border border-border bg-surface p-5 transition-colors hover:border-main-blue/40"
                                 >
-                                    <span className="pointer-events-none absolute right-3 top-2 select-none font-title text-4xl font-bold leading-none text-light-blue/15">
+                                    <span className="pointer-events-none absolute right-3 top-2 select-none font-title text-4xl font-normal leading-none text-light-blue/15">
                                         {String(i + 1).padStart(2, "0")}
                                     </span>
                                     <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
@@ -260,10 +260,10 @@ export default function GovernmentCapabilities() {
 
                             {/* Oversized headline */}
                             <div className="relative">
-                                <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-light-blue/[0.25] md:text-[11rem]">
+                                <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
                                     04
                                 </span>
-                                <h2 className="relative ml-20 font-title text-3xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
+                                <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                     Why Agencies Choose US
                                 </h2>
                             </div>
@@ -313,10 +313,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-brand-light/[0.09] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-brand-light/[0.09] md:text-[11rem]">
                                 05
                             </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-bold uppercase tracking-tight text-white md:text-5xl">
+                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-white md:text-5xl">
                                 Project Log
                             </h2>
                         </motion.div>
@@ -394,10 +394,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-bold leading-none text-light-blue/[0.25] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
                                 06
                             </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
+                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                 NAICS Codes
                             </h2>
                         </motion.div>
@@ -475,7 +475,7 @@ export default function GovernmentCapabilities() {
 
                         <motion.h2
                             variants={fadeUp}
-                            className="font-title text-4xl font-bold uppercase leading-[1.05] tracking-tight text-white md:text-6xl"
+                            className="font-title text-4xl font-normal uppercase leading-[1.05] tracking-[0.015em] text-white md:text-6xl"
                         >
                             Ready to partner with a reliable{" "}
                             <span className="text-brand-light">government contractor?</span>

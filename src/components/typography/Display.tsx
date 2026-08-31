@@ -23,7 +23,11 @@ export default function Display({
     className = "",
 }: DisplayProps): React.ReactElement {
     return (
-        <h1 className={`font-bold tracking-tight ${sizeClasses[size]} ${className}`}>
+        /* Unica One ships a single weight (400). Asking for `font-bold` made the
+           browser synthesise it by smearing the glyphs, which is what read as a
+           soft white slab on the heroes. Condensed caps also need slightly
+           positive tracking — `tracking-tight` jammed them together. */
+        <h1 className={`font-normal tracking-[0.015em] text-balance ${sizeClasses[size]} ${className}`}>
             {children}
         </h1>
     );

@@ -149,7 +149,7 @@ function ImageFlagshipCard({
             {/* Ghost index */}
             <span
                 aria-hidden="true"
-                className="pointer-events-none absolute right-3 top-1 z-10 select-none font-title text-6xl font-bold leading-none text-white/25"
+                className="pointer-events-none absolute right-3 top-1 z-10 select-none font-title text-6xl font-normal leading-none text-white/25"
             >
                 {String(index + 1).padStart(2, "0")}
             </span>
@@ -157,7 +157,7 @@ function ImageFlagshipCard({
             <span className="relative z-10 flex flex-col p-6">
                 {/* min-h reserves two lines at lg so a title that un-wraps as
                     the card widens does not shunt the block mid-animation. */}
-                <h3 className="font-title text-xl font-bold uppercase tracking-tight text-white lg:flex lg:min-h-[3.5rem] lg:items-end">
+                <h3 className="font-title text-xl font-normal uppercase tracking-[0.015em] text-white lg:flex lg:min-h-[3.5rem] lg:items-end">
                     {service.title}
                 </h3>
                 {/* lg: blurb is the expansion's reward. 0fr→1fr eases over the
@@ -206,7 +206,7 @@ function FlagshipCard({
             {/* Ghost index */}
             <span
                 aria-hidden="true"
-                className="pointer-events-none absolute right-3 top-1 select-none font-title text-6xl font-bold leading-none text-light-blue/15"
+                className="pointer-events-none absolute right-3 top-1 select-none font-title text-6xl font-normal leading-none text-light-blue/15"
             >
                 {String(index + 1).padStart(2, "0")}
             </span>
@@ -216,7 +216,7 @@ function FlagshipCard({
                 animated
                 className="mb-5 h-11 w-11 text-main-blue transition-transform duration-200 ease-out group-hover:scale-110 group-focus-visible:scale-110 motion-reduce:transition-none"
             />
-            <h3 className="font-title text-xl font-bold uppercase tracking-tight text-foreground md:text-2xl lg:flex lg:min-h-[3.5rem] lg:items-end lg:text-xl">
+            <h3 className="font-title text-xl font-normal uppercase tracking-[0.015em] text-foreground md:text-2xl lg:flex lg:min-h-[3.5rem] lg:items-end lg:text-xl">
                 {service.title}
             </h3>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-muted md:text-base">{service.blurb}</p>
@@ -279,7 +279,7 @@ export default function WhatWeDo() {
                 {/* Headline */}
                 <motion.h2
                     variants={fadeUp}
-                    className="mx-auto text-center font-title text-4xl font-bold uppercase tracking-tight text-foreground md:text-6xl"
+                    className="mx-auto text-center font-title text-4xl font-normal uppercase tracking-[0.015em] text-foreground md:text-6xl"
                 >
                     A Wide Range of General Construction Services
                 </motion.h2>
