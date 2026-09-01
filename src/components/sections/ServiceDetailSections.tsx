@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import Blueprint from "../../../public/svg/test3";
-import BlueprintGrid from "../../../public/svg/test1";
+import Blueprint from "@/components/svg/Blueprint";
+import BlueprintGrid from "@/components/svg/BlueprintGrid";
 import BeforeAfter from "@/components/ui/BeforeAfter";
 import Carousel from "@/components/ui/Carousel";
 import Container from "@/components/ui/Container";

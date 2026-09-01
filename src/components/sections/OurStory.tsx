@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
-import Blueprint from "../../../public/svg/test3-bright";
+import Blueprint from "@/components/svg/BlueprintBright";
 import RecognitionLogos from "@/components/ui-elements/RecognitionLogos";
 import { BUSINESS } from "@/lib/site";
 

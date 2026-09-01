@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Blueprint from "../../../public/svg/test3";
+import Blueprint from "@/components/svg/Blueprint";
 import ChecklistSheet from "@/components/ui/ChecklistSheet";
 import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";

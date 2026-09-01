@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Blueprint from "../../../public/svg/test3";
+import Blueprint from "@/components/svg/Blueprint";
 import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";
 import SectionHeader from "@/components/ui/SectionHeader";

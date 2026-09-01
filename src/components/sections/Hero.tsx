@@ -3,7 +3,7 @@ import Button from "@/components/ui/Button";
 import Display from "@/components/typography/Display";
 import Text from "@/components/typography/Text";
 import Container from "@/components/ui/Container";
-import Blueprint from "../../../public/svg/test3-bright";
+import Blueprint from "@/components/svg/BlueprintBright";
 
 export default function Hero(): React.ReactElement {
     return (

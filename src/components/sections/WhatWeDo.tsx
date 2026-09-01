@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
-import Blueprint from "../../../public/svg/test1";
+import Blueprint from "@/components/svg/BlueprintGrid";
 import ServiceIcon from "@/components/ui/ServiceIcon";
 import { FLAGSHIP_SERVICES, MORE_SERVICES, SECTOR_SERVICES, type Service } from "@/lib/services";
 

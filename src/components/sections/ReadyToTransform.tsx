@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import Blueprint from "../../../public/svg/test3-bright";
+import Blueprint from "@/components/svg/BlueprintBright";
 import Button from "@/components/ui/Button";
 import { BUSINESS } from "@/lib/site";
 
@@ -48,19 +48,23 @@ const corners = [
 export default function ReadyToTransform() {
     return (
         <section className="relative overflow-hidden border-t-2 border-brand-light/25 bg-gradient-to-b from-steel-top to-steel-bottom py-24 md:py-32">
-            {/* Bright blueprint variant (test3-bright): soft-light removed, uniform
-                white gradient, grid opacity raised — renders crisp bright white.
-                Tune `zoom` (≥1) to enlarge the drawing; for a different zoom per
-                breakpoint render two instances, e.g. one with className="hidden
-                md:block" and one zoomed with className="md:hidden". */}
+            {/* Fewer, larger squares (`gridStep` up from 88), and `gridFade`
+                dissolves them through a gradient rather than ruling them edge to
+                edge — paper is strong at the outer thirds and thins across the
+                middle. `weight="calm"` then puts the drawn elements well above
+                the grid, so the dimension strings, title block and corner marks
+                are what reads, not the graph paper. */}
             <Blueprint
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-90"
+                weight="calm"
+                gridStep={148}
+                gridFade
+                className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-80"
             />
             {/* Vignette to focus the card (matches the section's lower tone) */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,var(--color-steel-bottom)_95%)]" />
 
-            <div className="relative z-10 mx-auto max-w-4xl px-6">
+            <div className="relative z-10 mx-auto max-w-5xl px-6">
                 {/* Ambient glow that gently breathes behind the card */}
                 <motion.div
                     aria-hidden="true"
@@ -74,7 +78,7 @@ export default function ReadyToTransform() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={viewport}
-                    className="relative overflow-hidden rounded-sm border border-brand-light/20 bg-gradient-to-b from-ink-soft/70 to-ink/30 px-8 py-14 text-center backdrop-blur-sm md:px-16 md:py-20"
+                    className="relative overflow-hidden rounded-sm border border-brand-light/20 bg-gradient-to-b from-ink-soft/70 to-ink/30 px-6 py-14 text-center backdrop-blur-sm md:px-10 md:py-20"
                 >
                     {/* Corner brackets that draw themselves in */}
                     {corners.map((c) => (
@@ -138,7 +142,7 @@ export default function ReadyToTransform() {
                     {/* Answer-first, fact-dense lead paragraph */}
                     <motion.p
                         variants={fadeUp}
-                        className="relative mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-blue-100/80 md:text-xl"
+                        className="relative mx-auto mt-8 max-w-3xl text-lg leading-relaxed text-blue-100/80 md:text-xl"
                     >
                         {BUSINESS.name} is an MHIC-licensed general contractor working across{" "}
                         {BUSINESS.areaServed.join(" and ")} since {BUSINESS.foundingYear}. We take
@@ -149,7 +153,7 @@ export default function ReadyToTransform() {
                     {/* CTA prompt */}
                     <motion.p
                         variants={fadeUp}
-                        className="relative mx-auto mt-4 max-w-xl text-base text-blue-100/60"
+                        className="relative mx-auto mt-4 max-w-2xl text-base text-blue-100/60"
                     >
                         Book a free consultation and get a written estimate.
                     </motion.p>
@@ -164,7 +168,7 @@ export default function ReadyToTransform() {
                             whileTap={{ scale: 0.97 }}
                             transition={{ type: "spring", stiffness: 400, damping: 20 }}
                         >
-                            <Button href="/contact" variant="primary" className="running-border">
+                            <Button href="/contact" variant="cta" className="running-border">
                                 Get Your Free Consultation
                             </Button>
                         </motion.div>
@@ -173,7 +177,7 @@ export default function ReadyToTransform() {
                             whileTap={{ scale: 0.97 }}
                             transition={{ type: "spring", stiffness: 400, damping: 20 }}
                         >
-                            <Button href="/projects" variant="ghost" className="running-border">
+                            <Button href="/projects" variant="ctaOutline" className="running-border">
                                 View Our Work
                             </Button>
                         </motion.div>

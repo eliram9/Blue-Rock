@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Blueprint from "../../../public/svg/test3";
-import BlueprintBright from "../../../public/svg/test3-bright";
-import BlueprintGrid from "../../../public/svg/test1";
+import Blueprint from "@/components/svg/Blueprint";
+import BlueprintBright from "@/components/svg/BlueprintBright";
+import BlueprintGrid from "@/components/svg/BlueprintGrid";
 import Button from "@/components/ui/Button";
 import ChecklistSheet from "@/components/ui/ChecklistSheet";
 import Container from "@/components/ui/Container";

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import BlueprintGrid from "../../../public/svg/test1";
+import BlueprintGrid from "@/components/svg/BlueprintGrid";
 import ChecklistSheet from "@/components/ui/ChecklistSheet";
 import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";

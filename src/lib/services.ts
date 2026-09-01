@@ -7,10 +7,10 @@
  */
 
 import {
+    ADDITION_1,
+    ADDITION_2,
     BASEMENT_1,
     BASEMENT_2,
-    BASEMENT_3,
-    BASEMENT_4,
     BATH_1,
     BATH_2,
     BATH_3,
@@ -21,6 +21,8 @@ import {
     BATH_8,
     BATH_9,
     DC_KITCHEN,
+    EXTERIOR_1,
+    EXTERIOR_2,
     KITCHEN_3,
     KITCHEN_4,
     KITCHEN_5,
@@ -29,6 +31,7 @@ import {
     KITCHEN_8,
     KITCHEN_9,
     POTOMAC_KITCHEN,
+    toBeforeAfterProjects,
 } from "@/lib/projects";
 
 export interface Service {
@@ -269,8 +272,8 @@ export const SERVICE_SPLITS: Record<string, ServiceSplitBand> = {
                     "Professional exterior painting, prep included",
                 ],
                 image: {
-                    src: "/images/projects/exterior/exterior1.webp",
-                    alt: "Stone-clad home exterior at dusk with a rebuilt entry landing, wide stair treads, a dark full-height front door, and recessed landscape lighting along the planting bed",
+                    src: EXTERIOR_1.cover.src,
+                    alt: EXTERIOR_1.cover.alt,
                     caption: "Entry, cladding & hardscape",
                     focus: "60% 50%",
                 },
@@ -287,8 +290,8 @@ export const SERVICE_SPLITS: Record<string, ServiceSplitBand> = {
                 pullQuote:
                     "One licensed crew from tear-off to final walkthrough, so the siding, windows, trim, and paint all answer to the same standard.",
                 image: {
-                    src: "/images/projects/exterior/exterior2.webp",
-                    alt: "Corner elevation of a renovated home exterior with large-format stone cladding, a continuous lit soffit line, wall sconces between windows, and a paver walkway",
+                    src: EXTERIOR_2.cover.src,
+                    alt: EXTERIOR_2.cover.alt,
                     caption: "Corner elevation & lighting",
                     focus: "38% 50%",
                 },
@@ -470,17 +473,17 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                 {
                     src: POTOMAC_KITCHEN.cover.src,
                     alt: POTOMAC_KITCHEN.cover.alt,
-                    tag: POTOMAC_KITCHEN.location,
+                    tag: POTOMAC_KITCHEN.location ?? undefined,
                     title: "Full Gut Renovation",
                 },
                 {
                     src: DC_KITCHEN.cover.src,
                     alt: DC_KITCHEN.cover.alt,
-                    tag: DC_KITCHEN.location,
+                    tag: DC_KITCHEN.location ?? undefined,
                     title: "Two-Tone Cabinetry & Quartz",
                 },
                 /* No `tag` on the rest yet - the chip renders a project's
-                   location, and theirs are still TBD in projects.ts. */
+                   location, and theirs are still null in projects.ts. */
                 {
                     src: KITCHEN_3.cover.src,
                     alt: KITCHEN_3.cover.alt,
@@ -689,64 +692,13 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             kicker: "Before & After",
             heading: "Additions, Before & After",
             lead: "Two Montgomery County additions, each documented before construction and again after the final walkthrough. Both added a full upper level over an existing garage without extending the foundation or taking a foot of yard or driveway.",
+            /* Both studies live on their Project records in projects.ts,
+               where they also drive /projects/[slug]; toBeforeAfterProjects
+               merges each project's title and location back onto its study so
+               this band renders exactly as before. */
             projects: [
-                {
-                    title: "Second Story Over The Garage",
-                    /* Registered pair: same vantage point, same season, so the
-                       divider seam holds together across the elevation. */
-                    mode: "wipe",
-                    lead: "This colonial had a single-story two-car garage wing and a half-width second floor. Blue Rock built a full second story over the existing garage, which added an upper level of finished living space without extending the foundation or giving up a foot of yard or driveway. Drag the revision line to compare the original elevation with the finished one.",
-                    before: {
-                        src: "/images/projects/addition/pro1-before.webp",
-                        alt: "Two-story colonial home before construction, with a single-story attached two-car garage and a lower roofline over the garage wing",
-                        label: "Rev. A",
-                        note: "Existing elevation",
-                    },
-                    after: {
-                        src: "/images/projects/addition/pro1-after.webp",
-                        alt: "The same colonial home after Blue Rock built a second story over the attached garage, with the roofline carried across the full width and siding, trim, and shutters matched to the original house",
-                        label: "Rev. B",
-                        note: "As built",
-                    },
-                    caption:
-                        "Second story framed over the existing attached garage, with the main roofline extended across the full elevation and a rebuilt entry porch roof.",
-                    specs: [
-                        { label: "Scope", value: "Full second story over an attached two-car garage" },
-                        { label: "Added", value: "Upper level living space with two new front windows" },
-                        { label: "Matched", value: "Roofline, siding profile, trim, and shutters" },
-                        { label: "Footprint", value: "Unchanged, built over the existing garage" },
-                    ],
-                },
-                {
-                    title: "Mid-Century Second Story",
-                    location: "Rockville, MD",
-                    /* Unregistered pair: the record shot and the finished shot
-                       were taken from different positions and in different
-                       seasons, so these run side by side instead of behind a
-                       wipe divider. See SheetPair for why. */
-                    mode: "pair",
-                    lead: "This split-level had a low single-story garage wing that stopped well short of the two-story brick section. Rather than sit an addition on top of the house, Blue Rock drew the new upper level in the home's own mid-century vocabulary, so the finished elevation reads as one design instead of two eras.",
-                    before: {
-                        src: "/images/projects/addition/pro2-before.webp",
-                        alt: "Mid-century split-level brick home before construction, with a low single-story attached garage wing under a shingled roof and a bare autumn treeline behind it",
-                        label: "Rev. A",
-                        note: "Existing elevation",
-                    },
-                    after: {
-                        src: "/images/projects/addition/pro2-after.webp",
-                        alt: "The same split-level home after Blue Rock built a second story over the garage wing, with an angled mid-century roofline, full-height glazing, tan panel cladding, and teal accent panels matching the original entry band",
-                        label: "Rev. B",
-                        note: "As built",
-                    },
-                    caption:
-                        "Second story framed over the existing garage wing and drawn in the home's own mid-century vocabulary: an angled roofline, full-height glazing, and teal accent panels picked up from the original entry band.",
-                    specs: [
-                        { label: "Scope", value: "Full second story over an attached garage wing" },
-                        { label: "Added", value: "Upper level living space behind full-height glazing" },
-                        { label: "Matched", value: "Mid-century roof pitch, brickwork, and teal accent panels" },
-                        { label: "Site", value: "New planting beds and a resurfaced driveway" },
-                    ],
-                },
+                ...toBeforeAfterProjects(ADDITION_1),
+                ...toBeforeAfterProjects(ADDITION_2),
             ],
         },
         faq: [
@@ -822,8 +774,10 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
             heading: "Recent Basement Projects",
             /* Every slide is a real project pulled from projects.ts, so photos
                and alt text stay in sync with the portfolio. No `tag` yet - the
-               chip renders a location and these are still TBD. Slides 1, 3, and
-               4 are three rooms of the same finished basement. */
+               chip renders a location and these are still unconfirmed. Slides 1,
+               3, and 4 are three rooms of the same finished basement, which is
+               why the last two come off BASEMENT_1.photos rather than being
+               separate portfolio entries. */
             slides: [
                 {
                     src: BASEMENT_1.cover.src,
@@ -835,16 +789,11 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
                     alt: BASEMENT_2.cover.alt,
                     title: BASEMENT_2.title,
                 },
-                {
-                    src: BASEMENT_3.cover.src,
-                    alt: BASEMENT_3.cover.alt,
-                    title: BASEMENT_3.title,
-                },
-                {
-                    src: BASEMENT_4.cover.src,
-                    alt: BASEMENT_4.cover.alt,
-                    title: BASEMENT_4.title,
-                },
+                ...BASEMENT_1.photos.map((photo) => ({
+                    src: photo.src,
+                    alt: photo.alt,
+                    title: photo.caption ?? BASEMENT_1.title,
+                })),
             ],
         },
         faq: [

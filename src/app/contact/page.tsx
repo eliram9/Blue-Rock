@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Blueprint from "../../../public/svg/test3";
+import Blueprint from "@/components/svg/Blueprint";
 import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";
 import MiniHero from "@/components/sections/MiniHero";

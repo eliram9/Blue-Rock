@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import Blueprint from "../../../public/svg/test1";
+import Blueprint from "@/components/svg/BlueprintGrid";
 
 /* Blueprint-style corner brackets wrapper */
 function BlueprintBox({ children, className = "" }: { children: React.ReactNode; className?: string }) {
