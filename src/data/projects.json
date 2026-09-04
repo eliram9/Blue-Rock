@@ -14,6 +14,18 @@
         "featured": true
     },
     {
+        "slug": "bath-white-marble-primary",
+        "title": "White Marble Primary Bath",
+        "summary": "A bright primary suite in white and marble - a light oak double vanity with marble counters, brass fixtures, and a freestanding tub set beneath a triple window under a skylight. Built out of a full gut: the bath was taken back to the studs for new plumbing and electrical, a new subfloor and a curbed shower base in cement board, then Ditra underlayment for the large-format marble floor tile.",
+        "category": "bath",
+        "location": "Clarksville, MD",
+        "cover": {
+            "src": "/images/work_gallery/bath_clarksville_2024/after_02.jpg",
+            "alt": "White primary bathroom with light oak vanity, marble counters, brass fixtures, and a freestanding tub under a triple window"
+        },
+        "featured": false
+    },
+    {
         "slug": "bath-slate-vanity-primary",
         "title": "Slate Vanity Primary Bath",
         "summary": "A primary bath built around a slate-blue double vanity with a white quartz top - matte black fixtures, a freestanding soaking tub, and large-format porcelain floor tile.",
@@ -55,10 +67,11 @@
         "title": "Open Basement Rec Room",
         "summary": "An unfinished basement turned into an open rec room - light oak plank flooring, recessed lighting throughout, a cable-rail stair, and a wet bar and full bath off the main space.",
         "category": "basement",
-        "location": null,
+        "location": "Chevy Chase, MD",
         "cover": {
-            "src": "/images/projects/basement/basement1.jpg",
-            "alt": "Finished basement rec room with light oak plank flooring, recessed lighting, a black cable-rail staircase, and a wet bar through the open door"
+            "src": "/images/work_gallery/basement_chevy_Chase_24/after_02.jpg",
+            "alt": "Finished basement rec room with light oak plank flooring, recessed lighting, a black cable-rail staircase, and a wet bar through the open door",
+            "status": "after"
         },
         "featured": false
     },
@@ -240,18 +253,6 @@
         "cover": {
             "src": "/images/projects/kitchen/kitchen8.jpg",
             "alt": "Cream shaker kitchen with black granite counters, a gray island topped in marble, marble subway backsplash, farmhouse sink, and stainless pro range"
-        },
-        "featured": false
-    },
-    {
-        "slug": "bath-white-marble-primary",
-        "title": "White Marble Primary Bath",
-        "summary": "A bright primary suite in white and marble - a light oak vanity with marble counters, brass fixtures, and a freestanding tub set beneath a triple window.",
-        "category": "bath",
-        "location": null,
-        "cover": {
-            "src": "/images/projects/bath/bath7.jpg",
-            "alt": "White primary bathroom with light oak vanity, marble counters, brass fixtures, and a freestanding tub under a triple window"
         },
         "featured": false
     },

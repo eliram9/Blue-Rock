@@ -8,6 +8,7 @@ import ProjectModal from "@/components/ui/ProjectModal";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import {
     ADDITION_1,
+    BATH_7,
     CATEGORY_LABELS,
     projectSheetId,
     type Project,
@@ -172,6 +173,14 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
     );
 }
 
+/* Tiles whose mono label prints the city instead of a sheet number, and so
+   suppress the location line underneath. Opted into per project rather than
+   derived from `location`: four other records carry a city and still lead with
+   PRJ-NN, so converting a tile stays a decision rather than a side effect of
+   confirming an address. `location` lives on the record rather than here so
+   the photo modal stamps the same city on its frames. */
+const CITY_LABEL_SLUGS = new Set([ADDITION_1.slug, BATH_7.slug]);
+
 function TileInner({
     project,
     span,
@@ -186,11 +195,7 @@ function TileInner({
        simply its fraction of the viewport once past the mobile stack. */
     const sizes = `(max-width: 768px) 100vw, ${Math.round((span / 12) * 100)}vw`;
 
-    /* Scoped to the lead project on purpose: its label prints the city instead
-       of a sheet number. The rest of the grid keeps PRJ-NN until we decide to
-       convert them too. `location` lives on the record rather than here so the
-       photo modal stamps the same city on its frames. */
-    const leadsWithLocation = project.slug === ADDITION_1.slug && Boolean(project.location);
+    const leadsWithLocation = CITY_LABEL_SLUGS.has(project.slug) && Boolean(project.location);
 
     return (
         <>

@@ -33,10 +33,33 @@ automatically. Nothing sorts on `completedAt`.
 | --- | --- |
 | `slug` | Unique. It is the URL segment and the key into `project-gallery.json`. |
 | `category` | One of `kitchen` `bath` `basement` `addition` `exterior` `whole-home`. |
-| `location` | `"City, ST"`, or `null` when the city is not confirmed. `null` prints no chip; do not write `"TBD"`. |
+| `location` | `"City, ST"`, or `null` when the city is not confirmed. `null` prints no chip; do not write `"TBD"`. See *The tile label* below. |
 | `cover` | The tile image and the OG image. Deliberately *not* shown in the modal. |
 | `featured` | `true` spans two grid columns and leads the home-page carousel. |
 | `completedAt` | Optional `"YYYY-MM"`. Only emitted into structured data; omit rather than guess. |
+
+### The tile label
+
+Every tile prints one mono line above its title. By default that line is the
+sheet number:
+
+```
+PRJ—03 · BATHROOM          CLARKSVILLE, MD · BATHROOM
+Slate Vanity Primary Bath  White Marble Primary Bath
+```
+
+The right-hand form is what a finished project should look like. A tile leads
+with its city once its slug is listed in `CITY_LABEL_SLUGS` at the top of
+`TileInner` in `src/components/sections/ProjectGrid.tsx` — **add the slug there
+when you add the project**, or the card reads `PRJ-NN` and repeats the city on
+a third line underneath, which is the tell that this step was missed.
+
+It is an opt-in list rather than "any record with a `location`" on purpose: a
+city being confirmed is not the same decision as a project being finished
+enough to lead with it. Records still carrying a sheet number are not bugs.
+
+`null` location and a listed slug is not a failure - the tile falls back to the
+sheet number - so a project can be listed before its city is confirmed.
 
 ## `project-gallery.json` — what the carousel shows
 
@@ -51,7 +74,6 @@ fails the build.
         {
             "src": "/images/projects/kitchen/kitchen6b.jpg",
             "alt": "Describe what is in the frame, not \"project photo 2\".",
-            "caption": "Range Wall",
             "status": "before"
         }
     ]
@@ -71,7 +93,11 @@ To give a project a finished shot in its modal, add a *different* frame of the
 finished work - not the cover file.
 
 - `alt` is required and is read aloud by screen readers. Describe the frame.
-- `caption` is optional, shown over the bottom of that frame.
+- **`caption` stays off.** The field exists and renders a label bar under the
+  frame, but do not write one. A row of invented room names ("Utility Sink",
+  "Closet Run") reads as filing, not as photography, and it says nothing the
+  photograph is not already showing. The `alt` text carries the description,
+  and it carries it to the people who actually need it.
 - `status` is optional: `"before"`, `"after"`, or `"in-progress"`. It stamps a
   chip beside the city. Omit it for ordinary finished work rather than
   labelling every frame `"after"`.
@@ -129,8 +155,10 @@ future shoot might include phone GPS, which would pin a client's address.
 3. Add a matching `project-gallery.json` slot, even if `photos` is empty.
 4. Write real `alt` for every frame - describe what is actually in the shot,
    not "project photo 2". Screen readers read this aloud, and it is what the
-   `ImageGallery` structured data falls back to.
-5. Check it in the browser: open the tile, walk the frames, confirm the counter
+   `ImageGallery` structured data falls back to. No `caption` - see above.
+5. Add the slug to `CITY_LABEL_SLUGS` in `ProjectGrid.tsx` so the tile leads
+   with the city instead of `PRJ-NN`. See *The tile label* above.
+6. Check it in the browser: open the tile, walk the frames, confirm the counter
    and the stage stamps change where you expect.
 
 A slug in one file and not the other fails the build with a named error rather
