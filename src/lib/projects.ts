@@ -32,6 +32,7 @@ export type ProjectCategory =
     | "bath"
     | "basement"
     | "addition"
+    | "garage"
     | "exterior"
     | "whole-home";
 
@@ -41,6 +42,7 @@ export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
     bath: "Bathroom",
     basement: "Basement",
     addition: "Addition",
+    garage: "Garage",
     exterior: "Exterior",
     "whole-home": "Whole Home",
 };
@@ -318,6 +320,8 @@ export const BATH_9 = bySlug("bath-wood-tile-shower");
 export const BATH_10 = bySlug("bath-potomac-primary-gut");
 export const BASEMENT_1 = bySlug("basement-open-rec-room");
 export const BASEMENT_2 = bySlug("basement-modern-lower-level");
+export const BASEMENT_3 = bySlug("basement-tornado-shelter");
+export const GARAGE_1 = bySlug("garage-renovation-potomac");
 export const EXTERIOR_1 = bySlug("exterior-stone-entry");
 export const EXTERIOR_2 = bySlug("exterior-corner-elevation");
 

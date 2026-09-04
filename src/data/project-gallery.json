@@ -417,5 +417,170 @@
                 "status": "after"
             }
         ]
+    },
+    "basement-tornado-shelter": {
+        "intro": "",
+        "photos": [
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_02.jpg",
+                "alt": "The open hatch seen from the patio, its diamond-plate leaf held upright on a chain, with the deck stairs and the back of the gray-sided house behind it",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_03.jpg",
+                "alt": "Looking straight down through the open hatch into the entry shaft, the stainless frame set flush in the concrete pad and the rebar grab bar of the ladder just below the lip",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_04.jpg",
+                "alt": "Looking up the rebar ladder from the bottom of the shaft to the open hatch, with blue sky and spring branches above the rim",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_05.jpg",
+                "alt": "The barrel-vaulted concrete tunnel looking toward the exit shaft, with the ladder at the far end, a strip light on the right wall and conduit run along it",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_06.jpg",
+                "alt": "The same tunnel from the opposite side, the poured concrete vault overhead and the ladder framed in the opening at the end of the run",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_07.jpg",
+                "alt": "The tunnel looking the other way toward the shelter, the arched steel door standing open at the end of the vault beside a wall-mounted strip light",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_08.jpg",
+                "alt": "The arched steel door closed at the end of the concrete tunnel, its black leaf filling the vaulted opening",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_09.jpg",
+                "alt": "Inside the shelter room, corrugated steel deck ceiling over troweled concrete walls and a tiled floor, with the arched steel door in the far right corner",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_10.jpg",
+                "alt": "The shelter room looking toward the concrete stair that climbs back into the house, steel deck ceiling above and a capped water stub in the left wall",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_11.jpg",
+                "alt": "The shelter room with the arched door open onto the lit tunnel beyond, caged bulkhead lights on either wall fed by surface conduit, and outlets set low",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_12.jpg",
+                "alt": "The shelter room with the arched steel door latched shut, a caged bulkhead light overhead, and tiled steps leading up to the doorway into the finished lower level",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_13.jpg",
+                "alt": "The passage into the shelter under an exposed steel deck ceiling, a junction box and surface conduit feeding a hanging bulb over the tiled floor",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_14.jpg",
+                "alt": "The shelter's vault door standing open, its brass five-spoke handle and pinned edge in the foreground, with the lit concrete passage beyond",
+                "status": "after"
+            }
+        ]
+    },
+    "garage-renovation-potomac": {
+        "intro": "",
+        "photos": [
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/pre_01.jpg",
+                "alt": "The garage before work, one paneled door closed and the second bay standing open on the tan brick elevation under gray lap siding",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/pre_02.jpg",
+                "alt": "The same elevation from the driveway before work, the closed paneled door beside the open bay, with a recycling bin at the brick corner",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/pre_03.jpg",
+                "alt": "Inside the garage before work, two red steel shoring posts standing under the beam line, a workbench and tool chests along the left wall, and a step up through an open door into the house",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/prog_01.jpg",
+                "alt": "The elevation mid-job, the garage opening boarded over with sheathing, a dumpster on the driveway, and ladders up to the second story where the siding has been stripped to felt and Tyvek is going on",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/prog_02.jpg",
+                "alt": "The same elevation from across the lawn, showing how far the wrap has been carried along the upper story above the brick, with staging and ladders set against the wall",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/prog_03.jpg",
+                "alt": "The garage interior stripped to studs and joists, a grey steel beam carried across the ceiling where the shoring posts had stood, sheathing and insulation exposed on the walls, and a new window opening cut in the far wall",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/prog_04.jpg",
+                "alt": "A linear trench drain being set into the concrete at the door threshold, with the slab inside masked in red waterproofing membrane taped off at the edge and bags of concrete mix stacked alongside",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/prog_05.jpg",
+                "alt": "A slatwall run going up over the finished epoxy floor, blue tape marking a stud line down the middle of the panels and the top course still open to the blocking above",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_02.jpg",
+                "alt": "The finished elevation head-on, two white garage doors with staggered glass panels set in the tan brick under a gray gambrel second story and a copper-capped bay window",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_03.jpg",
+                "alt": "The same elevation closer, the paired doors and brick pier centered under the gambrel roof, with a climbing rose on the split-rail fence to the left",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_04.jpg",
+                "alt": "The garage wing from across the lawn, the gambrel end and its side dormer in gray siding above the brick, joined back to the house beyond the red maple",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_05.jpg",
+                "alt": "The finished interior looking out through both open bays to the lawn and trees, slatwall carried around the walls above a flake epoxy floor and recessed lights across the white ceiling",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_06.jpg",
+                "alt": "The interior from the far corner, both doors up on the driveway and the neighbouring house, with the cabinet run and wood workbench along the right-hand wall",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_07.jpg",
+                "alt": "The full width of the finished garage, tall gray cabinets and a workbench along the left wall, a glazed door through to the house, and recessed lighting over the flake epoxy floor",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_08.jpg",
+                "alt": "One bay open to the fence line, the cabinet run and wood-topped workbench centered on the back wall between slatwall panels",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_09.jpg",
+                "alt": "The storage wall in detail, full-height gray cabinets with long steel pulls beside a butcher-block workbench, drawer banks below and upper cabinets over a slatwall backsplash",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_10.jpg",
+                "alt": "The garage looking back toward the closed doors, slatwall wrapping the walls to a granite-chip base and the steel post left exposed at the beam line",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/garage_renovation_potomac_24/after_11.jpg",
+                "alt": "The rear corner of the finished garage, a white service door on its raised step between slatwall runs, with two new windows looking onto the trees",
+                "status": "after"
+            }
+        ]
     }
 }

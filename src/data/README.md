@@ -32,7 +32,7 @@ automatically. Nothing sorts on `completedAt`.
 | Field | Notes |
 | --- | --- |
 | `slug` | Unique. It is the URL segment and the key into `project-gallery.json`. |
-| `category` | One of `kitchen` `bath` `basement` `addition` `exterior` `whole-home`. |
+| `category` | One of `kitchen` `bath` `basement` `addition` `garage` `exterior` `whole-home`. |
 | `location` | `"City, ST"`, or `null` when the city is not confirmed. `null` prints no chip; do not write `"TBD"`. See *The tile label* below. |
 | `cover` | The tile image and the OG image. Deliberately *not* shown in the modal. |
 | `featured` | `true` spans two grid columns and leads the home-page carousel. |

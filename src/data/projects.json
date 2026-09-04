@@ -39,6 +39,33 @@
         "featured": false
     },
     {
+        "slug": "basement-tornado-shelter",
+        "title": "Underground Tornado Shelter",
+        "summary": "A private storm shelter built below grade off the lower level - a poured concrete room under a steel deck ceiling behind a gasketed vault door, joined to a barrel-vaulted concrete tunnel that runs out to a ladder and a steel escape hatch set flush into the patio. Two ways out, independent of the house.",
+        "category": "basement",
+        "location": "Bethesda, MD",
+        "cover": {
+            "src": "/images/work_gallery/tornado_shelter_bethesda_24/after_01.jpg",
+            "alt": "Diamond-plate steel escape hatch standing open in a concrete patio pad beside the deck stairs, with the lawn and trees of the back yard behind it",
+            "status": "after"
+        },
+        "featured": false
+    },
+    {
+        "slug": "garage-renovation-potomac",
+        "title": "Two-Bay Garage Rebuild",
+        "summary": "A two-bay garage in Potomac taken back to studs and rebuilt as finished space. The temporary shoring came out for a steel beam carrying the floor above, the slab was waterproofed to a trench drain at the threshold and coated in flake epoxy, and the walls went back in full-height slatwall with built-in cabinetry and a wood workbench. Outside, the elevation was re-sided and re-trimmed under a gambrel roof, with new glass-panel doors hung in the original brick openings.",
+        "category": "garage",
+        "location": "Potomac, MD",
+        "cover": {
+            "src": "/images/work_gallery/garage_renovation_potomac_24/after_01.jpg",
+            "alt": "The finished two-bay garage from the driveway, both doors raised on the tan brick base to show the slatwall and epoxy floor inside, under a gray gambrel second story with a copper-capped bay window and a red Japanese maple alongside",
+            "status": "after"
+        },
+        "featured": false,
+        "completedAt": "2024-05"
+    },
+    {
         "slug": "bath-slate-vanity-primary",
         "title": "Slate Vanity Primary Bath",
         "summary": "A primary bath built around a slate-blue double vanity with a white quartz top - matte black fixtures, a freestanding soaking tub, and large-format porcelain floor tile.",
