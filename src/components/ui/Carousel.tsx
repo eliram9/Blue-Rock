@@ -3,6 +3,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { PHOTO_STATUS_LABELS, type PhotoStatus } from "@/lib/projects";
+
+/**
+ * Which surface the carousel is sitting on, per the two-surface model in the
+ * dark-mode skill. "themed" uses flipping tokens and is right for a normal
+ * page band; "ink" uses the fixed navy/brand tokens and is what a carousel
+ * inside the photo modal needs, because that modal is dark in both themes and
+ * a flipping `border-border` would go pale-on-navy in light mode.
+ */
+type CarouselTone = "themed" | "ink";
 
 interface CarouselProps {
     images: {
@@ -10,9 +20,11 @@ interface CarouselProps {
         alt: string;
         title?: string;
         description?: string;
-        /** Category label shown as a chip on the main image only,
-            e.g. "Residential — Kitchen". */
+        /** Label chipped on the top left of the main image, e.g. a category
+            on the home page or the project's city in the photo modal. */
         tag?: string;
+        /** Optional second chip beside `tag`. Omit for finished work. */
+        status?: PhotoStatus;
     }[];
     autoplay?: boolean;
     autoplayInterval?: number;
@@ -21,7 +33,33 @@ interface CarouselProps {
     /** Frame height. Leave unset — every carousel on the site shares one
         height so slides read as the same size from section to section. */
     height?: string;
+    tone?: CarouselTone;
 }
+
+/* The only classes that differ between the two surfaces. Everything else in
+   the carousel is already fixed-token or photo, so it reads the same on both. */
+const TONES: Record<
+    CarouselTone,
+    { frame: string; thumb: string; thumbActive: string; thumbWidth: string }
+> = {
+    themed: {
+        frame: "border-border",
+        thumb: "border-border",
+        thumbActive: "border-main-blue ring-1 ring-main-blue",
+        thumbWidth: "",
+    },
+    ink: {
+        frame: "border-brand-light/25",
+        thumb: "border-brand-light/20",
+        thumbActive: "border-brand-light ring-1 ring-brand-light",
+        /* A page band can be as tall as it likes; the modal has to fit inside
+           one viewport. Without a cap, `flex-1` stretches a three-photo strip
+           to ~376px per thumb, which at 16/10 is a 235px band that pushes the
+           frame off a short laptop window. 150px also matches the `sizes` hint
+           below, so the browser stops requesting a file too small for its box. */
+        thumbWidth: "sm:max-w-[150px]",
+    },
+};
 
 export default function Carousel({
     images,
@@ -30,7 +68,9 @@ export default function Carousel({
     showDots = true,
     showArrows = true,
     height = "h-[460px] md:h-[580px]",
+    tone = "themed",
 }: CarouselProps): React.ReactElement {
+    const toneClasses = TONES[tone];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
     const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -131,7 +171,7 @@ export default function Carousel({
             onTouchEnd={onTouchEnd}
         >
             {/* Main Image Container — blueprint frame with corner brackets */}
-            <div className={`relative ${height} overflow-hidden rounded-sm border border-border`}>
+            <div className={`relative ${height} overflow-hidden rounded-sm border ${toneClasses.frame}`}>
                 {["top-0 left-0 border-t-2 border-l-2", "top-0 right-0 border-t-2 border-r-2", "bottom-0 left-0 border-b-2 border-l-2", "bottom-0 right-0 border-b-2 border-r-2"].map((pos) => (
                     <span
                         key={pos}
@@ -163,11 +203,25 @@ export default function Carousel({
                             quality={90}
                         />
 
-                        {/* Category tag — light glass chip so the brand-blue text
-                            stays readable over any photo; crossfades with its slide */}
+                        {/* Top left: the label chip. A light glass panel so the
+                            brand-blue text stays readable over any photo.
+                            Crossfades with its slide. */}
                         {images[currentIndex].tag && (
                             <span className="absolute top-5 left-5 z-20 rounded-sm border border-white/60 bg-white/85 px-3 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.2em] text-brand backdrop-blur-sm">
                                 {images[currentIndex].tag}
+                            </span>
+                        )}
+
+                        {/* Bottom left: the timeline stamp. Diagonally opposite
+                            the counter and clear of the label above, so the
+                            frame reads corner to corner instead of stacking two
+                            chips in one corner. Outlined rather than filled, so
+                            it never competes with the label for attention.
+                            `bottom-6` clears the autoplay hairline that sits at
+                            bottom-0 on the page carousels. */}
+                        {images[currentIndex].status && (
+                            <span className="absolute bottom-6 left-5 z-20 rounded-sm border border-brand-light/60 bg-ink/70 px-3 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.2em] text-blue-100 backdrop-blur-sm">
+                                {PHOTO_STATUS_LABELS[images[currentIndex].status]}
                             </span>
                         )}
 
@@ -223,7 +277,7 @@ export default function Carousel({
                     <>
                         <button
                             onClick={goToPrevious}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-brand-light hover:bg-brand-light/30"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 cursor-pointer rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-brand-light hover:bg-brand-light/30"
                             aria-label="Previous slide"
                         >
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -233,7 +287,7 @@ export default function Carousel({
 
                         <button
                             onClick={goToNext}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-brand-light hover:bg-brand-light/30"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 cursor-pointer rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-brand-light hover:bg-brand-light/30"
                             aria-label="Next slide"
                         >
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -262,11 +316,11 @@ export default function Carousel({
                             key={index}
                             onClick={() => goToSlide(index)}
                             aria-label={`Go to slide ${index + 1} of ${images.length}`}
-                            className={`relative aspect-[16/10] overflow-hidden rounded-sm border transition-all duration-300 ${
+                            className={`relative aspect-[16/10] cursor-pointer overflow-hidden rounded-sm border transition-all duration-300 ${
                                 index === currentIndex
-                                    ? "border-main-blue opacity-100 ring-1 ring-main-blue"
-                                    : "border-border opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
-                            }`}
+                                    ? `${toneClasses.thumbActive} opacity-100`
+                                    : `${toneClasses.thumb} opacity-60 grayscale hover:opacity-100 hover:grayscale-0`
+                            } ${toneClasses.thumbWidth}`}
                         >
                             <Image
                                 src={image.src}

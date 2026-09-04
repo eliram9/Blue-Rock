@@ -8,6 +8,9 @@
        Use on art-directed "ink" surfaces that must NOT flip:
        the navy Story band, the steel CTA band, the Footer. */
     --color-brand: #0E48CC;         /* deep brand blue */
+    --color-brand-deep: #0B3AA6;    /* darker hover state for brand fills — the
+                                       fixed twin of main-blue-deep, for filled
+                                       buttons on art-directed surfaces */
     --color-brand-light: #5A87DD;   /* light brand-blue accent on ink */
     /* Accent word inside display headlines on ink. brand-light only measures
        2.5:1 on the steel band's lighter end, under the 3:1 AA floor for large

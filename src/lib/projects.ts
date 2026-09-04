@@ -1,11 +1,31 @@
 /**
- * Single source of truth for Blue Rock's completed project portfolio - the
- * /projects gallery, the /projects/[slug] detail pages, and the "recent work"
- * bands on service detail pages all read from here.
+ * The project portfolio: the /projects grid, the photo modal, the
+ * /projects/[slug] pages, and the "recent work" bands on service pages all
+ * read from here.
  *
- * Photos live in public/images/projects/<category>/ and are referenced by their
- * public path (no `public/` prefix - that folder is the web root).
+ * The records themselves live in JSON so content can be edited without
+ * touching code:
+ *
+ *   src/data/projects.json          one entry per project - the tile. Title,
+ *                                   summary, category, city, cover photo.
+ *                                   Array order is the grid's display order.
+ *   src/data/project-gallery.json   keyed by slug - what the photo modal
+ *                                   shows. `photos` are the frames that
+ *                                   follow the cover, plus optional `intro`
+ *                                   text. Every slug has a slot, most are
+ *                                   still empty.
+ *
+ * This file owns the types, the helpers, and the before/after studies (which
+ * drive the service-page comparison bands, not the modal). It composes the two
+ * JSON files back into the `Project` shape every consumer already expects, so
+ * nothing downstream had to change.
+ *
+ * Photo paths are public paths, no `public/` prefix - that folder is the web
+ * root.
  */
+
+import indexJson from "@/data/projects.json";
+import galleryJson from "@/data/project-gallery.json";
 
 export type ProjectCategory =
     | "kitchen"
@@ -25,12 +45,28 @@ export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
     "whole-home": "Whole Home",
 };
 
+/**
+ * Where a frame sits in the job's timeline. Optional on purpose: most
+ * portfolio shots are finished work and carry no stamp at all. Only set it
+ * when the frame would be misread without it.
+ */
+export type PhotoStatus = "before" | "after" | "in-progress";
+
+/** Chip text for a status stamp. */
+export const PHOTO_STATUS_LABELS: Record<PhotoStatus, string> = {
+    before: "Before",
+    after: "After",
+    "in-progress": "In Progress",
+};
+
 export interface ProjectPhoto {
     src: string;
     /** Describe what's in the frame, not "project photo 1". */
     alt: string;
     /** Short label shown under the photo in the detail gallery. */
     caption?: string;
+    /** Stamped over the frame in the viewer. Omit for finished work. */
+    status?: PhotoStatus;
 }
 
 interface ProjectFrame {
@@ -74,8 +110,12 @@ export interface Project {
     location: string | null;
     /** Grid tile, detail-page hero, and OG image. */
     cover: ProjectPhoto;
-    /** Detail-page gallery, cover excluded. Empty = tile only, no detail route. */
+    /** Modal and detail-page gallery, cover excluded. Empty = cover only.
+        Edited in src/data/project-gallery.json. */
     photos: ProjectPhoto[];
+    /** Optional paragraph shown under the title in the photo modal. Lives
+        alongside the photos in src/data/project-gallery.json. */
+    intro?: string;
     /** Populated once a job has a documented before/after study. */
     beforeAfter?: ProjectBeforeAfter[];
     /** Featured tiles span two grid columns and lead the home-page carousel. */
@@ -86,23 +126,35 @@ export interface Project {
     completedAt?: string;
 }
 
-/* ── Additions ─────────────────────────────────────────────────────────────
-   The two richest records in the portfolio: both carry a documented
-   before/after study, so both earn a detail page today. */
+/* ── Composition ───────────────────────────────────────────────────────────
+   JSON gives us widened types (`string`, not the category union), so the two
+   imports are asserted once here and nowhere else. `assertRecords` below is
+   what keeps that assertion honest: a typo like "beofre" would otherwise
+   compile clean and silently render no chip. */
 
-export const ADDITION_1: Project = {
-    slug: "addition-second-story-garage",
-    title: "Second Story Over The Garage",
-    summary:
-        "A full second story framed over an existing attached two-car garage, with the main roofline carried across the whole elevation and siding, trim, and shutters matched to the original house. The foundation and footprint are unchanged.",
-    category: "addition",
-    location: null,
-    cover: {
-        src: "/images/projects/addition/pro1-after.webp",
-        alt: "Two-story colonial home after Blue Rock built a second story over the attached garage, with the roofline carried across the full width and siding, trim, and shutters matched to the original house",
-    },
-    photos: [],
-    beforeAfter: [
+type GalleryEntry = { intro?: string; photos: ProjectPhoto[] };
+
+/* Two files, one job each, and the split is deliberate:
+
+     projects.json          the tile. Title, summary, category, city, cover.
+     project-gallery.json    the modal. Every frame the carousel shows.
+
+   A project's photos belong in the gallery file and nowhere else. Do not
+   inline a `photos` array on a record in projects.json - assertRecords
+   rejects it, because two places to look is how the two drift apart. */
+type IndexRecord = Omit<Project, "photos" | "beforeAfter" | "intro">;
+
+const INDEX = indexJson as IndexRecord[];
+const GALLERY = galleryJson as Record<string, GalleryEntry>;
+
+/**
+ * Before/after studies, keyed by slug. These stay in code rather than JSON:
+ * they are not what the modal shows, they drive the service-page comparison
+ * bands and the detail pages, and their `mode` choice is a judgement about the
+ * photographs that wants the comment attached to it.
+ */
+const BEFORE_AFTER: Record<string, ProjectBeforeAfter[]> = {
+    "addition-second-story-garage": [
         {
             /* Registered pair: same vantage point, same season, so the
                divider seam holds together across the elevation. */
@@ -130,22 +182,7 @@ export const ADDITION_1: Project = {
             ],
         },
     ],
-    featured: true,
-};
-
-export const ADDITION_2: Project = {
-    slug: "addition-mid-century-second-story",
-    title: "Mid-Century Second Story",
-    summary:
-        "A second story over an existing garage wing on a split-level, drawn in the home's own mid-century vocabulary - an angled roofline, full-height glazing, and teal accent panels picked up from the original entry band.",
-    category: "addition",
-    location: "Rockville, MD",
-    cover: {
-        src: "/images/projects/addition/pro2-after.webp",
-        alt: "Split-level home after Blue Rock built a second story over the garage wing, with an angled mid-century roofline, full-height glazing, tan panel cladding, and teal accent panels",
-    },
-    photos: [],
-    beforeAfter: [
+    "addition-mid-century-second-story": [
         {
             /* Unregistered pair: the record shot and the finished shot were
                taken from different positions and in different seasons, so
@@ -174,408 +211,96 @@ export const ADDITION_2: Project = {
             ],
         },
     ],
-    featured: false,
 };
 
-/* ── Kitchens ──────────────────────────────────────────────────────────────
-   Exported by name as well as through PROJECTS so service pages can pull a
-   specific project's photo and location without a find() + non-null assert.
-
-   TODO: locations below are null - confirm the city for each job with the
-   client, then fill them in. Until then these render without a location chip. */
-
-export const POTOMAC_KITCHEN: Project = {
-    slug: "potomac-kitchen",
-    title: "Potomac Kitchen Remodel",
-    summary:
-        "A full gut renovation opening the kitchen into a bright galley layout - handleless flat-panel cabinetry, a waterfall marble island with prep sink, full-slab backsplash, and a professional appliance suite.",
-    category: "kitchen",
-    location: "Potomac, MD",
-    completedAt: "2026-06",
-    cover: {
-        src: "/images/projects/kitchen/kitchen1.jpg",
-        alt: "Modern white kitchen with handleless cabinetry, waterfall marble island, matte black faucets, and stainless steel professional range",
-    },
-    photos: [],
-    featured: true,
-};
-
-export const DC_KITCHEN: Project = {
-    slug: "washington-dc-kitchen",
-    title: "Washington DC Kitchen Remodel",
-    summary:
-        "A two-tone kitchen built around a walnut-stained island - slate shaker cabinetry, marble-look quartz counters, a subway tile backsplash, and a professional range set into the island.",
-    category: "kitchen",
-    location: "Washington, DC",
-    completedAt: "2026-04",
-    cover: {
-        src: "/images/projects/kitchen/kitchen2.jpg",
-        alt: "Two-tone kitchen with slate gray shaker cabinets, walnut island, marble-look quartz counters, and glass globe pendant lights",
-    },
-    photos: [],
-    featured: true,
-};
-
-export const KITCHEN_3: Project = {
-    slug: "kitchen-open-plan-white",
-    title: "Open-Plan White Kitchen",
-    summary:
-        "A bright open-plan kitchen and dining space - handleless white cabinetry, a quartz island with an undermount prep sink, and dark-framed windows against wide-plank hardwood.",
-    category: "kitchen",
-    location: null,
-    cover: {
-        src: "/images/projects/kitchen/kitchen3.jpg",
-        alt: "Bright open-plan white kitchen with a quartz island, handleless cabinetry, dark-framed windows, and hardwood floors",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const KITCHEN_4: Project = {
-    slug: "kitchen-farmhouse-white",
-    title: "Farmhouse Kitchen",
-    summary:
-        "A farmhouse kitchen built around a plaster-style range hood - white shaker and glass-front cabinetry, a gray subway backsplash, lantern pendants, and a seated island.",
-    category: "kitchen",
-    location: null,
-    cover: {
-        src: "/images/projects/kitchen/kitchen4.jpg",
-        alt: "Farmhouse kitchen with white cabinetry, plaster range hood, gray subway tile backsplash, lantern pendants, and wood bar stools at the island",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const KITCHEN_5: Project = {
-    slug: "kitchen-marble-galley",
-    title: "Marble Galley Kitchen",
-    summary:
-        "A galley layout finished in soft gray shaker cabinetry with a full marble slab backsplash, a long marble island, farmhouse sink, and a professional range.",
-    category: "kitchen",
-    location: null,
-    cover: {
-        src: "/images/projects/kitchen/kitchen5.jpg",
-        alt: "Gray shaker galley kitchen with a long marble island, marble slab backsplash, stainless farmhouse sink, and professional range",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const KITCHEN_6: Project = {
-    slug: "kitchen-navy-brass",
-    title: "Navy & Brass Kitchen",
-    summary:
-        "A two-tone kitchen pairing white perimeter cabinetry with a navy island, brass hardware and fixtures throughout, white oak floors, and a farmhouse sink.",
-    category: "kitchen",
-    location: null,
-    cover: {
-        src: "/images/projects/kitchen/kitchen6.jpg",
-        alt: "White kitchen with a navy island, brass hardware and faucet, white oak floors, farmhouse sink, and double wall ovens",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const KITCHEN_7: Project = {
-    slug: "kitchen-matte-black",
-    title: "Matte Black Kitchen",
-    summary:
-        "A dramatic matte black kitchen under a vaulted, beamed ceiling - white quartz counters, an induction cooktop set into the island, double wall ovens, and light wood floors.",
-    category: "kitchen",
-    location: null,
-    cover: {
-        src: "/images/projects/kitchen/kitchen7.jpg",
-        alt: "Matte black kitchen with a vaulted beamed ceiling, white quartz island with induction cooktop, cylinder pendants, and double wall ovens",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const KITCHEN_8: Project = {
-    slug: "kitchen-classic-cream",
-    title: "Classic Cream Kitchen",
-    summary:
-        "A classic kitchen in cream shaker cabinetry - black granite perimeter counters against a marble-topped gray island, a marble subway backsplash with a tile medallion, and a professional range.",
-    category: "kitchen",
-    location: null,
-    cover: {
-        src: "/images/projects/kitchen/kitchen8.jpg",
-        alt: "Cream shaker kitchen with black granite counters, a gray island topped in marble, marble subway backsplash, farmhouse sink, and stainless pro range",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const KITCHEN_9: Project = {
-    slug: "kitchen-vaulted-white",
-    title: "Vaulted White Kitchen",
-    summary:
-        "A white kitchen under a vaulted ceiling with a gable window wall - a waterfall quartz island seating four, black lantern pendants, a pot filler over the gas cooktop, and light oak floors.",
-    category: "kitchen",
-    location: null,
-    cover: {
-        src: "/images/projects/kitchen/kitchen9.jpg",
-        alt: "White shaker kitchen under a vaulted ceiling with a gable window wall, waterfall quartz island with black bar stools, lantern pendants, and light oak floors",
-    },
-    photos: [],
-    featured: false,
-};
-
-/* ── Bathrooms ─────────────────────────────────────────────────────────────
-   Same TODO as the kitchens above: locations are unconfirmed, so these render
-   without a location chip until the client supplies the city for each job. */
-
-export const BATH_1: Project = {
-    slug: "bath-slate-vanity-primary",
-    title: "Slate Vanity Primary Bath",
-    summary:
-        "A primary bath built around a slate-blue double vanity with a white quartz top - matte black fixtures, a freestanding soaking tub, and large-format porcelain floor tile.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath1.jpg",
-        alt: "Primary bathroom with a slate-blue double vanity, white quartz counter, matte black fixtures, and a freestanding soaking tub by the window",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_2: Project = {
-    slug: "bath-stone-walk-in",
-    title: "Stone Tile Walk-In Bath",
-    summary:
-        "A compact bath finished in large-format stone-look tile - a light wood floating vanity, backlit mirror cabinet, and a frameless glass walk-in shower with a rain head.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath2.jpg",
-        alt: "Contemporary bathroom with light wood floating vanity, stone-look tile walls, backlit mirror cabinet, and a glass walk-in shower",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_3: Project = {
-    slug: "bath-gray-brass",
-    title: "Gray & Brass Bath",
-    summary:
-        "A bright bath pairing a gray shaker double vanity with brass hardware and arched mirrors - a black-framed subway tile shower and a marble-look tile floor.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath3.jpg",
-        alt: "Bathroom with gray shaker double vanity, brass hardware and arched mirrors, black-framed glass shower, and white subway tile",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_4: Project = {
-    slug: "bath-spa-fireplace",
-    title: "Spa Bath with Fireplace",
-    summary:
-        "A spa-style primary bath centered on a freestanding soaking tub - a marble-look feature wall with a linear fireplace and hexagon porcelain floor tile.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath4.jpg",
-        alt: "Spa bathroom with a freestanding soaking tub, marble-look feature wall with a linear fireplace, and gray hexagon floor tile",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_5: Project = {
-    slug: "bath-classic-luxury",
-    title: "Classic Luxury Bath",
-    summary:
-        "A classic luxury bath in cream marble - a fluted stone vanity, integrated wood shelving and storage, and a frameless glass shower alongside a built-in tub.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath5.jpg",
-        alt: "Cream marble luxury bathroom with a fluted stone vanity, wood shelving, glass shower enclosure, and built-in tub",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_6: Project = {
-    slug: "bath-fluted-wood",
-    title: "Fluted Wood Vanity Bath",
-    summary:
-        "A modern bath mixing a fluted wood floating vanity and vessel sink with a geometric feature tile wall and a ribbed wood-look tile walk-in shower.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath6.jpg",
-        alt: "Modern bathroom with a fluted wood floating vanity, vessel sink, geometric patterned accent tile, and a ribbed wood-look tile shower",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_7: Project = {
-    slug: "bath-white-marble-primary",
-    title: "White Marble Primary Bath",
-    summary:
-        "A bright primary suite in white and marble - a light oak vanity with marble counters, brass fixtures, and a freestanding tub set beneath a triple window.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath7.jpg",
-        alt: "White primary bathroom with light oak vanity, marble counters, brass fixtures, and a freestanding tub under a triple window",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_8: Project = {
-    slug: "bath-double-shower",
-    title: "Double Shower Primary Bath",
-    summary:
-        "A primary bath with an oversized marble walk-in shower - dual shower heads, a built-in bench, and a freestanding oval tub by the window.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath8.jpg",
-        alt: "Primary bathroom with a large marble walk-in shower with dual shower heads and bench seat, and a freestanding oval tub",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const BATH_9: Project = {
-    slug: "bath-wood-tile-shower",
-    title: "Wood Tile Shower Bath",
-    summary:
-        "A guest bath finished with a ribbed wood-look tile shower behind a brass sliding glass door, paired with a wood vanity and marble-look floor tile.",
-    category: "bath",
-    location: null,
-    cover: {
-        src: "/images/projects/bath/bath9.jpg",
-        alt: "Bathroom with a ribbed wood-look tile shower behind a brass-framed sliding glass door, wood vanity, and marble-look floor tile",
-    },
-    photos: [],
-    featured: false,
-};
-
-/* ── Basements ─────────────────────────────────────────────────────────────
-   BASEMENT_1 is one job photographed in three rooms. The storage end and the
-   utility/fireplace room used to be separate exports, which listed one build
-   three times in the portfolio; they are now photos on the job they belong to. */
-
-export const BASEMENT_1: Project = {
-    slug: "basement-open-rec-room",
-    title: "Open Basement Rec Room",
-    summary:
-        "An unfinished basement turned into an open rec room - light oak plank flooring, recessed lighting throughout, a cable-rail stair, and a wet bar and full bath off the main space.",
-    category: "basement",
-    location: null,
-    cover: {
-        src: "/images/projects/basement/basement1.jpg",
-        alt: "Finished basement rec room with light oak plank flooring, recessed lighting, a black cable-rail staircase, and a wet bar through the open door",
-    },
-    photos: [
-        {
-            src: "/images/projects/basement/basement3.jpg",
-            alt: "Finished basement hallway with gray louvered bifold closet doors and a rolling steel workbench with a butcher-block top along the far wall",
-            caption: "Basement Storage & Workshop",
-        },
-        {
-            src: "/images/projects/basement/basement4.jpg",
-            alt: "Basement utility area with open cedar storage shelving, a rolling steel workbench, and an open door to a room with a white brick fireplace",
-            caption: "Utility & Fireplace Room",
-        },
-    ],
-    featured: false,
-};
-
-export const BASEMENT_2: Project = {
-    slug: "basement-modern-lower-level",
-    title: "Modern Lower Level",
-    summary:
-        "A dramatic lower level built around a floating marble stair with lit treads - polished concrete floors, a stone-clad bar, and woven pendants over a built-in wood table.",
-    category: "basement",
-    location: null,
-    cover: {
-        src: "/images/projects/basement/basement2.jpg",
-        alt: "Modern lower level with a floating marble staircase with lit treads, polished concrete floor, stone bar, and woven pendant lights over a wood table",
-    },
-    photos: [],
-    featured: false,
-};
-
-/* ── Exteriors ─────────────────────────────────────────────────────────────
-   These two photographs were previously hardcoded as string literals inside
-   SERVICE_SPLITS["exterior-renovations"]; that band now reads them from here
-   so the portfolio and the service page cannot drift apart. */
-
-export const EXTERIOR_1: Project = {
-    slug: "exterior-stone-entry",
-    title: "Stone Entry & Hardscape",
-    summary:
-        "A rebuilt front entry in stone cladding - wide stair treads up to a dark full-height door, recessed landscape lighting along the planting bed, and new hardscape across the approach.",
-    category: "exterior",
-    location: null,
-    cover: {
-        src: "/images/projects/exterior/exterior1.webp",
-        alt: "Stone-clad home exterior at dusk with a rebuilt entry landing, wide stair treads, a dark full-height front door, and recessed landscape lighting along the planting bed",
-    },
-    photos: [],
-    featured: false,
-};
-
-export const EXTERIOR_2: Project = {
-    slug: "exterior-corner-elevation",
-    title: "Corner Elevation & Lighting",
-    summary:
-        "A re-clad corner elevation in large-format stone with a continuous lit soffit line, wall sconces set between the windows, and a paver walkway carried around the corner.",
-    category: "exterior",
-    location: null,
-    cover: {
-        src: "/images/projects/exterior/exterior2.webp",
-        alt: "Corner elevation of a renovated home exterior with large-format stone cladding, a continuous lit soffit line, wall sconces between windows, and a paver walkway",
-    },
-    photos: [],
-    featured: false,
-};
+/* Fails the build rather than shipping a silently broken chip or a dead
+   image reference. Runs once at module load, which on this site is build
+   time. */
+function assertRecords() {
+    const seen = new Set<string>();
+    for (const record of INDEX) {
+        if (seen.has(record.slug)) throw new Error(`Duplicate project slug: ${record.slug}`);
+        seen.add(record.slug);
+        if (!CATEGORY_LABELS[record.category]) {
+            throw new Error(`Unknown category "${record.category}" on ${record.slug}`);
+        }
+        if ("photos" in record) {
+            throw new Error(
+                `${record.slug} has a photos array in projects.json. Carousel ` +
+                    `frames belong in project-gallery.json - move it there.`,
+            );
+        }
+        if (!GALLERY[record.slug]) {
+            throw new Error(`${record.slug} has no slot in project-gallery.json`);
+        }
+        for (const photo of GALLERY[record.slug].photos) {
+            if (photo.status && !PHOTO_STATUS_LABELS[photo.status]) {
+                throw new Error(`Unknown status "${photo.status}" on ${record.slug}`);
+            }
+            if (photo.src === record.cover.src) {
+                throw new Error(
+                    `${record.slug} repeats its cover as a gallery frame. The ` +
+                        `cover is the tile and is not shown in the modal.`,
+                );
+            }
+        }
+    }
+    for (const slug of Object.keys(GALLERY)) {
+        if (!seen.has(slug)) throw new Error(`Gallery entry has no project: ${slug}`);
+    }
+    for (const slug of Object.keys(BEFORE_AFTER)) {
+        if (!seen.has(slug)) throw new Error(`Before/after entry has no project: ${slug}`);
+    }
+}
+assertRecords();
 
 /**
- * The portfolio, in display order.
- *
- * Array position IS the order the /projects grid renders in - there is no
- * sort. `completedAt` is missing on most records, so it cannot order anything;
- * this list is curated by hand instead. Two rules when editing it: put the
- * strongest work first, and interleave categories so the grid shows range
- * rather than nine kitchens followed by nine bathrooms.
+ * Display order is `src/data/projects.json` order. Reorder the JSON to reorder
+ * the grid; the sheet numbers follow automatically.
  */
-export const PROJECTS: Project[] = [
-    ADDITION_1,
-    BATH_1,
-    KITCHEN_3,
-    POTOMAC_KITCHEN,
-    BASEMENT_1,
-    BATH_2,
-    EXTERIOR_1,
-    DC_KITCHEN,
-    KITCHEN_4,
-    BATH_3,
-    ADDITION_2,
-    KITCHEN_5,
-    BATH_4,
-    BASEMENT_2,
-    KITCHEN_6,
-    BATH_5,
-    EXTERIOR_2,
-    KITCHEN_7,
-    BATH_6,
-    KITCHEN_8,
-    BATH_7,
-    KITCHEN_9,
-    BATH_8,
-    BATH_9,
-];
+export const PROJECTS: Project[] = INDEX.map((record) => {
+    const gallery = GALLERY[record.slug];
+    return {
+        ...record,
+        photos: gallery.photos,
+        ...(gallery.intro ? { intro: gallery.intro } : {}),
+        ...(BEFORE_AFTER[record.slug] ? { beforeAfter: BEFORE_AFTER[record.slug] } : {}),
+    };
+});
+
+/* Named exports, re-derived by slug. services.ts references these ~90 times
+   and ProjectGrid uses ADDITION_1, so they stay part of the public surface;
+   they are now views onto the JSON rather than the storage itself. */
+function bySlug(slug: string): Project {
+    const found = PROJECTS.find((p) => p.slug === slug);
+    if (!found) throw new Error(`Unknown project slug: ${slug}`);
+    return found;
+}
+
+export const ADDITION_1 = bySlug("addition-second-story-garage");
+export const ADDITION_2 = bySlug("addition-mid-century-second-story");
+export const POTOMAC_KITCHEN = bySlug("potomac-kitchen");
+export const DC_KITCHEN = bySlug("washington-dc-kitchen");
+export const KITCHEN_3 = bySlug("kitchen-open-plan-white");
+export const KITCHEN_4 = bySlug("kitchen-farmhouse-white");
+export const KITCHEN_5 = bySlug("kitchen-marble-galley");
+export const KITCHEN_6 = bySlug("kitchen-navy-brass");
+export const KITCHEN_7 = bySlug("kitchen-matte-black");
+export const KITCHEN_8 = bySlug("kitchen-classic-cream");
+export const KITCHEN_9 = bySlug("kitchen-vaulted-white");
+export const BATH_1 = bySlug("bath-slate-vanity-primary");
+export const BATH_2 = bySlug("bath-stone-walk-in");
+export const BATH_3 = bySlug("bath-gray-brass");
+export const BATH_4 = bySlug("bath-spa-fireplace");
+export const BATH_5 = bySlug("bath-classic-luxury");
+export const BATH_6 = bySlug("bath-fluted-wood");
+export const BATH_7 = bySlug("bath-white-marble-primary");
+export const BATH_8 = bySlug("bath-double-shower");
+export const BATH_9 = bySlug("bath-wood-tile-shower");
+export const BASEMENT_1 = bySlug("basement-open-rec-room");
+export const BASEMENT_2 = bySlug("basement-modern-lower-level");
+export const EXTERIOR_1 = bySlug("exterior-stone-entry");
+export const EXTERIOR_2 = bySlug("exterior-corner-elevation");
 
 export const FEATURED_PROJECTS = PROJECTS.filter((p) => p.featured);
 

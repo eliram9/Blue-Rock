@@ -2,17 +2,15 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import Corners from "@/components/ui/Corners";
-import PhotoLightbox from "@/components/ui/PhotoLightbox";
+import ProjectModal from "@/components/ui/ProjectModal";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import {
+    ADDITION_1,
     CATEGORY_LABELS,
-    hasDetailPage,
     projectSheetId,
     type Project,
-    type ProjectPhoto,
 } from "@/lib/projects";
 
 /* ── Layout system ─────────────────────────────────────────────────────────
@@ -104,14 +102,11 @@ function packRows(projects: Project[]) {
 }
 
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
-    /* One lightbox for the whole grid; the open tile decides what it shows. */
-    const [active, setActive] = useState<{ photos: ProjectPhoto[]; label: string } | null>(null);
-    const [photoIndex, setPhotoIndex] = useState<number | null>(null);
-
-    const openLightbox = (project: Project) => {
-        setActive({ photos: [project.cover, ...project.photos], label: project.title });
-        setPhotoIndex(0);
-    };
+    /* One modal for the whole grid; the open tile decides what it shows.
+       Every project opens it, including the two that also build a detail page
+       at /projects/<slug> - those routes stay indexable, they are just no
+       longer what a tile click goes to. */
+    const [active, setActive] = useState<Project | null>(null);
 
     const rows = packRows(projects);
 
@@ -134,14 +129,11 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                     >
                         {row.items.map((project, c) => {
                             const span = row.layout.spans[c];
-                            const linked = hasDetailPage(project);
-                            const inner = (
-                                <TileInner
-                                    project={project}
-                                    span={span}
-                                    heightClass={HEIGHTS[row.layout.height]}
-                                />
-                            );
+                            /* Gallery frames only. The cover is the tile the
+                               visitor is already looking at and is not shown
+                               inside the modal, so counting it here would
+                               promise one more photo than they will get. */
+                            const count = project.photos.length;
 
                             return (
                                 <motion.div
@@ -149,25 +141,25 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                                     variants={fadeUp}
                                     className={SPAN_CLASS[span]}
                                 >
-                                    {linked ? (
-                                        <Link
-                                            href={`/projects/${project.slug}`}
-                                            className="group relative flex h-full flex-col border border-border bg-surface transition-colors hover:border-main-blue/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-main-blue"
-                                            style={{ touchAction: "manipulation" }}
-                                        >
-                                            {inner}
-                                        </Link>
-                                    ) : (
-                                        <button
-                                            type="button"
-                                            onClick={() => openLightbox(project)}
-                                            aria-label={`View photo of ${project.title}`}
-                                            className="group relative flex h-full w-full flex-col border border-border bg-surface text-left transition-colors hover:border-main-blue/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-main-blue"
-                                            style={{ touchAction: "manipulation" }}
-                                        >
-                                            {inner}
-                                        </button>
-                                    )}
+                                    <button
+                                        type="button"
+                                        onClick={() => setActive(project)}
+                                        aria-label={
+                                            count === 0
+                                                ? `${project.title} - no photographs yet`
+                                                : `View ${count} ${
+                                                      count === 1 ? "photo" : "photos"
+                                                  } of ${project.title}`
+                                        }
+                                        className="group relative flex h-full w-full cursor-pointer flex-col border border-border bg-surface text-left transition-colors hover:border-main-blue/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-main-blue"
+                                        style={{ touchAction: "manipulation" }}
+                                    >
+                                        <TileInner
+                                            project={project}
+                                            span={span}
+                                            heightClass={HEIGHTS[row.layout.height]}
+                                        />
+                                    </button>
                                 </motion.div>
                             );
                         })}
@@ -175,16 +167,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 ))}
             </motion.div>
 
-            <PhotoLightbox
-                photos={active?.photos ?? []}
-                index={active ? photoIndex : null}
-                label={active?.label ?? "Project photo"}
-                onClose={() => {
-                    setPhotoIndex(null);
-                    setActive(null);
-                }}
-                onNavigate={setPhotoIndex}
-            />
+            <ProjectModal project={active} onClose={() => setActive(null)} />
         </>
     );
 }
@@ -202,6 +185,12 @@ function TileInner({
        that is too large or too small. The grid caps at max-w-6xl, so a span is
        simply its fraction of the viewport once past the mobile stack. */
     const sizes = `(max-width: 768px) 100vw, ${Math.round((span / 12) * 100)}vw`;
+
+    /* Scoped to the lead project on purpose: its label prints the city instead
+       of a sheet number. The rest of the grid keeps PRJ-NN until we decide to
+       convert them too. `location` lives on the record rather than here so the
+       photo modal stamps the same city on its frames. */
+    const leadsWithLocation = project.slug === ADDITION_1.slug && Boolean(project.location);
 
     return (
         <>
@@ -232,14 +221,17 @@ function TileInner({
 
             <div className="flex flex-1 flex-col border-t border-border px-4 py-4 md:px-5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
-                    PRJ—{projectSheetId(project)} · {CATEGORY_LABELS[project.category]}
+                    {leadsWithLocation ? project.location : `PRJ—${projectSheetId(project)}`} ·{" "}
+                    {CATEGORY_LABELS[project.category]}
                 </span>
                 <h3 className="mt-2 text-base font-semibold leading-snug text-foreground">
                     {project.title}
                 </h3>
                 {/* Location is null until the client confirms the city, and an
-                    empty chip reads worse than no chip. */}
-                {project.location && (
+                    empty chip reads worse than no chip. Suppressed when the
+                    label above already prints the city, so the tile never
+                    stamps it twice. */}
+                {project.location && !leadsWithLocation && (
                     <p className="mt-1 font-mono text-xs uppercase tracking-[0.15em] text-muted">
                         {project.location}
                     </p>

@@ -93,11 +93,34 @@ export default function Hero(): React.ReactElement {
                     >
                         Blue Rock Remodeling provides excellence in every residential and commercial building with precision and passion.
                     </Text>
-                    <div className="hero-rise [animation-delay:230ms] flex gap-4 justify-center">
-                        <Button href="/contact" variant="primary">
+                    {/* Drafting plates, the same register as the CTA band and the
+                        header's Contact plate: square, mono, uppercase, wide
+                        tracking, with the running-border streak on hover. The
+                        rounded pills they replace were the last piece of the hero
+                        speaking a different language than the rest of the site.
+                        Stacked below sm — two plates at this tracking overrun a
+                        320px viewport side by side.
+                        The lift is CSS, not framer-motion (which the CTA band can
+                        afford): the hero is a Server Component and the buttons sit
+                        next to the LCP headline. */}
+                    <div className="hero-rise [animation-delay:230ms] flex flex-col items-center justify-center gap-4 sm:flex-row">
+                        <Button
+                            href="/contact"
+                            variant="cta"
+                            className="running-border hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+                        >
                             Get Started
                         </Button>
-                        <Button href="/projects" variant="secondary">
+                        {/* The CTA band's outline plate sits on a flat steel
+                            gradient, where a brand-light hairline reads fine. Over
+                            photography it disappears, so this one keeps the white
+                            keyline and blur wash the old secondary pill carried —
+                            same shape and type, surface adapted to its ground. */}
+                        <Button
+                            href="/projects"
+                            variant="ctaOutline"
+                            className="running-border border-white/60 bg-white/10 backdrop-blur-sm hover:border-white hover:bg-white/20 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+                        >
                             View Projects
                         </Button>
                     </div>

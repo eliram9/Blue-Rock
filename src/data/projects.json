@@ -1,0 +1,294 @@
+[
+    {
+        "slug": "addition-second-story-garage",
+        "title": "Second Story Over The Garage",
+        "summary": "A full second story framed over an existing attached two-car garage, with the main roofline carried across the whole elevation and siding, trim, and shutters matched to the original house. The foundation and footprint are unchanged.",
+        "category": "addition",
+        "location": "Bethesda, MD",
+        "cover": {
+            "src": "/images/projects/addition/pro1-after.webp",
+            "alt": "Two-story colonial home after Blue Rock built a second story over the attached garage, with the roofline carried across the full width and siding, trim, and shutters matched to the original house",
+            "caption": "Finished Elevation",
+            "status": "after"
+        },
+        "featured": true
+    },
+    {
+        "slug": "bath-slate-vanity-primary",
+        "title": "Slate Vanity Primary Bath",
+        "summary": "A primary bath built around a slate-blue double vanity with a white quartz top - matte black fixtures, a freestanding soaking tub, and large-format porcelain floor tile.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath1.jpg",
+            "alt": "Primary bathroom with a slate-blue double vanity, white quartz counter, matte black fixtures, and a freestanding soaking tub by the window"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-open-plan-white",
+        "title": "Open-Plan White Kitchen",
+        "summary": "A bright open-plan kitchen and dining space - handleless white cabinetry, a quartz island with an undermount prep sink, and dark-framed windows against wide-plank hardwood.",
+        "category": "kitchen",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen3.jpg",
+            "alt": "Bright open-plan white kitchen with a quartz island, handleless cabinetry, dark-framed windows, and hardwood floors"
+        },
+        "featured": false
+    },
+    {
+        "slug": "potomac-kitchen",
+        "title": "Potomac Kitchen Remodel",
+        "summary": "A full gut renovation opening the kitchen into a bright galley layout - handleless flat-panel cabinetry, a waterfall marble island with prep sink, full-slab backsplash, and a professional appliance suite.",
+        "category": "kitchen",
+        "location": "Potomac, MD",
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen1.jpg",
+            "alt": "Modern white kitchen with handleless cabinetry, waterfall marble island, matte black faucets, and stainless steel professional range"
+        },
+        "featured": true,
+        "completedAt": "2026-06"
+    },
+    {
+        "slug": "basement-open-rec-room",
+        "title": "Open Basement Rec Room",
+        "summary": "An unfinished basement turned into an open rec room - light oak plank flooring, recessed lighting throughout, a cable-rail stair, and a wet bar and full bath off the main space.",
+        "category": "basement",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/basement/basement1.jpg",
+            "alt": "Finished basement rec room with light oak plank flooring, recessed lighting, a black cable-rail staircase, and a wet bar through the open door"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-stone-walk-in",
+        "title": "Stone Tile Walk-In Bath",
+        "summary": "A compact bath finished in large-format stone-look tile - a light wood floating vanity, backlit mirror cabinet, and a frameless glass walk-in shower with a rain head.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath2.jpg",
+            "alt": "Contemporary bathroom with light wood floating vanity, stone-look tile walls, backlit mirror cabinet, and a glass walk-in shower"
+        },
+        "featured": false
+    },
+    {
+        "slug": "exterior-stone-entry",
+        "title": "Stone Entry & Hardscape",
+        "summary": "A rebuilt front entry in stone cladding - wide stair treads up to a dark full-height door, recessed landscape lighting along the planting bed, and new hardscape across the approach.",
+        "category": "exterior",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/exterior/exterior1.webp",
+            "alt": "Stone-clad home exterior at dusk with a rebuilt entry landing, wide stair treads, a dark full-height front door, and recessed landscape lighting along the planting bed"
+        },
+        "featured": false
+    },
+    {
+        "slug": "washington-dc-kitchen",
+        "title": "Washington DC Kitchen Remodel",
+        "summary": "A two-tone kitchen built around a walnut-stained island - slate shaker cabinetry, marble-look quartz counters, a subway tile backsplash, and a professional range set into the island.",
+        "category": "kitchen",
+        "location": "Washington, DC",
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen2.jpg",
+            "alt": "Two-tone kitchen with slate gray shaker cabinets, walnut island, marble-look quartz counters, and glass globe pendant lights"
+        },
+        "featured": true,
+        "completedAt": "2026-04"
+    },
+    {
+        "slug": "kitchen-farmhouse-white",
+        "title": "Farmhouse Kitchen",
+        "summary": "A farmhouse kitchen built around a plaster-style range hood - white shaker and glass-front cabinetry, a gray subway backsplash, lantern pendants, and a seated island.",
+        "category": "kitchen",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen4.jpg",
+            "alt": "Farmhouse kitchen with white cabinetry, plaster range hood, gray subway tile backsplash, lantern pendants, and wood bar stools at the island"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-gray-brass",
+        "title": "Gray & Brass Bath",
+        "summary": "A bright bath pairing a gray shaker double vanity with brass hardware and arched mirrors - a black-framed subway tile shower and a marble-look tile floor.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath3.jpg",
+            "alt": "Bathroom with gray shaker double vanity, brass hardware and arched mirrors, black-framed glass shower, and white subway tile"
+        },
+        "featured": false
+    },
+    {
+        "slug": "addition-mid-century-second-story",
+        "title": "Mid-Century Second Story",
+        "summary": "A second story over an existing garage wing on a split-level, drawn in the home's own mid-century vocabulary - an angled roofline, full-height glazing, and teal accent panels picked up from the original entry band.",
+        "category": "addition",
+        "location": "Rockville, MD",
+        "cover": {
+            "src": "/images/projects/addition/pro2-after.webp",
+            "alt": "Split-level home after Blue Rock built a second story over the garage wing, with an angled mid-century roofline, full-height glazing, tan panel cladding, and teal accent panels"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-marble-galley",
+        "title": "Marble Galley Kitchen",
+        "summary": "A galley layout finished in soft gray shaker cabinetry with a full marble slab backsplash, a long marble island, farmhouse sink, and a professional range.",
+        "category": "kitchen",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen5.jpg",
+            "alt": "Gray shaker galley kitchen with a long marble island, marble slab backsplash, stainless farmhouse sink, and professional range"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-spa-fireplace",
+        "title": "Spa Bath with Fireplace",
+        "summary": "A spa-style primary bath centered on a freestanding soaking tub - a marble-look feature wall with a linear fireplace and hexagon porcelain floor tile.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath4.jpg",
+            "alt": "Spa bathroom with a freestanding soaking tub, marble-look feature wall with a linear fireplace, and gray hexagon floor tile"
+        },
+        "featured": false
+    },
+    {
+        "slug": "basement-modern-lower-level",
+        "title": "Modern Lower Level",
+        "summary": "A dramatic lower level built around a floating marble stair with lit treads - polished concrete floors, a stone-clad bar, and woven pendants over a built-in wood table.",
+        "category": "basement",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/basement/basement2.jpg",
+            "alt": "Modern lower level with a floating marble staircase with lit treads, polished concrete floor, stone bar, and woven pendant lights over a wood table"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-navy-brass",
+        "title": "Navy & Brass Kitchen",
+        "summary": "A two-tone kitchen pairing white perimeter cabinetry with a navy island, brass hardware and fixtures throughout, white oak floors, and a farmhouse sink.",
+        "category": "kitchen",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen6.jpg",
+            "alt": "White kitchen with a navy island, brass hardware and faucet, white oak floors, farmhouse sink, and double wall ovens"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-classic-luxury",
+        "title": "Classic Luxury Bath",
+        "summary": "A classic luxury bath in cream marble - a fluted stone vanity, integrated wood shelving and storage, and a frameless glass shower alongside a built-in tub.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath5.jpg",
+            "alt": "Cream marble luxury bathroom with a fluted stone vanity, wood shelving, glass shower enclosure, and built-in tub"
+        },
+        "featured": false
+    },
+    {
+        "slug": "exterior-corner-elevation",
+        "title": "Corner Elevation & Lighting",
+        "summary": "A re-clad corner elevation in large-format stone with a continuous lit soffit line, wall sconces set between the windows, and a paver walkway carried around the corner.",
+        "category": "exterior",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/exterior/exterior2.webp",
+            "alt": "Corner elevation of a renovated home exterior with large-format stone cladding, a continuous lit soffit line, wall sconces between windows, and a paver walkway"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-matte-black",
+        "title": "Matte Black Kitchen",
+        "summary": "A dramatic matte black kitchen under a vaulted, beamed ceiling - white quartz counters, an induction cooktop set into the island, double wall ovens, and light wood floors.",
+        "category": "kitchen",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen7.jpg",
+            "alt": "Matte black kitchen with a vaulted beamed ceiling, white quartz island with induction cooktop, cylinder pendants, and double wall ovens"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-fluted-wood",
+        "title": "Fluted Wood Vanity Bath",
+        "summary": "A modern bath mixing a fluted wood floating vanity and vessel sink with a geometric feature tile wall and a ribbed wood-look tile walk-in shower.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath6.jpg",
+            "alt": "Modern bathroom with a fluted wood floating vanity, vessel sink, geometric patterned accent tile, and a ribbed wood-look tile shower"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-classic-cream",
+        "title": "Classic Cream Kitchen",
+        "summary": "A classic kitchen in cream shaker cabinetry - black granite perimeter counters against a marble-topped gray island, a marble subway backsplash with a tile medallion, and a professional range.",
+        "category": "kitchen",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen8.jpg",
+            "alt": "Cream shaker kitchen with black granite counters, a gray island topped in marble, marble subway backsplash, farmhouse sink, and stainless pro range"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-white-marble-primary",
+        "title": "White Marble Primary Bath",
+        "summary": "A bright primary suite in white and marble - a light oak vanity with marble counters, brass fixtures, and a freestanding tub set beneath a triple window.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath7.jpg",
+            "alt": "White primary bathroom with light oak vanity, marble counters, brass fixtures, and a freestanding tub under a triple window"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-vaulted-white",
+        "title": "Vaulted White Kitchen",
+        "summary": "A white kitchen under a vaulted ceiling with a gable window wall - a waterfall quartz island seating four, black lantern pendants, a pot filler over the gas cooktop, and light oak floors.",
+        "category": "kitchen",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/kitchen/kitchen9.jpg",
+            "alt": "White shaker kitchen under a vaulted ceiling with a gable window wall, waterfall quartz island with black bar stools, lantern pendants, and light oak floors"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-double-shower",
+        "title": "Double Shower Primary Bath",
+        "summary": "A primary bath with an oversized marble walk-in shower - dual shower heads, a built-in bench, and a freestanding oval tub by the window.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath8.jpg",
+            "alt": "Primary bathroom with a large marble walk-in shower with dual shower heads and bench seat, and a freestanding oval tub"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-wood-tile-shower",
+        "title": "Wood Tile Shower Bath",
+        "summary": "A guest bath finished with a ribbed wood-look tile shower behind a brass sliding glass door, paired with a wood vanity and marble-look floor tile.",
+        "category": "bath",
+        "location": null,
+        "cover": {
+            "src": "/images/projects/bath/bath9.jpg",
+            "alt": "Bathroom with a ribbed wood-look tile shower behind a brass-framed sliding glass door, wood vanity, and marble-look floor tile"
+        },
+        "featured": false
+    }
+]
