@@ -120,6 +120,12 @@ export interface Project {
     beforeAfter?: ProjectBeforeAfter[];
     /** Featured tiles span two grid columns and lead the home-page carousel. */
     featured: boolean;
+    /** Keeps a record out of the portfolio (`PROJECTS`) while leaving it
+        addressable by slug, so a named export can still point a service-page
+        carousel at its cover. Use it for photos worth showing in context but
+        not worth a portfolio tile - not as a delete button, which is editing
+        the JSON. */
+    hidden?: boolean;
     /** Optional "YYYY-MM". Not displayed and not sorted on - PROJECTS array
         order is the display order. Kept only where the month is known, so
         detail pages can emit `datePublished` without inventing one. */
@@ -254,11 +260,9 @@ function assertRecords() {
 }
 assertRecords();
 
-/**
- * Display order is `src/data/projects.json` order. Reorder the JSON to reorder
- * the grid; the sheet numbers follow automatically.
- */
-export const PROJECTS: Project[] = INDEX.map((record) => {
+/* Every record, `hidden` ones included. Only `bySlug` reads this: it is the
+   lookup table, not the portfolio. */
+const ALL_PROJECTS: Project[] = INDEX.map((record) => {
     const gallery = GALLERY[record.slug];
     return {
         ...record,
@@ -268,11 +272,25 @@ export const PROJECTS: Project[] = INDEX.map((record) => {
     };
 });
 
+/**
+ * The portfolio: every record that is shown as a project in its own right.
+ *
+ * Display order is `src/data/projects.json` order. Reorder the JSON to reorder
+ * the grid; the sheet numbers follow automatically.
+ *
+ * `hidden` records are filtered out here rather than at the grid, so one flag
+ * covers the index, the "more work" strips, and the sheet numbering together -
+ * a hidden record leaves no gap in the PRJ-NN sequence and cannot reappear as
+ * a tile somewhere else. Its cover is still reachable through a named export,
+ * which is the whole point of hiding it instead of deleting it.
+ */
+export const PROJECTS: Project[] = ALL_PROJECTS.filter((p) => !p.hidden);
+
 /* Named exports, re-derived by slug. services.ts references these ~90 times
    and ProjectGrid uses ADDITION_1, so they stay part of the public surface;
    they are now views onto the JSON rather than the storage itself. */
 function bySlug(slug: string): Project {
-    const found = PROJECTS.find((p) => p.slug === slug);
+    const found = ALL_PROJECTS.find((p) => p.slug === slug);
     if (!found) throw new Error(`Unknown project slug: ${slug}`);
     return found;
 }
@@ -297,6 +315,7 @@ export const BATH_6 = bySlug("bath-fluted-wood");
 export const BATH_7 = bySlug("bath-white-marble-primary");
 export const BATH_8 = bySlug("bath-double-shower");
 export const BATH_9 = bySlug("bath-wood-tile-shower");
+export const BATH_10 = bySlug("bath-potomac-primary-gut");
 export const BASEMENT_1 = bySlug("basement-open-rec-room");
 export const BASEMENT_2 = bySlug("basement-modern-lower-level");
 export const EXTERIOR_1 = bySlug("exterior-stone-entry");

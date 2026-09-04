@@ -26,6 +26,19 @@
         "featured": false
     },
     {
+        "slug": "bath-potomac-primary-gut",
+        "title": "Primary Bath Gut Renovation",
+        "summary": "A primary suite bath taken back to the frame and rebuilt - a marble-look walk-in shower behind a black barn-slider door, a freestanding soaking tub under the window, and a white chevron-panel double vanity with backlit mirrors, all in matte black. The hall bath was rebuilt in the same materials.",
+        "category": "bath",
+        "location": "Potomac, MD",
+        "cover": {
+            "src": "/images/work_gallery/bath_potomac_25/after_04.jpg",
+            "alt": "Finished primary bathroom with a marble-look walk-in shower behind a black barn-slider glass door, a freestanding soaking tub under the window, and a matte black floor-mounted tub filler",
+            "status": "after"
+        },
+        "featured": false
+    },
+    {
         "slug": "bath-slate-vanity-primary",
         "title": "Slate Vanity Primary Bath",
         "summary": "A primary bath built around a slate-blue double vanity with a white quartz top - matte black fixtures, a freestanding soaking tub, and large-format porcelain floor tile.",
@@ -47,7 +60,8 @@
             "src": "/images/projects/kitchen/kitchen3.jpg",
             "alt": "Bright open-plan white kitchen with a quartz island, handleless cabinetry, dark-framed windows, and hardwood floors"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "potomac-kitchen",

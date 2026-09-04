@@ -36,7 +36,21 @@ automatically. Nothing sorts on `completedAt`.
 | `location` | `"City, ST"`, or `null` when the city is not confirmed. `null` prints no chip; do not write `"TBD"`. See *The tile label* below. |
 | `cover` | The tile image and the OG image. Deliberately *not* shown in the modal. |
 | `featured` | `true` spans two grid columns and leads the home-page carousel. |
+| `hidden` | Optional `true`. Keeps the record out of the portfolio entirely — the `/projects` grid, the "more work" strips, and the `PRJ-NN` numbering — while it stays reachable by slug. See *Hiding a project* below. |
 | `completedAt` | Optional `"YYYY-MM"`. Only emitted into structured data; omit rather than guess. |
+
+### Hiding a project
+
+`"hidden": true` drops a record from `PROJECTS`, which is what every portfolio
+surface reads: the `/projects` grid, the "more work" strip on detail pages,
+`FEATURED_PROJECTS`, and the sheet numbers. The sequence closes over it, so
+hiding `PRJ-05` renumbers the rest rather than leaving a gap.
+
+It is not a soft delete. Use it when the record still has a job to do
+elsewhere — the cover feeding a service-page carousel through a named export
+in `src/lib/projects.ts` — but the project does not earn a tile of its own.
+`bySlug` still finds it, so those exports keep working. If nothing references
+it, delete the record and its `project-gallery.json` slot instead.
 
 ### The tile label
 

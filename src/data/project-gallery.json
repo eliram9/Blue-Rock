@@ -287,5 +287,135 @@
     "bath-wood-tile-shower": {
         "intro": "",
         "photos": []
+    },
+    "bath-potomac-primary-gut": {
+        "intro": "",
+        "photos": [
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_01.jpg",
+                "alt": "Existing hall bathroom with a white raised-panel vanity, speckled granite counter, a wide mirror, and a tiled tub surround reflected behind it",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_02.jpg",
+                "alt": "Existing tub and shower surround tiled floor to ceiling in tan stone-look tile with a mosaic border band and two corner shelves",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_03.jpg",
+                "alt": "Existing primary bathroom before renovation, with pink walls, a blue-painted corner tub deck, a glass-door shower stall, and the ceiling opened to the roof rafters",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_04.jpg",
+                "alt": "Existing primary bath looking across the blue-painted tub deck to the white double vanity, with the ceiling drywall stripped back to the joists and rafters",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_05.jpg",
+                "alt": "Existing shower stall with sliding glass doors, cream tile and a floral border, beside the jetted tub on its blue-painted deck",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_06.jpg",
+                "alt": "Pink primary bath wall with the toilet, the corner of the jetted tub, and the doorway through to the hardwood hall, ceiling opened above the wall line",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_07.jpg",
+                "alt": "Existing white raised-panel vanity with a solid-surface top and full-width mirror, the framing and wiring exposed above it",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_08.jpg",
+                "alt": "Existing primary bath with a jetted corner tub on a blue-painted deck under a double-hung window, the glass shower stall at left and open rafters overhead",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/pre_09.jpg",
+                "alt": "Adjoining bedroom with yellow walls and light oak flooring looking through the doorway into the primary bath, the ceiling opened to the roof framing",
+                "status": "before"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/prog_01.jpg",
+                "alt": "Rebuilt shower alcove coated in red liquid waterproofing membrane over cement board, with a recessed niche and the curb masked in blue tape, sheets of marble-look tile staged against it",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/prog_02.jpg",
+                "alt": "Bathroom at rough-in with the drywall taped and mudded around two double-hung windows, floor protection paper down, and joint compound buckets and trowels on the floor",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/prog_03.jpg",
+                "alt": "New partition walls hung and taped with a fresh doorway opening cut through, a step ladder and buckets of joint compound on the papered floor",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/prog_04.jpg",
+                "alt": "Shower stall framed and boarded in cement board with a recessed niche cut in, insulation exposed at the base, and the black shower pan liner turned up over the curb",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/prog_05.jpg",
+                "alt": "Bathroom wall skim-coated over patched drywall where the old fixtures came out, with a step ladder and a roll of floor protection paper against the wall",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/prog_06.jpg",
+                "alt": "Shower base with the black pan liner and cement board walls in place beside a double-hung window, a shop vacuum and compound buckets on the papered floor",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/prog_07.jpg",
+                "alt": "Tile saw set up on a stand behind plastic dust sheeting taped to the ceiling, with cement board and tile stacked against the wall beside the doorway",
+                "status": "in-progress"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_01.jpg",
+                "alt": "Finished hall bath with a white vanity and quartz top, a backlit oval mirror, matte black faucet and towel rings, and a white corner storage cabinet beside the toilet",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_02.jpg",
+                "alt": "Marble-look porcelain tub surround with a recessed niche, matte black shower head and valve, and frameless sliding glass doors on a black track",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_03.jpg",
+                "alt": "Straight-on view of the finished tub and shower, tiled floor to ceiling in marble-look porcelain with a recessed niche and matte black fittings behind sliding glass",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_05.jpg",
+                "alt": "Primary bath looking across the freestanding tub to the white double vanity, with two backlit round mirrors, matte black fixtures, and the toilet in its own alcove",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_06.jpg",
+                "alt": "Marble-look walk-in shower with a lit recessed niche and matte black hardware, the freestanding tub visible through the open glass door",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_07.jpg",
+                "alt": "Finished primary bath wall in pale blue with a matte black towel shelf, the toilet alcove, and the doorway through to the bedroom",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_08.jpg",
+                "alt": "White double vanity with a chevron-panel front, matte black bar pulls and widespread faucets, quartz top, and two backlit round mirrors against pale blue walls",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_09.jpg",
+                "alt": "Walk-in closet with white wire shelving on both walls and refinished oak flooring, looking through the doorway to the freestanding tub in the primary bath",
+                "status": "after"
+            },
+            {
+                "src": "/images/work_gallery/bath_potomac_25/after_10.jpg",
+                "alt": "Frosted-panel sliding door standing open to the finished hall bath, showing the marble-look tub surround and sliding glass doors beyond",
+                "status": "after"
+            }
+        ]
     }
 }

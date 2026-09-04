@@ -9,6 +9,7 @@ import { fadeUp, stagger, viewport } from "@/lib/motion";
 import {
     ADDITION_1,
     BATH_7,
+    BATH_10,
     CATEGORY_LABELS,
     projectSheetId,
     type Project,
@@ -179,7 +180,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
    PRJ-NN, so converting a tile stays a decision rather than a side effect of
    confirming an address. `location` lives on the record rather than here so
    the photo modal stamps the same city on its frames. */
-const CITY_LABEL_SLUGS = new Set([ADDITION_1.slug, BATH_7.slug]);
+const CITY_LABEL_SLUGS = new Set([ADDITION_1.slug, BATH_7.slug, BATH_10.slug]);
 
 function TileInner({
     project,

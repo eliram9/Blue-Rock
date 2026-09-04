@@ -15,7 +15,7 @@ import { PROJECTS } from "@/lib/projects";
  */
 export default function ProjectsIndex() {
     return (
-        <section className="relative overflow-hidden bg-surface-muted py-16 transition-colors md:py-24">
+        <section className="relative overflow-hidden bg-surface-muted py-24 transition-colors md:py-32">
             <ProjectsBlueprint
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 h-full w-full select-none text-light-blue dark:opacity-50"
@@ -32,12 +32,12 @@ export default function ProjectsIndex() {
                     <SectionHeader
                         prefix="Projects"
                         index="01"
-                        kicker="Index"
                         title="Completed Work"
+                        meta="Maryland & Washington DC · Since 2010"
                     />
                     <motion.p
                         variants={fadeUp}
-                        className="mt-8 ml-20 max-w-[58ch] text-base leading-relaxed text-muted md:text-lg"
+                        className="mt-20 max-w-[58ch] text-base leading-relaxed text-foreground/80 md:text-lg"
                     >
                         Kitchens, bathrooms, basements, additions, and exteriors
                         completed across Maryland and Washington, DC, newest work
