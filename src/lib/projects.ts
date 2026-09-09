@@ -299,6 +299,7 @@ function bySlug(slug: string): Project {
 
 export const ADDITION_1 = bySlug("addition-second-story-garage");
 export const ADDITION_2 = bySlug("addition-mid-century-second-story");
+export const ADDITION_3 = bySlug("addition-bethesda-2025");
 export const POTOMAC_KITCHEN = bySlug("potomac-kitchen");
 export const DC_KITCHEN = bySlug("washington-dc-kitchen");
 export const KITCHEN_3 = bySlug("kitchen-open-plan-white");
@@ -308,6 +309,8 @@ export const KITCHEN_6 = bySlug("kitchen-navy-brass");
 export const KITCHEN_7 = bySlug("kitchen-matte-black");
 export const KITCHEN_8 = bySlug("kitchen-classic-cream");
 export const KITCHEN_9 = bySlug("kitchen-vaulted-white");
+export const KITCHEN_10 = bySlug("kitchen-wood-tone-modernized");
+export const KITCHEN_11 = bySlug("kitchen-family-room-rockville");
 export const BATH_1 = bySlug("bath-slate-vanity-primary");
 export const BATH_2 = bySlug("bath-stone-walk-in");
 export const BATH_3 = bySlug("bath-gray-brass");
@@ -318,6 +321,9 @@ export const BATH_7 = bySlug("bath-white-marble-primary");
 export const BATH_8 = bySlug("bath-double-shower");
 export const BATH_9 = bySlug("bath-wood-tile-shower");
 export const BATH_10 = bySlug("bath-potomac-primary-gut");
+export const BATH_11 = bySlug("bath-office-conversion-silver-spring");
+export const BATH_12 = bySlug("bath-primary-suite-bowie");
+export const BATH_13 = bySlug("bath-rockville-gut");
 export const BASEMENT_1 = bySlug("basement-open-rec-room");
 export const BASEMENT_2 = bySlug("basement-modern-lower-level");
 export const BASEMENT_3 = bySlug("basement-tornado-shelter");
@@ -377,3 +383,197 @@ export function toBeforeAfterProjects(project: Project) {
         ...study,
     }));
 }
+
+/* ------------------------------------------------------------------ *
+ * Home-page carousel
+ * ------------------------------------------------------------------ */
+
+export interface HomeSlide {
+    src: string;
+    alt: string;
+    tag: string;
+    title: string;
+    description: string;
+}
+
+/**
+ * The home-page portfolio carousel: the strongest finished frame from each
+ * residential service page that has real photography behind it - kitchen,
+ * bath, additions, basement, exterior.
+ *
+ * Ordered so no two consecutive slides share a service; the strip below the
+ * frame shows eight at a time, so a run of five baths would read as one long
+ * bathroom gallery rather than a portfolio.
+ *
+ * `src` is resolved against the project's own cover and gallery, so the alt
+ * text stays in `project-gallery.json` and a photo renamed or dropped there
+ * fails the build here instead of shipping a dead frame.
+ */
+const HOME_CAROUSEL_PICKS: {
+    project: Project;
+    src: string;
+    service: string;
+    description: string;
+}[] = [
+    {
+        project: KITCHEN_11,
+        src: "/images/work_gallery/kitchen_rockville_25/after_06.jpg",
+        service: "Kitchen",
+        description:
+            "Navy island with a downdraft cooktop, brass fixtures, and a white perimeter run - Rockville, MD",
+    },
+    {
+        project: BATH_12,
+        src: "/images/work_gallery/master_bath_bowie_25/after_01.jpg",
+        service: "Bathroom",
+        description:
+            "Freestanding soaking tub beside a full-length walk-in shower with a floating bench - Bowie, MD",
+    },
+    {
+        project: ADDITION_1,
+        src: "/images/projects/addition/pro1-after.webp",
+        service: "Home Addition",
+        description:
+            "A full second story built over the attached garage, roofline and trim matched to the original - Bethesda, MD",
+    },
+    {
+        project: KITCHEN_10,
+        src: "/images/work_gallery/kitchen_clinton_25/after_07.jpg",
+        service: "Kitchen",
+        description:
+            "Dove-gray shaker cabinetry to the ceiling, quartz island, and the original red oak floors kept - Clinton, MD",
+    },
+    {
+        project: BATH_7,
+        src: "/images/work_gallery/bath_clarksville_2024/after_04.jpg",
+        service: "Bathroom",
+        description:
+            "Tub bay and frameless glass shower with a brass rain head and paired niches - Clarksville, MD",
+    },
+    {
+        project: BASEMENT_1,
+        src: "/images/work_gallery/basement_chevy_Chase_24/after_01.jpg",
+        service: "Basement Finishing",
+        description:
+            "Open rec room around a painted brick fireplace, finished for everyday use - Chevy Chase, MD",
+    },
+    {
+        project: KITCHEN_11,
+        src: "/images/work_gallery/kitchen_rockville_25/after_02.jpg",
+        service: "Kitchen",
+        description:
+            "Wall ovens, apron-front sink, and new white oak flooring running the length of the room - Rockville, MD",
+    },
+    {
+        project: BATH_13,
+        src: "/images/work_gallery/bath_rockville_25/after_02.jpg",
+        service: "Bathroom",
+        description:
+            "Chevron-laid marble carried across both shower walls over a hex mosaic floor - Rockville, MD",
+    },
+    {
+        project: EXTERIOR_1,
+        src: "/images/projects/exterior/exterior1.webp",
+        service: "Exterior Renovation",
+        description:
+            "Rebuilt entry landing, wide stair treads, and recessed lighting along the planting bed",
+    },
+    {
+        project: KITCHEN_10,
+        src: "/images/work_gallery/kitchen_clinton_25/after_01.jpg",
+        service: "Kitchen",
+        description:
+            "Dual range and chimney hood against a full-height slab backsplash - Clinton, MD",
+    },
+    {
+        project: BATH_7,
+        src: "/images/work_gallery/bath_clarksville_2024/after_02.jpg",
+        service: "Bathroom",
+        description:
+            "Light oak vanity, marble counters, and a freestanding tub under a triple window - Clarksville, MD",
+    },
+    {
+        project: ADDITION_3,
+        src: "/images/work_gallery/addition_bethesda_25/after_10.jpg",
+        service: "Home Addition",
+        description:
+            "New bath inside the addition: fluted oak vanity, brass sconces, wood-tiled shower - Bethesda, MD",
+    },
+    {
+        project: KITCHEN_11,
+        src: "/images/work_gallery/kitchen_rockville_25/after_04.jpg",
+        service: "Kitchen",
+        description:
+            "Sink run with dishwasher drawers, undercounter refrigeration, and a wine cooler - Rockville, MD",
+    },
+    {
+        project: BATH_13,
+        src: "/images/work_gallery/bath_rockville_25/after_04.jpg",
+        service: "Bathroom",
+        description:
+            "Double trough basin on a floating vanity under a backlit mirror - Rockville, MD",
+    },
+    {
+        project: BASEMENT_2,
+        src: "/images/projects/basement/basement2.jpg",
+        service: "Basement Finishing",
+        description:
+            "Lower level opened up around a lit staircase, stone bar, and polished concrete floor",
+    },
+    {
+        project: KITCHEN_10,
+        src: "/images/work_gallery/kitchen_clinton_25/after_03.jpg",
+        service: "Kitchen",
+        description:
+            "Stainless farmhouse sink set in white quartz, breakfast area beyond - Clinton, MD",
+    },
+    {
+        project: BATH_11,
+        src: "/images/work_gallery/office_to_full_bath_silver_spring_24/after_03.jpg",
+        service: "Bathroom",
+        description:
+            "An unused office converted to a full bath with a double vanity and arched mirrors - Silver Spring, MD",
+    },
+    {
+        project: ADDITION_1,
+        src: "/images/work_gallery/addition_bethesda_26/after_02.jpg",
+        service: "Home Addition",
+        description:
+            "The finished elevation from the street, siding and shutters carried across the new level - Bethesda, MD",
+    },
+    {
+        project: BATH_12,
+        src: "/images/work_gallery/master_bath_bowie_25/after_08.jpg",
+        service: "Bathroom",
+        description:
+            "Stained oak vanity run under a marble-look quartz top with square brass hardware - Bowie, MD",
+    },
+    {
+        project: EXTERIOR_2,
+        src: "/images/projects/exterior/exterior2.webp",
+        service: "Exterior Renovation",
+        description:
+            "Corner elevation reclad in large-format stone with a continuous lit soffit line",
+    },
+];
+
+/** Alt text for one of a project's own frames - its cover or a gallery photo.
+    Throws rather than shipping a frame with no alt behind it. */
+function frameAlt(project: Project, src: string): string {
+    if (project.cover.src === src) return project.cover.alt;
+    const photo = project.photos.find((p) => p.src === src);
+    if (!photo) {
+        throw new Error(`${src} is not a frame of ${project.slug}`);
+    }
+    return photo.alt;
+}
+
+export const HOME_CAROUSEL_SLIDES: HomeSlide[] = HOME_CAROUSEL_PICKS.map(
+    ({ project, src, service, description }) => ({
+        src,
+        alt: frameAlt(project, src),
+        tag: `Residential — ${service}`,
+        title: project.title,
+        description,
+    }),
+);

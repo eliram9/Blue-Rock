@@ -84,15 +84,6 @@ export default function ProjectModal({
                                 <h2 className="font-title text-xl uppercase leading-tight tracking-[0.015em] text-white md:text-2xl">
                                     {project.title}
                                 </h2>
-                                {/* Optional, and empty on most records today.
-                                    Rendered only when there is real copy, so a
-                                    blank string never opens a gap under the
-                                    title. Edited in project-gallery.json. */}
-                                {project.intro && (
-                                    <p className="mt-2 max-w-[65ch] text-sm leading-relaxed text-blue-100/80">
-                                        {project.intro}
-                                    </p>
-                                )}
                             </div>
                             <button
                                 type="button"
@@ -117,8 +108,15 @@ export default function ProjectModal({
                                 autoplay={false}
                                 /* Viewport-relative so the frame plus the eight
                                    thumbnails below it always fit without the dialog
-                                   scrolling, down to a short laptop window. */
-                                height="h-[42vh] sm:h-[50vh] md:h-[58vh]"
+                                   scrolling, down to a short laptop window. An intro
+                                   claims a couple of lines under the strip, so the
+                                   well gives that height back rather than pushing the
+                                   thumbnails off the bottom. */
+                                height={
+                                    project.intro
+                                        ? "h-[36vh] sm:h-[44vh] md:h-[52vh]"
+                                        : "h-[42vh] sm:h-[50vh] md:h-[58vh]"
+                                }
                             />
                         ) : (
                             /* Carousel's own no-images fallback is a themed gray
@@ -134,6 +132,17 @@ export default function ProjectModal({
                                     walk you through the work in the meantime.
                                 </p>
                             </div>
+                        )}
+
+                        {/* Optional, and empty on every record but one. It sits
+                            UNDER the frame on purpose: above the frame it pushed
+                            the photograph past the fold on a laptop window, which
+                            is backwards in a viewer whose whole job is the
+                            photograph. Edited in project-gallery.json. */}
+                        {project.intro && (
+                            <p className="mt-4 max-w-[80ch] text-sm leading-relaxed text-blue-100/80">
+                                {project.intro}
+                            </p>
                         )}
                     </div>
                 </div>

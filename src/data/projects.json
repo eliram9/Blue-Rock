@@ -66,6 +66,81 @@
         "completedAt": "2024-05"
     },
     {
+        "slug": "bath-office-conversion-silver-spring",
+        "title": "Office to Full Bath Conversion",
+        "summary": "A board-and-batten home office in Silver Spring converted into a full bathroom - taken back to the studs and the subfloor opened to run supply, waste, and vent lines into a room that had none, then finished with a fluted wood-look shower behind a brushed brass slider, a floating oak double vanity under arched mirrors, and marble-look porcelain underfoot. A second bath was rebuilt in the same trip in matching stone and brass.",
+        "category": "bath",
+        "location": "Silver Spring, MD",
+        "cover": {
+            "src": "/images/work_gallery/office_to_full_bath_silver_spring_24/after_01.jpg",
+            "alt": "The finished bathroom in the former office, with a fluted wood-look tile shower behind a brushed brass sliding glass door, a brass shower set, and the original corner windows carried through to the new room",
+            "status": "after"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-wood-tone-modernized",
+        "title": "Wood-Tone Kitchen Modernized",
+        "summary": "A dated golden oak kitchen rebuilt as a light gray shaker kitchen on the same footprint - raised-panel oak and speckled granite out, dove-gray cabinetry carried to the ceiling with glass-front display uppers in, under marble-look quartz counters and a full-height slab backsplash. A dark-stained island with a microwave drawer replaced the oak-panelled one, the fluorescent ceiling panel gave way to recessed cans and nickel chandeliers, and the appliances went to a Wolf dual range, a built-in Sub-Zero, and a stainless apron-front sink. The original red oak floors stayed.",
+        "category": "kitchen",
+        "location": "Clinton, MD",
+        "cover": {
+            "src": "/images/work_gallery/kitchen_clinton_25/after_07.jpg",
+            "alt": "The finished kitchen seen down the length of the white quartz island, with dove-gray shaker cabinetry carried to the ceiling, a marble-look slab backsplash behind the Wolf range, a built-in Sub-Zero at left, and the original red oak floors",
+            "status": "after"
+        },
+        "featured": false
+    },
+    {
+        "slug": "addition-bethesda-2025",
+        "title": "Bethesda Home Addition",
+        "summary": "A home addition in Bethesda, framed over the existing footprint. Photographs of the completed work are being prepared.",
+        "category": "addition",
+        "location": "Bethesda, MD",
+        "cover": {
+            "src": "/images/projects/addition/pro2-after.webp",
+            "alt": "The Bethesda house after Blue Rock built a second story over the garage wing, with an angled mid-century roofline, full-height glazing, tan panel cladding, and teal accent panels matching the original entry band"
+        },
+        "featured": false
+    },
+    {
+        "slug": "kitchen-family-room-rockville",
+        "title": "Navy Island Kitchen & Family Room",
+        "summary": "A kitchen and family room rebuilt as one open floor, with a navy island running the length of the room under a white quartz top, white shaker cabinetry with aged-brass hardware, and a downdraft cooktop that keeps the sightline through to the family room clear. New white oak floors carry through both rooms, and the family room's brick fireplace was painted charcoal and given a reclaimed timber mantel.",
+        "category": "kitchen",
+        "location": "Rockville, MD",
+        "cover": {
+            "src": "/images/work_gallery/kitchen_rockville_25/after_01.jpg",
+            "alt": "The finished kitchen straight on across the navy island, three brass pendants over its white quartz top, five tan leather stools along the front, and white shaker cabinetry with the built-in refrigerator, stacked wall ovens, and gas cooktop against the marble-look slab backsplash behind"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-primary-suite-bowie",
+        "title": "Primary Suite & Spa Shower",
+        "summary": "A primary suite rebuilt as one run of rooms - a vaulted bedroom on new red oak floors opening through panelled doors into a bath built around an oversized walk-in shower, glazed end to end with two full shower sets, a floating marble bench, and a recessed niche. A freestanding soaking tub sits under the window beside it, with a stained oak double vanity, quartz counters, arched mirrors, and brushed brass fittings throughout.",
+        "category": "bath",
+        "location": "Bowie, MD",
+        "cover": {
+            "src": "/images/work_gallery/master_bath_bowie_25/after_01.jpg",
+            "alt": "The finished primary bath, a freestanding soaking tub under the window with a brushed nickel floor filler beside a glass-walled walk-in shower running the length of the wall, its marble-look slab walls, floating bench, recessed niche, and two shower sets over a mosaic floor"
+        },
+        "featured": false
+    },
+    {
+        "slug": "bath-rockville-gut",
+        "title": "Rockville Primary Suite",
+        "summary": "A primary suite in Rockville - the bedroom and its ensuite bath - taken back to the studs and rebuilt. Pink fixtures, twin pedestal sinks and dark-stained mirror surrounds gave way to a frameless glass shower lined in chevron-laid marble with a lit niche, a freestanding soaking tub, and a floating teak vanity with twin trough basins under a backlit mirror, all over a hex marble mosaic floor. The bedroom was reframed, rewired and refinished on new plank flooring.",
+        "category": "bath",
+        "location": "Rockville, MD",
+        "cover": {
+            "src": "/images/work_gallery/bath_rockville_25/after_01.jpg",
+            "alt": "The finished primary bath, a frameless glass shower lined in chevron-laid marble with a lit recessed niche, a freestanding soaking tub under the window, a recessed white storage cabinet, and a hex marble mosaic floor",
+            "status": "after"
+        },
+        "featured": false
+    },
+    {
         "slug": "bath-slate-vanity-primary",
         "title": "Slate Vanity Primary Bath",
         "summary": "A primary bath built around a slate-blue double vanity with a white quartz top - matte black fixtures, a freestanding soaking tub, and large-format porcelain floor tile.",
@@ -75,7 +150,8 @@
             "src": "/images/projects/bath/bath1.jpg",
             "alt": "Primary bathroom with a slate-blue double vanity, white quartz counter, matte black fixtures, and a freestanding soaking tub by the window"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "kitchen-open-plan-white",
@@ -101,7 +177,8 @@
             "alt": "Modern white kitchen with handleless cabinetry, waterfall marble island, matte black faucets, and stainless steel professional range"
         },
         "featured": true,
-        "completedAt": "2026-06"
+        "completedAt": "2026-06",
+        "hidden": true
     },
     {
         "slug": "basement-open-rec-room",
@@ -126,7 +203,8 @@
             "src": "/images/projects/bath/bath2.jpg",
             "alt": "Contemporary bathroom with light wood floating vanity, stone-look tile walls, backlit mirror cabinet, and a glass walk-in shower"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "exterior-stone-entry",
@@ -138,7 +216,8 @@
             "src": "/images/projects/exterior/exterior1.webp",
             "alt": "Stone-clad home exterior at dusk with a rebuilt entry landing, wide stair treads, a dark full-height front door, and recessed landscape lighting along the planting bed"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "washington-dc-kitchen",
@@ -151,7 +230,8 @@
             "alt": "Two-tone kitchen with slate gray shaker cabinets, walnut island, marble-look quartz counters, and glass globe pendant lights"
         },
         "featured": true,
-        "completedAt": "2026-04"
+        "completedAt": "2026-04",
+        "hidden": true
     },
     {
         "slug": "kitchen-farmhouse-white",
@@ -163,7 +243,8 @@
             "src": "/images/projects/kitchen/kitchen4.jpg",
             "alt": "Farmhouse kitchen with white cabinetry, plaster range hood, gray subway tile backsplash, lantern pendants, and wood bar stools at the island"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "bath-gray-brass",
@@ -175,7 +256,8 @@
             "src": "/images/projects/bath/bath3.jpg",
             "alt": "Bathroom with gray shaker double vanity, brass hardware and arched mirrors, black-framed glass shower, and white subway tile"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "addition-mid-century-second-story",
@@ -187,7 +269,8 @@
             "src": "/images/projects/addition/pro2-after.webp",
             "alt": "Split-level home after Blue Rock built a second story over the garage wing, with an angled mid-century roofline, full-height glazing, tan panel cladding, and teal accent panels"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "kitchen-marble-galley",
@@ -199,7 +282,8 @@
             "src": "/images/projects/kitchen/kitchen5.jpg",
             "alt": "Gray shaker galley kitchen with a long marble island, marble slab backsplash, stainless farmhouse sink, and professional range"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "bath-spa-fireplace",
@@ -211,7 +295,8 @@
             "src": "/images/projects/bath/bath4.jpg",
             "alt": "Spa bathroom with a freestanding soaking tub, marble-look feature wall with a linear fireplace, and gray hexagon floor tile"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "basement-modern-lower-level",
@@ -223,7 +308,8 @@
             "src": "/images/projects/basement/basement2.jpg",
             "alt": "Modern lower level with a floating marble staircase with lit treads, polished concrete floor, stone bar, and woven pendant lights over a wood table"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "kitchen-navy-brass",
@@ -235,7 +321,8 @@
             "src": "/images/projects/kitchen/kitchen6.jpg",
             "alt": "White kitchen with a navy island, brass hardware and faucet, white oak floors, farmhouse sink, and double wall ovens"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "bath-classic-luxury",
@@ -247,7 +334,8 @@
             "src": "/images/projects/bath/bath5.jpg",
             "alt": "Cream marble luxury bathroom with a fluted stone vanity, wood shelving, glass shower enclosure, and built-in tub"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "exterior-corner-elevation",
@@ -259,7 +347,8 @@
             "src": "/images/projects/exterior/exterior2.webp",
             "alt": "Corner elevation of a renovated home exterior with large-format stone cladding, a continuous lit soffit line, wall sconces between windows, and a paver walkway"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "kitchen-matte-black",
@@ -271,7 +360,8 @@
             "src": "/images/projects/kitchen/kitchen7.jpg",
             "alt": "Matte black kitchen with a vaulted beamed ceiling, white quartz island with induction cooktop, cylinder pendants, and double wall ovens"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "bath-fluted-wood",
@@ -283,7 +373,8 @@
             "src": "/images/projects/bath/bath6.jpg",
             "alt": "Modern bathroom with a fluted wood floating vanity, vessel sink, geometric patterned accent tile, and a ribbed wood-look tile shower"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "kitchen-classic-cream",
@@ -295,7 +386,8 @@
             "src": "/images/projects/kitchen/kitchen8.jpg",
             "alt": "Cream shaker kitchen with black granite counters, a gray island topped in marble, marble subway backsplash, farmhouse sink, and stainless pro range"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "kitchen-vaulted-white",
@@ -307,7 +399,8 @@
             "src": "/images/projects/kitchen/kitchen9.jpg",
             "alt": "White shaker kitchen under a vaulted ceiling with a gable window wall, waterfall quartz island with black bar stools, lantern pendants, and light oak floors"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "bath-double-shower",
@@ -319,7 +412,8 @@
             "src": "/images/projects/bath/bath8.jpg",
             "alt": "Primary bathroom with a large marble walk-in shower with dual shower heads and bench seat, and a freestanding oval tub"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     },
     {
         "slug": "bath-wood-tile-shower",
@@ -331,6 +425,7 @@
             "src": "/images/projects/bath/bath9.jpg",
             "alt": "Bathroom with a ribbed wood-look tile shower behind a brass-framed sliding glass door, wood vanity, and marble-look floor tile"
         },
-        "featured": false
+        "featured": false,
+        "hidden": true
     }
 ]

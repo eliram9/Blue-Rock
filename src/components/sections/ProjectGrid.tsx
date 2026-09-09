@@ -8,11 +8,18 @@ import ProjectModal from "@/components/ui/ProjectModal";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import {
     ADDITION_1,
+    ADDITION_3,
+    BASEMENT_1,
     BASEMENT_3,
     BATH_7,
     BATH_10,
+    BATH_11,
+    BATH_12,
+    BATH_13,
     CATEGORY_LABELS,
     GARAGE_1,
+    KITCHEN_10,
+    KITCHEN_11,
     projectSheetId,
     type Project,
 } from "@/lib/projects";
@@ -107,9 +114,9 @@ function packRows(projects: Project[]) {
 
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
     /* One modal for the whole grid; the open tile decides what it shows.
-       Every project opens it, including the two that also build a detail page
-       at /projects/<slug> - those routes stay indexable, they are just no
-       longer what a tile click goes to. */
+       Every project opens it, including the ones that also build a detail
+       page at /projects/<slug> - those routes stay indexable, they are just
+       no longer what a tile click goes to. */
     const [active, setActive] = useState<Project | null>(null);
 
     const rows = packRows(projects);
@@ -184,10 +191,17 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
    the photo modal stamps the same city on its frames. */
 const CITY_LABEL_SLUGS = new Set([
     ADDITION_1.slug,
+    ADDITION_3.slug,
+    BASEMENT_1.slug,
     BASEMENT_3.slug,
     GARAGE_1.slug,
     BATH_7.slug,
     BATH_10.slug,
+    BATH_11.slug,
+    KITCHEN_10.slug,
+    KITCHEN_11.slug,
+    BATH_12.slug,
+    BATH_13.slug,
 ]);
 
 function TileInner({

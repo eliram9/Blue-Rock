@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import Carousel from "@/components/ui/Carousel";
+import { HOME_CAROUSEL_SLIDES } from "@/lib/projects";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const viewport = { once: true, amount: 0.25 };
@@ -15,66 +16,6 @@ const fadeUp: Variants = {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
-
-/* Placeholder set — swap for real project photography as it arrives. */
-const PROJECT_SLIDES = [
-    {
-        src: "/kitchen.jpg",
-        alt: "Modern kitchen remodel with custom island and cabinetry",
-        title: "Kitchen Transformations",
-        tag: "Residential — Kitchen",
-        description: "Creating beautiful, functional spaces for your home",
-    },
-    {
-        src: "/kitchen.jpg",
-        alt: "Bathroom renovation with modern fixtures",
-        title: "Bathroom Renovations",
-        tag: "Residential — Bathroom",
-        description: "Luxury bathrooms designed for comfort and style",
-    },
-    {
-        src: "/kitchen.jpg",
-        alt: "Seamless home addition expanding the living space",
-        title: "Home Additions",
-        tag: "Residential — Home Addition",
-        description: "Expanding your living space with seamless additions",
-    },
-    {
-        src: "/kitchen.jpg",
-        alt: "Finished basement converted to a living area",
-        title: "Basement Finishing",
-        tag: "Residential — Basement",
-        description: "Transform your basement into a functional living area",
-    },
-    {
-        src: "/kitchen.jpg",
-        alt: "Exterior renovation with new siding and trim",
-        title: "Exterior Renovations",
-        tag: "Residential — Exterior",
-        description: "Curb appeal built to last, from siding to paint",
-    },
-    {
-        src: "/kitchen.jpg",
-        alt: "Custom deck and outdoor living space",
-        title: "Deck & Outdoor Living",
-        tag: "Residential — Outdoor",
-        description: "Outdoor spaces built for every season",
-    },
-    {
-        src: "/kitchen.jpg",
-        alt: "Custom carpentry and built-in cabinetry",
-        title: "Custom Carpentry",
-        tag: "Residential — Carpentry",
-        description: "Built-ins and millwork crafted to fit",
-    },
-    {
-        src: "/kitchen.jpg",
-        alt: "Commercial office build-out",
-        title: "Commercial Build-Out",
-        tag: "Commercial — Build-Out",
-        description: "Turnkey spaces for growing businesses",
-    },
-];
 
 /**
  * Home-page portfolio band: house-style header + blueprint-framed carousel.
@@ -126,7 +67,7 @@ export default function FeaturedProjects() {
                 {/* Carousel */}
                 <motion.div variants={fadeUp} className="mt-12">
                     <Carousel
-                        images={PROJECT_SLIDES}
+                        images={HOME_CAROUSEL_SLIDES}
                         autoplay={true}
                         autoplayInterval={5000}
                         showArrows={true}
