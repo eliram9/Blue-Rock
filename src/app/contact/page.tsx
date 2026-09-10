@@ -23,20 +23,28 @@ const INITIAL_FORM = {
     message: "",
 };
 
-/* The four required text fields, rendered into a 2-column grid via .map() */
-const CONTACT_FIELDS = [
-    { name: "firstName", type: "text", label: "First Name", placeholder: "Enter your first name" },
-    { name: "lastName", type: "text", label: "Last Name", placeholder: "Enter your last name" },
+/* The four required text fields, rendered into a 2-column grid via .map().
+   A placeholder only earns its place where it shows format; on the name fields
+   it just restated the label, so those two are omitted. Explicitly typed rather
+   than `as const` so `placeholder` can be optional while `name` stays narrow
+   enough to index formData. */
+const CONTACT_FIELDS: {
+    name: "firstName" | "lastName" | "email" | "phone";
+    type: string;
+    label: string;
+    placeholder?: string;
+}[] = [
+    { name: "firstName", type: "text", label: "First Name" },
+    { name: "lastName", type: "text", label: "Last Name" },
     { name: "email", type: "email", label: "Email Address", placeholder: "your.email@example.com" },
     { name: "phone", type: "tel", label: "Phone Number", placeholder: "(555) 123-4567" },
-] as const;
+];
 
 /* Direct-line sheet rows — values come from BUSINESS/SITE_CONFIG, never
    hardcoded, so contact details stay in sync site-wide. */
 const DIRECT_LINE_ROWS: { label: string; content: React.ReactNode; note?: string }[] = [
     {
         label: "Call Now",
-        note: "Fastest way to reach us - talk to the team directly.",
         content: (
             <a
                 href={`tel:${SITE_CONFIG.phone}`}
@@ -220,12 +228,12 @@ export default function Contact() {
                                 </div>
 
                                 <div className="p-6 md:p-8">
-                                    <h3 className="font-title text-2xl font-normal uppercase tracking-[0.015em] text-foreground md:text-3xl">
+                                    {/* The headline carries the bottom spacing the intro
+                                        paragraph used to. "Response within 24h" in the title
+                                        block above is now the only place that promise appears. */}
+                                    <h3 className="mb-8 font-title text-2xl font-normal uppercase tracking-[0.015em] text-foreground md:text-3xl">
                                         Send Us a Message
                                     </h3>
-                                    <p className="mt-2 mb-8 text-muted">
-                                        Fill out the form below and we&apos;ll get back to you within 24 hours.
-                                    </p>
 
                                     <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                                         {/* Honeypot — hidden from users, bots fill it */}
@@ -295,7 +303,7 @@ export default function Contact() {
                                                 value={formData.message}
                                                 onChange={handleChange}
                                                 rows={6}
-                                                placeholder="Tell us about your project, any specific requirements, or questions you have..."
+                                                placeholder="Tell us about your project."
                                                 className={`${inputClass} resize-none`}
                                                 required
                                             ></textarea>
@@ -355,20 +363,12 @@ export default function Contact() {
 
                                 {/* Content — flex column so the sheet fills the panel */}
                                 <div className="relative z-10 flex h-full flex-col p-6 md:p-8">
-                                    {/* Section label */}
-                                    <div className="mb-6 flex items-center gap-3">
-                                        <span className="font-mono text-sm uppercase tracking-widest text-brand-light/80">
-                                            Contact · Direct Line
-                                        </span>
-                                        <div className="flex-1 border-t border-dashed border-brand-light/25" />
-                                    </div>
-
+                                    {/* No eyebrow here: the section label above already
+                                        reads "Contact 01.01", and a second one inside the
+                                        column just repeated it. The headline leads. */}
                                     <h2 className="font-title text-3xl font-normal uppercase tracking-[0.015em] text-white md:text-4xl">
                                         Need Immediate <span className="text-brand-light">Help?</span>
                                     </h2>
-                                    <p className="mt-4 text-base leading-relaxed text-blue-100/80">
-                                        Our expert team is ready to assist you with any remodeling emergency or question you may have.
-                                    </p>
 
                                     {/* Contact sheet — rows flex to fill the full height */}
                                     <div className="relative mt-8 flex flex-1 flex-col border border-brand-light/25 bg-gradient-to-b from-ink-soft/80 to-ink/40 backdrop-blur-sm">
