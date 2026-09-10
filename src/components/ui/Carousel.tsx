@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { PHOTO_STATUS_LABELS, type PhotoStatus } from "@/lib/projects";
@@ -72,9 +72,16 @@ export default function Carousel({
 }: CarouselProps): React.ReactElement {
     const toneClasses = TONES[tone];
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
+    /* Hover and focus pause on separate flags rather than one shared boolean:
+       a keyboard reader parked on the frame must not be un-paused by a stray
+       mouse-leave somewhere else, and vice versa. */
+    const [isHovered, setIsHovered] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+    const [isTabHidden, setIsTabHidden] = useState(false);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    const autoplayPaused = isHovered || isFocused || isTabHidden;
 
     // Minimum swipe distance (in px)
     const minSwipeDistance = 50;
@@ -95,16 +102,47 @@ export default function Carousel({
         );
     }, [images.length]);
 
-    // Autoplay functionality
+    /* A backgrounded tab keeps firing timers but stops settling Framer's exit
+       animations, so every autoplay tick left another full-size slide mounted
+       behind the live one. A tab parked on this page came back holding a dozen
+       dead <Image> layers. Freezing autoplay while the tab is hidden stops the
+       pile-up at the source, and freezes the progress hairline with it. */
     useEffect(() => {
-        if (!autoplay || isAutoplayPaused) return;
+        const syncVisibility = () => setIsTabHidden(document.hidden);
+        syncVisibility();
+        document.addEventListener("visibilitychange", syncVisibility);
+        return () =>
+            document.removeEventListener("visibilitychange", syncVisibility);
+    }, []);
 
-        const interval = setInterval(() => {
-            goToNext();
-        }, autoplayInterval);
+    /* Autoplay clock. The timer is rebuilt on every pause, so it carries the
+       time it had left across the gap - restarting a whole interval on
+       mouse-leave would drift out of step with the progress hairline, which
+       freezes and resumes in place. And any slide change (autoplay, arrow,
+       swipe, thumbnail) resets it to a full interval: the old setInterval kept
+       its own phase through a manual change, so a swipe could be followed a
+       blink later by an autoplay advance, under a bar that had just restarted. */
+    const remainingRef = useRef(autoplayInterval);
+    const resumedAtRef = useRef(0);
 
-        return () => clearInterval(interval);
-    }, [autoplay, autoplayInterval, isAutoplayPaused, goToNext]);
+    useEffect(() => {
+        remainingRef.current = autoplayInterval;
+    }, [currentIndex, autoplayInterval]);
+
+    useEffect(() => {
+        if (!autoplay || autoplayPaused) return;
+
+        resumedAtRef.current = Date.now();
+        const timer = setTimeout(goToNext, remainingRef.current);
+
+        return () => {
+            clearTimeout(timer);
+            remainingRef.current = Math.max(
+                0,
+                remainingRef.current - (Date.now() - resumedAtRef.current),
+            );
+        };
+    }, [autoplay, autoplayPaused, goToNext, currentIndex]);
 
     // Touch handlers for swipe
     const onTouchStart = (e: React.TouchEvent) => {
@@ -117,7 +155,9 @@ export default function Carousel({
     };
 
     const onTouchEnd = () => {
-        if (!touchStart || !touchEnd) return;
+        /* Null checks, not falsy ones: a swipe begun hard against the left edge
+           reports clientX 0, which the old guard threw away. */
+        if (touchStart === null || touchEnd === null) return;
 
         const distance = touchStart - touchEnd;
         const isLeftSwipe = distance > minSwipeDistance;
@@ -128,21 +168,25 @@ export default function Carousel({
         } else if (isRightSwipe) {
             goToPrevious();
         }
+
+        setTouchStart(null);
+        setTouchEnd(null);
     };
 
-    // Keyboard navigation
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "ArrowLeft") {
-                goToPrevious();
-            } else if (e.key === "ArrowRight") {
-                goToNext();
-            }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [goToNext, goToPrevious]);
+    /* Arrow keys used to be bound to window, so every mounted carousel answered
+       every keypress: this band advanced while the reader was three sections
+       away, and a photo modal opened over a page carousel drove both at once
+       from one press. Scoped to the frame, which is its own tab stop, and the
+       page no longer scrolls sideways under the slide it just changed. */
+    const onKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+        e.preventDefault();
+        if (e.key === "ArrowLeft") {
+            goToPrevious();
+        } else {
+            goToNext();
+        }
+    };
 
     if (!images || images.length === 0) {
         return <div className="text-gray-500">No images available</div>;
@@ -163,9 +207,27 @@ export default function Carousel({
 
     return (
         <div
-            className="relative w-full group"
-            onMouseEnter={() => setIsAutoplayPaused(true)}
-            onMouseLeave={() => setIsAutoplayPaused(false)}
+            role="group"
+            aria-roledescription="carousel"
+            aria-label="Project photos"
+            tabIndex={0}
+            onKeyDown={onKeyDown}
+            className="relative w-full group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-main-blue"
+            /* Pointer events rather than mouse events: a tap on a phone fires
+               mouseenter with no matching mouseleave, which left autoplay
+               paused for good after the first touch. */
+            onPointerEnter={(e) => {
+                if (e.pointerType === "mouse") setIsHovered(true);
+            }}
+            onPointerLeave={(e) => {
+                if (e.pointerType === "mouse") setIsHovered(false);
+            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+                    setIsFocused(false);
+                }
+            }}
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
@@ -265,7 +327,7 @@ export default function Carousel({
                             className="block h-full bg-brand-light shadow-[0_0_8px_rgba(90,135,221,0.9)]"
                             style={{
                                 animation: `carousel-progress ${autoplayInterval}ms linear forwards`,
-                                animationPlayState: isAutoplayPaused ? "paused" : "running",
+                                animationPlayState: autoplayPaused ? "paused" : "running",
                             }}
                         />
                     </span>
@@ -277,7 +339,7 @@ export default function Carousel({
                     <>
                         <button
                             onClick={goToPrevious}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 cursor-pointer rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-brand-light hover:bg-brand-light/30"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 cursor-pointer rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-within:opacity-100 hover:border-brand-light hover:bg-brand-light/30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light"
                             aria-label="Previous slide"
                         >
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -287,7 +349,7 @@ export default function Carousel({
 
                         <button
                             onClick={goToNext}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 cursor-pointer rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-brand-light hover:bg-brand-light/30"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 cursor-pointer rounded-sm border border-brand-light/40 bg-ink/40 p-3 text-white backdrop-blur-sm opacity-0 transition-all duration-300 group-hover:opacity-100 group-focus-within:opacity-100 hover:border-brand-light hover:bg-brand-light/30 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light"
                             aria-label="Next slide"
                         >
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -316,6 +378,7 @@ export default function Carousel({
                             key={index}
                             onClick={() => goToSlide(index)}
                             aria-label={`Go to slide ${index + 1} of ${images.length}`}
+                            aria-current={index === currentIndex ? "true" : undefined}
                             className={`relative aspect-[16/10] cursor-pointer overflow-hidden rounded-sm border transition-all duration-300 ${
                                 index === currentIndex
                                     ? `${toneClasses.thumbActive} opacity-100`
