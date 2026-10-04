@@ -111,10 +111,11 @@
         "category": "kitchen",
         "location": "Rockville, MD",
         "cover": {
-            "src": "/images/work_gallery/kitchen_rockville_25/after_01.jpg",
-            "alt": "The finished kitchen straight on across the navy island, three brass pendants over its white quartz top, five tan leather stools along the front, and white shaker cabinetry with the built-in refrigerator, stacked wall ovens, and gas cooktop against the marble-look slab backsplash behind"
+            "src": "/images/work_gallery/kitchen_rockville_25/after_02.jpg",
+            "alt": "The kitchen looking from the refrigerator toward the apron-front sink under the window, white cabinetry and stacked wall ovens along the left wall, the navy island with its stainless cooktop and brass faucet on the right, and new white oak flooring running the length between them"
         },
-        "featured": false
+        "featured": false,
+        "coverInGallery": true
     },
     {
         "slug": "bath-primary-suite-bowie",

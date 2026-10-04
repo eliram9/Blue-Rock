@@ -37,6 +37,7 @@ automatically. Nothing sorts on `completedAt`.
 | `cover` | The tile image and the OG image. Deliberately *not* shown in the modal. |
 | `featured` | `true` spans two grid columns and leads the home-page carousel. |
 | `hidden` | Optional `true`. Keeps the record out of the portfolio entirely — the `/projects` grid, the "more work" strips, and the `PRJ-NN` numbering — while it stays reachable by slug. See *Hiding a project* below. |
+| `coverInGallery` | Optional `true`. Lets the cover `src` also appear in `photos`, overriding the rule below. Only for an explicit client request. |
 | `completedAt` | Optional `"YYYY-MM"`. Only emitted into structured data; omit rather than guess. |
 
 ### Hiding a project

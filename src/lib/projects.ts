@@ -128,6 +128,9 @@ export interface Project {
         not worth a portfolio tile - not as a delete button, which is editing
         the JSON. */
     hidden?: boolean;
+    /** Opts one record out of the cover-not-in-modal rule, for a client who
+        wants the tile photo kept as a modal frame too. Leave it off by default. */
+    coverInGallery?: boolean;
     /** Optional "YYYY-MM". Not displayed and not sorted on - PROJECTS array
         order is the display order. Kept only where the month is known, so
         detail pages can emit `datePublished` without inventing one. */
@@ -245,7 +248,7 @@ function assertRecords() {
             if (photo.status && !PHOTO_STATUS_LABELS[photo.status]) {
                 throw new Error(`Unknown status "${photo.status}" on ${record.slug}`);
             }
-            if (photo.src === record.cover.src) {
+            if (photo.src === record.cover.src && !record.coverInGallery) {
                 throw new Error(
                     `${record.slug} repeats its cover as a gallery frame. The ` +
                         `cover is the tile and is not shown in the modal.`,
