@@ -59,13 +59,39 @@ export const GOV_WHY_AGENCIES = [
     "Experience coordinating with government inspectors and regulatory agencies",
 ] as const;
 
+/* Order matters: GovernmentCapabilities places entries 1 and 4 in the large
+   feature tiles, so those need the highest-resolution photos. */
 export const GOV_PAST_PERFORMANCE = [
-    "Embassy Renovation & Modernization Projects",
-    "High-Security Facility Construction",
-    "Municipal Renovation Projects",
-    "Security Fencing & Site Improvement Projects",
-    "Commercial Tenant Improvements & Interior Build-Outs",
-    "Multi-Family Residential Rehabilitation Projects",
+    {
+        title: "Embassy Renovation & Modernization Projects",
+        image: "/images/government/embassy-campus.webp",
+        alt: "U.S. embassy building with a flag and landscaped walkways",
+    },
+    {
+        title: "High-Security Facility Construction",
+        image: "/images/government/defense-contractor-hq.webp",
+        alt: "Modern secure headquarters building with a newly paved entry drive",
+    },
+    {
+        title: "Municipal Renovation Projects",
+        image: "/images/government/office-building-scaffolding.webp",
+        alt: "Multi-story building under renovation, wrapped in scaffolding",
+    },
+    {
+        title: "Security Fencing & Site Improvement Projects",
+        image: "/images/government/security-fencing.webp",
+        alt: "Temporary security fencing around an active site preparation area",
+    },
+    {
+        title: "Commercial Tenant Improvements & Interior Build-Outs",
+        image: "/images/government/tenant-build-out.webp",
+        alt: "Commercial interior build-out with steel stud framing in progress",
+    },
+    {
+        title: "Multi-Family Residential Rehabilitation Projects",
+        image: "/images/government/multifamily-rehab.webp",
+        alt: "Rendering of a rehabilitated multi-family townhome building",
+    },
 ] as const;
 
 export const GOV_NAICS = [

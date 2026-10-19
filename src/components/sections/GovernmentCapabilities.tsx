@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import Link from "next/link";
 import Blueprint from "@/components/svg/Blueprint";
 import BlueprintBright from "@/components/svg/BlueprintBright";
@@ -10,6 +10,7 @@ import Button from "@/components/ui/Button";
 import ChecklistSheet from "@/components/ui/ChecklistSheet";
 import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import { BUSINESS } from "@/lib/site";
 import {
@@ -20,27 +21,16 @@ import {
     GOV_NAICS,
 } from "@/lib/government";
 
-/* Past-performance collage — placeholder renders until real project photos
-   land. Different widths + offsets so the frames overlap like pinned prints. */
-const PP_COLLAGE = [
-    {
-        src: "/images/hero/government.webp",
-        alt: "Government facility construction project",
-        position: "left-0 top-0 w-[78%]",
-        z: "z-10",
-    },
-    {
-        src: "/images/hero/commercial.webp",
-        alt: "Commercial interior build-out project",
-        position: "right-0 top-[30%] w-[64%]",
-        z: "z-20",
-    },
-    {
-        src: "/images/hero/exterior.webp",
-        alt: "Exterior renovation and site improvement project",
-        position: "bottom-0 left-0 w-[56%]",
-        z: "z-30",
-    },
+/* Past-performance sheet: two mirrored blocks of one feature plate beside two
+   stacked plates (feature left, then feature right). md pairs the small plates
+   under a full-width feature; mobile is a single column. */
+const PP_LAYOUT = [
+    { feature: true, cell: "md:col-span-2 lg:col-span-7 lg:row-span-2" },
+    { feature: false, cell: "lg:col-span-5" },
+    { feature: false, cell: "lg:col-span-5" },
+    { feature: true, cell: "md:col-span-2 lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-3" },
+    { feature: false, cell: "lg:col-span-5 lg:col-start-1 lg:row-start-3" },
+    { feature: false, cell: "lg:col-span-5 lg:col-start-1 lg:row-start-4" },
 ] as const;
 
 export default function GovernmentCapabilities() {
@@ -72,10 +62,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-brand-light/[0.09] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-8 -left-3 select-none font-title text-[6.5rem] font-normal leading-none text-brand-light/[0.12] md:text-[8rem]">
                                 01
                             </span>
-                            <h2 className="relative ml-20 font-title text-4xl font-normal uppercase tracking-[0.015em] text-white md:text-6xl">
+                            <h2 className="relative ml-12 md:ml-14 font-title text-3xl font-normal uppercase tracking-[0.015em] text-white md:text-5xl">
                                 Capability <span className="text-brand-light">Statement</span>
                             </h2>
                         </motion.div>
@@ -153,7 +143,7 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-8 -left-3 select-none font-title text-[6.5rem] font-normal leading-none text-light-blue/[0.25] md:text-[8rem]">
                                 02
                             </span>
                             <h2 className="relative text-center font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
@@ -208,10 +198,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-8 -left-3 select-none font-title text-[6.5rem] font-normal leading-none text-light-blue/[0.25] md:text-[8rem]">
                                 03
                             </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
+                            <h2 className="relative ml-12 md:ml-14 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                 What We Deliver
                             </h2>
                         </motion.div>
@@ -260,10 +250,10 @@ export default function GovernmentCapabilities() {
 
                             {/* Oversized headline */}
                             <div className="relative">
-                                <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
+                                <span className="pointer-events-none absolute -top-8 -left-3 select-none font-title text-[6.5rem] font-normal leading-none text-light-blue/[0.25] md:text-[8rem]">
                                     04
                                 </span>
-                                <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
+                                <h2 className="relative ml-12 md:ml-14 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                     Why Agencies Choose US
                                 </h2>
                             </div>
@@ -289,90 +279,86 @@ export default function GovernmentCapabilities() {
                 </Container>
             </section>
 
-            {/* ── 05 · Past performance — project log on ink ── */}
-            <section className="relative overflow-hidden bg-ink py-16 md:py-24">
-                <Blueprint
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-40"
-                />
-                <Container className="relative z-10">
-                    <motion.div
-                        variants={stagger}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={viewport}
-                        className="mx-auto max-w-6xl"
-                    >
-                        {/* Section label */}
-                        <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
-                            <span className="font-mono text-sm uppercase tracking-widest text-brand-light/80">
-                                Government 01.05 · Past Performance
-                            </span>
-                            <div className="flex-1 border-t border-dashed border-brand-light/25" />
-                        </motion.div>
+            {/* ── 05 · Past performance — project sheet on ink ── */}
+            <MotionConfig reducedMotion="user">
+                <section className="relative overflow-hidden bg-ink py-16 md:py-24">
+                    <Blueprint
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-40"
+                    />
+                    <Container className="relative z-10">
+                        <motion.div
+                            variants={stagger}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={viewport}
+                            className="mx-auto max-w-6xl"
+                        >
+                            <SectionHeader
+                                prefix="Government"
+                                index="05"
+                                kicker="Past Performance"
+                                title="Project Log"
+                                tone="ink"
+                            />
 
-                        {/* Oversized headline */}
-                        <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-brand-light/[0.09] md:text-[11rem]">
-                                05
-                            </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-white md:text-5xl">
-                                Project Log
-                            </h2>
-                        </motion.div>
-
-                        <div className="mt-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-                            {/* Project log */}
-                            <div className="lg:col-span-7">
-                                {GOV_PAST_PERFORMANCE.map((project, i) => (
-                                    <motion.div
-                                        key={project}
-                                        variants={fadeUp}
-                                        className="group flex items-baseline gap-5 border-b border-brand-light/15 py-4 transition-colors hover:border-brand-light/40"
-                                    >
-                                        <span className="shrink-0 font-mono text-sm tracking-[0.2em] text-brand-light">
-                                            PP—{String(i + 1).padStart(2, "0")}
-                                        </span>
-                                        <span className="text-base leading-relaxed text-blue-100/90 md:text-lg">
-                                            {project}
-                                        </span>
-                                    </motion.div>
-                                ))}
-                            </div>
-
-                            {/* Overlapping project prints — hover lifts one to the front */}
-                            <motion.div variants={fadeUp} className="lg:col-span-5">
-                                <div className="relative mx-auto aspect-[4/5] w-full max-w-xl">
-                                    {PP_COLLAGE.map((item) => (
-                                        <motion.div
-                                            key={item.src}
-                                            initial={false}
-                                            whileHover={{
-                                                scale: 1.03,
-                                                y: -8,
-                                                zIndex: 40,
-                                            }}
-                                            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                                            className={`absolute ${item.position} ${item.z} border border-brand-light/25 bg-ink-soft p-1.5 shadow-2xl shadow-black/50`}
+                            <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-12">
+                                {GOV_PAST_PERFORMANCE.map((project, i) => {
+                                    const { feature, cell } = PP_LAYOUT[i];
+                                    return (
+                                        <motion.article
+                                            key={project.title}
+                                            variants={fadeUp}
+                                            className={`group relative flex flex-col border border-brand-light/20 bg-ink-soft p-1.5 transition-colors duration-500 hover:border-brand-light/50 ${cell}`}
                                         >
-                                            <div className="relative aspect-[4/3] overflow-hidden">
+                                            {/* Feature plates always carry the brackets; small
+                                                plates lock them on under hover. */}
+                                            {feature ? (
+                                                <Corners />
+                                            ) : (
+                                                <div className="opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                                                    <Corners />
+                                                </div>
+                                            )}
+                                            <div
+                                                className={`relative aspect-[16/10] overflow-hidden ${feature ? "lg:aspect-auto lg:min-h-80 lg:flex-1" : "lg:aspect-[16/9]"}`}
+                                            >
                                                 <Image
-                                                    src={item.src}
-                                                    alt={item.alt}
+                                                    src={project.image}
+                                                    alt={project.alt}
                                                     fill
-                                                    sizes="(max-width: 1024px) 60vw, 20vw"
-                                                    className="object-cover"
+                                                    sizes={
+                                                        feature
+                                                            ? "(min-width: 1152px) 660px, 100vw"
+                                                            : "(min-width: 1152px) 470px, (min-width: 768px) 50vw, 100vw"
+                                                    }
+                                                    className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:group-hover:scale-[1.05]"
                                                     quality={80}
                                                 />
+                                                {/* Ink wash that lifts on hover */}
+                                                <div
+                                                    aria-hidden="true"
+                                                    className="pointer-events-none absolute inset-0 bg-ink/20 transition-opacity duration-500 group-hover:opacity-0"
+                                                />
                                             </div>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                </Container>
-            </section>
+                                            <div className="flex items-baseline gap-4 px-3 pb-3 pt-4">
+                                                <span className="shrink-0 font-mono text-sm tracking-[0.2em] text-brand-light transition-colors duration-500 group-hover:text-white">
+                                                    PP-{String(i + 1).padStart(2, "0")}
+                                                </span>
+                                                <h3
+                                                    className={`font-title font-normal uppercase leading-snug tracking-[0.02em] text-white ${feature ? "text-xl md:text-2xl" : "text-lg"}`}
+                                                >
+                                                    {project.title}
+                                                </h3>
+                                            </div>
+                                        </motion.article>
+                                    );
+                                })}
+                            </div>
+                        </motion.div>
+                    </Container>
+                </section>
+            </MotionConfig>
 
             {/* ── 06 · NAICS schedule ── */}
             <section className="bg-surface py-16 transition-colors md:py-24">
@@ -394,10 +380,10 @@ export default function GovernmentCapabilities() {
 
                         {/* Oversized headline */}
                         <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
+                            <span className="pointer-events-none absolute -top-8 -left-3 select-none font-title text-[6.5rem] font-normal leading-none text-light-blue/[0.25] md:text-[8rem]">
                                 06
                             </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
+                            <h2 className="relative ml-12 md:ml-14 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
                                 NAICS Codes
                             </h2>
                         </motion.div>

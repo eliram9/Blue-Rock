@@ -31,6 +31,7 @@ export const BUSINESS = {
     cities: ["Rockville", "Potomac", "Bethesda", "Silver Spring", "Gaithersburg"],
     licenses: [
         "Maryland Home Improvement Commission (MHIC)",
+        "D.C. Home Improvement Contractor",
         "General Contractor",
         "New Home Builder",
     ],

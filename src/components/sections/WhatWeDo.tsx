@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Blueprint from "@/components/svg/BlueprintGrid";
+import SectionHeader from "@/components/ui/SectionHeader";
 import ServiceIcon from "@/components/ui/ServiceIcon";
 import { FLAGSHIP_SERVICES, MORE_SERVICES, SECTOR_SERVICES, type Service } from "@/lib/services";
 
@@ -244,7 +245,7 @@ export default function WhatWeDo() {
     const reduceMotion = useReducedMotion();
 
     return (
-        <section className="relative overflow-hidden bg-surface py-20 transition-colors md:py-28">
+        <section className="relative overflow-hidden bg-surface py-16 transition-colors md:py-20">
             {/* Soft ambient gradient under the blueprint: white → light blue → gray.
                 Flipping tokens keep it equally subtle in dark mode. */}
             <div
@@ -264,33 +265,25 @@ export default function WhatWeDo() {
                 viewport={viewport}
                 className="relative z-10 mx-auto max-w-6xl px-6"
             >
-                {/* Kicker */}
-                <motion.div
-                    variants={fadeUp}
-                    className="mb-4 flex items-center justify-center gap-3"
-                >
-                    <span className="h-px w-8 bg-main-blue/50" />
-                    <span className="font-mono text-xs uppercase tracking-[0.25em] text-main-blue">
-                        What we do
-                    </span>
-                    <span className="h-px w-8 bg-main-blue/50" />
-                </motion.div>
+                <SectionHeader
+                    prefix="Home"
+                    index="01"
+                    title="What We Do"
+                    meta={`${FLAGSHIP_SERVICES.length + MORE_SERVICES.length + SECTOR_SERVICES.length} Services · DMV Area`}
+                />
 
-                {/* Headline */}
-                <motion.h2
-                    variants={fadeUp}
-                    className="mx-auto text-center font-title text-4xl font-normal uppercase tracking-[0.015em] text-foreground md:text-6xl"
-                >
-                    A Wide Range of General Construction Services
-                </motion.h2>
-
-                {/* Accent bar */}
-                <motion.div variants={fadeUp} className="mx-auto mt-6 h-0.5 w-20 bg-main-blue" />
-
-                {/* Lead */}
+                {/* Editorial intro — same pairing as OurStory: statement + ruled detail */}
                 <motion.p
                     variants={fadeUp}
-                    className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-muted md:text-lg"
+                    className="mt-14 max-w-4xl text-2xl leading-snug tracking-tight text-foreground md:mt-20 md:text-3xl"
+                >
+                    A wide range of{" "}
+                    <span className="text-main-blue">general construction services</span>, from
+                    a single room to a full build.
+                </motion.p>
+                <motion.p
+                    variants={fadeUp}
+                    className="mt-7 max-w-[62ch] border-l border-dashed border-light-blue/30 pl-6 text-lg leading-relaxed text-foreground/80 md:text-xl"
                 >
                     From full kitchen and bathroom remodels to additions and finished
                     basements — our core specialties, backed by a licensed team that
@@ -299,7 +292,7 @@ export default function WhatWeDo() {
 
                 {/* Flagship four */}
                 {/* lg: flex accordion — the hovered card grows, siblings yield */}
-                <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:flex">
+                <div className="mt-14 md:mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:flex">
                     {FLAGSHIP_SERVICES.map((service, i) => (
                         <ServiceCard key={service.slug} service={service} index={i} />
                     ))}

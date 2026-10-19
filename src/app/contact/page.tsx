@@ -8,6 +8,7 @@ import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";
 import MiniHero from "@/components/sections/MiniHero";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import { BUSINESS } from "@/lib/site";
 import { SITE_CONFIG } from "@/constants/config";
@@ -99,8 +100,6 @@ const labelClass =
 const SERVICE_OPTIONS = [
     { value: "residential", label: "Residential" },
     { value: "commercial", label: "Commercial" },
-    { value: "government", label: "Government" },
-    { value: "renovation", label: "Renovation" },
     { value: "other", label: "Other" },
 ] as const;
 
@@ -190,223 +189,208 @@ export default function Contact() {
                         viewport={viewport}
                         className="mx-auto max-w-7xl"
                     >
-                        {/* Section label */}
-                        <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
-                            <span className="font-mono text-sm uppercase tracking-widest text-light-blue/80">
-                                Contact 01.01 · Project Inquiry
-                            </span>
-                            <div className="flex-1 border-t border-dashed border-light-blue/25" />
-                        </motion.div>
+                        {/* Same header grammar as About 01.01 (WhoWeAre) */}
+                        <SectionHeader
+                            prefix="Contact"
+                            index="01"
+                            title="Start the Conversation"
+                            meta="Free Quotes · DMV Area"
+                        />
 
-                        {/* Oversized headline */}
-                        <motion.div variants={fadeUp} className="relative">
-                            <span className="pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none text-light-blue/[0.25] md:text-[11rem]">
-                                01
-                            </span>
-                            <h2 className="relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] text-foreground md:text-5xl">
-                                Start the Conversation
-                            </h2>
-                        </motion.div>
-                        <motion.div variants={fadeUp} className="mt-20 h-0.5 w-16 bg-main-blue" />
+                        {/* One shared drafting sheet: a single frame, corner set and
+                            title strip span both columns, and the form and steel
+                            panel sit flush inside it as two halves of one element.
+                            Below lg the panel stacks under the form, same frame. */}
+                        <motion.div
+                            variants={fadeUp}
+                            className="relative mt-14 border border-border bg-surface-muted/40 shadow-2xl md:mt-20"
+                        >
+                            <Corners color="border-main-blue" />
 
-                        <div className="mt-12 grid gap-12 lg:grid-cols-2">
-                            {/* Left Column — inquiry form as a drafting sheet */}
-                            <motion.div
-                                variants={fadeUp}
-                                className="relative border border-border bg-surface-muted/40"
-                            >
-                                <Corners color="border-main-blue/50" />
+                            {/* Title block strip — spans the whole sheet */}
+                            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-6 py-3">
+                                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+                                    Project Inquiry · Form CT—1.1
+                                </span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+                                    Response within 24h
+                                </span>
+                            </div>
 
-                                {/* Title block strip */}
-                                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-6 py-3">
-                                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                                        Project Inquiry · Form CT—1.1
-                                    </span>
-                                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                                        Response within 24h
-                                    </span>
+                            <div className="grid lg:grid-cols-2">
+                                {/* Left half — inquiry form */}
+                                <div>
+                                    <div className="p-6 md:p-8">
+                                        {/* The headline carries the bottom spacing the intro
+                                            paragraph used to. "Response within 24h" in the title
+                                            block above is now the only place that promise appears. */}
+                                        <h3 className="mb-8 font-title text-2xl font-normal uppercase tracking-[0.015em] text-foreground md:text-3xl">
+                                            Send Us a Message
+                                        </h3>
+
+                                        <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+                                            {/* Honeypot — hidden from users, bots fill it */}
+                                            <input
+                                                type="text"
+                                                name="website"
+                                                value={website}
+                                                onChange={(e) => setWebsite(e.target.value)}
+                                                tabIndex={-1}
+                                                autoComplete="off"
+                                                aria-hidden="true"
+                                                className="absolute left-[-9999px] w-px h-px opacity-0"
+                                            />
+
+                                            {/* Contact fields — name / email / phone in one mapped grid */}
+                                            <div className="grid gap-6 md:grid-cols-2">
+                                                {CONTACT_FIELDS.map((field) => (
+                                                    <div key={field.name}>
+                                                        <label htmlFor={field.name} className={labelClass}>
+                                                            {field.label} <span className="text-error">*</span>
+                                                        </label>
+                                                        <input
+                                                            type={field.type}
+                                                            id={field.name}
+                                                            name={field.name}
+                                                            value={formData[field.name]}
+                                                            onChange={handleChange}
+                                                            placeholder={field.placeholder}
+                                                            className={inputClass}
+                                                            required
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            {/* Service Needed */}
+                                            <div>
+                                                <span className={labelClass}>Service Needed</span>
+                                                {/* 3 across, except lg (1024–1279) where the form shares
+                                                    the row with the panel and "Commercial" overflows a third */}
+                                                <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                                                    {SERVICE_OPTIONS.map((option) => (
+                                                        <label
+                                                            key={option.value}
+                                                            className="flex cursor-pointer items-center border border-border bg-surface p-4 transition-colors hover:border-main-blue/50 has-[:checked]:border-main-blue has-[:checked]:bg-light-blue/[0.07]"
+                                                        >
+                                                            <input
+                                                                type="radio"
+                                                                name="service"
+                                                                value={option.value}
+                                                                checked={formData.service === option.value}
+                                                                onChange={handleChange}
+                                                                className="h-4 w-4 accent-main-blue"
+                                                            />
+                                                            <span className="ml-3 text-foreground">{option.label}</span>
+                                                        </label>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Message */}
+                                            <div>
+                                                <label htmlFor="message" className={labelClass}>
+                                                    Message <span className="text-error">*</span>
+                                                </label>
+                                                <textarea
+                                                    id="message"
+                                                    name="message"
+                                                    value={formData.message}
+                                                    onChange={handleChange}
+                                                    rows={6}
+                                                    placeholder="Tell us about your project."
+                                                    className={`${inputClass} resize-none`}
+                                                    required
+                                                ></textarea>
+                                            </div>
+
+                                            {/* Submit Button */}
+                                            <button
+                                                type="submit"
+                                                disabled={!isComplete || status === "submitting"}
+                                                className={`w-full px-8 py-4 font-bold font-mono text-md uppercase tracking-[0.25em] transition-colors disabled:cursor-not-allowed ${
+                                                    isComplete
+                                                        ? "running-border bg-main-blue text-white hover:bg-main-blue-deep disabled:opacity-60"
+                                                        : "border border-border bg-surface-muted text-muted"
+                                                }`}
+                                            >
+                                                {status === "submitting" ? "Sending..." : "Get Your Free Quote"}
+                                            </button>
+
+                                            {status === "success" && (
+                                                <div className="border border-success/40 bg-success/10 px-4 py-3 text-sm text-success">
+                                                    Thanks! Your message has been sent. We&apos;ll get back to you within 24 hours.
+                                                </div>
+                                            )}
+                                            {status === "error" && (
+                                                <div className="border border-error/40 bg-error/10 px-4 py-3 text-sm text-error">
+                                                    {errorMessage}
+                                                </div>
+                                            )}
+                                        </form>
+                                    </div>
                                 </div>
 
-                                <div className="p-6 md:p-8">
-                                    {/* The headline carries the bottom spacing the intro
-                                        paragraph used to. "Response within 24h" in the title
-                                        block above is now the only place that promise appears. */}
-                                    <h3 className="mb-8 font-title text-2xl font-normal uppercase tracking-[0.015em] text-foreground md:text-3xl">
-                                        Send Us a Message
-                                    </h3>
+                                {/* Right half — direct-line panel on the steel band
+                                    (fixed ink art direction, identical in both themes) */}
+                                <div className="relative overflow-hidden bg-gradient-to-b from-steel-top to-steel-bottom">
+                                    {/* Blueprint layer — same fixed-white sheet as the CTA band */}
+                                    <Blueprint
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-50"
+                                    />
+                                    {/* Radial vignette grounds the sheet into the steel */}
+                                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,var(--color-steel-bottom)_95%)]" />
 
-                                    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-                                        {/* Honeypot — hidden from users, bots fill it */}
-                                        <input
-                                            type="text"
-                                            name="website"
-                                            value={website}
-                                            onChange={(e) => setWebsite(e.target.value)}
-                                            tabIndex={-1}
-                                            autoComplete="off"
-                                            aria-hidden="true"
-                                            className="absolute left-[-9999px] w-px h-px opacity-0"
+                                    {/* Logo Watermark */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5">
+                                        <Image
+                                            src="/logos/BR-logo2.png"
+                                            alt="Blue Rock Logo"
+                                            width={400}
+                                            height={400}
+                                            className="w-full h-full object-contain"
                                         />
+                                    </div>
 
-                                        {/* Contact fields — name / email / phone in one mapped grid */}
-                                        <div className="grid gap-6 md:grid-cols-2">
-                                            {CONTACT_FIELDS.map((field) => (
-                                                <div key={field.name}>
-                                                    <label htmlFor={field.name} className={labelClass}>
-                                                        {field.label} <span className="text-error">*</span>
-                                                    </label>
-                                                    <input
-                                                        type={field.type}
-                                                        id={field.name}
-                                                        name={field.name}
-                                                        value={formData[field.name]}
-                                                        onChange={handleChange}
-                                                        placeholder={field.placeholder}
-                                                        className={inputClass}
-                                                        required
-                                                    />
+                                    {/* Content — flex column so the sheet fills the panel */}
+                                    <div className="relative z-10 flex h-full flex-col p-6 md:p-8">
+                                        {/* No eyebrow here: the section label above already
+                                            reads "Contact 01.01", and a second one inside the
+                                            column just repeated it. The headline leads. */}
+                                        <h2 className="font-title text-3xl font-normal uppercase tracking-[0.015em] text-white md:text-4xl">
+                                            Need Immediate <span className="text-brand-light">Help?</span>
+                                        </h2>
+
+                                        {/* Contact sheet — rows flex to fill the full height */}
+                                        <div className="relative mt-8 flex flex-1 flex-col border border-brand-light/25 bg-gradient-to-b from-ink-soft/80 to-ink/40 backdrop-blur-sm">
+                                            <Corners color="border-brand-light" />
+
+                                            {/* Business name stays in the DOM for screen readers and
+                                                crawlers (NAP consistency) but no longer prints a strip */}
+                                            <span className="sr-only">{BUSINESS.name}</span>
+
+                                            {/* Readout rows — mapped; each stretches (flex-1) so the
+                                                sheet fills the panel's full height */}
+                                            {DIRECT_LINE_ROWS.map((row) => (
+                                                <div
+                                                    key={row.label}
+                                                    className="group flex flex-1 flex-col justify-center border-b border-brand-light/15 px-6 py-5 transition-colors last:border-b-0 hover:bg-brand-light/[0.07]"
+                                                >
+                                                    <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-brand-light">
+                                                        {row.label}
+                                                    </div>
+                                                    {row.content}
+                                                    {/* Notes are kept for SEO/GEO and screen
+                                                        readers, visually hidden to keep the rows clean */}
+                                                    {row.note && <span className="sr-only">{row.note}</span>}
                                                 </div>
                                             ))}
                                         </div>
-
-                                        {/* Service Needed */}
-                                        <div>
-                                            <span className={labelClass}>Service Needed</span>
-                                            <div className="grid gap-4 md:grid-cols-2">
-                                                {SERVICE_OPTIONS.map((option) => (
-                                                    <label
-                                                        key={option.value}
-                                                        className="flex cursor-pointer items-center border border-border bg-surface p-4 transition-colors hover:border-main-blue/50 has-[:checked]:border-main-blue has-[:checked]:bg-light-blue/[0.07]"
-                                                    >
-                                                        <input
-                                                            type="radio"
-                                                            name="service"
-                                                            value={option.value}
-                                                            checked={formData.service === option.value}
-                                                            onChange={handleChange}
-                                                            className="h-4 w-4 accent-main-blue"
-                                                        />
-                                                        <span className="ml-3 text-foreground">{option.label}</span>
-                                                    </label>
-                                                ))}
-                                            </div>
-                                        </div>
-
-                                        {/* Message */}
-                                        <div>
-                                            <label htmlFor="message" className={labelClass}>
-                                                Message <span className="text-error">*</span>
-                                            </label>
-                                            <textarea
-                                                id="message"
-                                                name="message"
-                                                value={formData.message}
-                                                onChange={handleChange}
-                                                rows={6}
-                                                placeholder="Tell us about your project."
-                                                className={`${inputClass} resize-none`}
-                                                required
-                                            ></textarea>
-                                        </div>
-
-                                        {/* Submit Button */}
-                                        <button
-                                            type="submit"
-                                            disabled={!isComplete || status === "submitting"}
-                                            className={`w-full px-8 py-4 font-bold font-mono text-md uppercase tracking-[0.25em] transition-colors disabled:cursor-not-allowed ${
-                                                isComplete
-                                                    ? "running-border bg-main-blue text-white hover:bg-main-blue-deep disabled:opacity-60"
-                                                    : "border border-border bg-surface-muted text-muted"
-                                            }`}
-                                        >
-                                            {status === "submitting" ? "Sending..." : "Get Your Free Quote"}
-                                        </button>
-
-                                        {status === "success" && (
-                                            <div className="border border-success/40 bg-success/10 px-4 py-3 text-sm text-success">
-                                                Thanks! Your message has been sent. We&apos;ll get back to you within 24 hours.
-                                            </div>
-                                        )}
-                                        {status === "error" && (
-                                            <div className="border border-error/40 bg-error/10 px-4 py-3 text-sm text-error">
-                                                {errorMessage}
-                                            </div>
-                                        )}
-                                    </form>
-                                </div>
-                            </motion.div>
-
-                            {/* Right Column — direct-line panel on the steel band
-                                (fixed ink art direction, identical in both themes) */}
-                            <motion.div
-                                variants={fadeUp}
-                                className="relative overflow-hidden border border-brand-light/25 bg-gradient-to-b from-steel-top to-steel-bottom shadow-2xl"
-                            >
-                                {/* Blueprint layer — same fixed-white sheet as the CTA band */}
-                                <Blueprint
-                                    aria-hidden="true"
-                                    className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-50"
-                                />
-                                {/* Radial vignette grounds the sheet into the steel */}
-                                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,var(--color-steel-bottom)_95%)]" />
-
-                                {/* Logo Watermark */}
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5">
-                                    <Image
-                                        src="/logos/BR-logo2.png"
-                                        alt="Blue Rock Logo"
-                                        width={400}
-                                        height={400}
-                                        className="w-full h-full object-contain"
-                                    />
-                                </div>
-
-                                {/* Content — flex column so the sheet fills the panel */}
-                                <div className="relative z-10 flex h-full flex-col p-6 md:p-8">
-                                    {/* No eyebrow here: the section label above already
-                                        reads "Contact 01.01", and a second one inside the
-                                        column just repeated it. The headline leads. */}
-                                    <h2 className="font-title text-3xl font-normal uppercase tracking-[0.015em] text-white md:text-4xl">
-                                        Need Immediate <span className="text-brand-light">Help?</span>
-                                    </h2>
-
-                                    {/* Contact sheet — rows flex to fill the full height */}
-                                    <div className="relative mt-8 flex flex-1 flex-col border border-brand-light/25 bg-gradient-to-b from-ink-soft/80 to-ink/40 backdrop-blur-sm">
-                                        <Corners color="border-brand-light" />
-
-                                        {/* Title block strip — name reads from BUSINESS so the
-                                            entity stays identical everywhere (NAP consistency) */}
-                                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-brand-light/20 px-6 py-3">
-                                            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-100/60">
-                                                {BUSINESS.name}
-                                            </span>
-                                            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-100/60">
-                                                Sheet CT—1.0 · Rev. A
-                                            </span>
-                                        </div>
-
-                                        {/* Readout rows — mapped; each stretches (flex-1) so the
-                                            sheet fills the panel's full height */}
-                                        {DIRECT_LINE_ROWS.map((row) => (
-                                            <div
-                                                key={row.label}
-                                                className="group flex flex-1 flex-col justify-center border-b border-brand-light/15 px-6 py-5 transition-colors last:border-b-0 hover:bg-brand-light/[0.07]"
-                                            >
-                                                <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-brand-light">
-                                                    {row.label}
-                                                </div>
-                                                {row.content}
-                                                {row.note && (
-                                                    <div className="mt-2 text-sm leading-relaxed text-blue-100/60">
-                                                        {row.note}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
                                     </div>
                                 </div>
-                            </motion.div>
-                        </div>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 </Container>
             </section>

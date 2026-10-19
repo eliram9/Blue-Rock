@@ -51,24 +51,39 @@ export default function ResidentialShowcase() {
     return (
         <>
             {/* ── 01 · Overview — intro copy + credential readout strip ── */}
-            <section className="bg-surface py-16 transition-colors md:py-24">
-                <Container>
+            {/* Themed band per the About standard (WhoWeAre / WhatWeDo) */}
+            <section className="relative overflow-hidden bg-surface py-16 transition-colors md:py-20">
+                <BlueprintGrid
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 h-full w-full select-none text-light-blue opacity-40"
+                />
+                <div className="relative z-10 mx-auto max-w-6xl px-6">
                     <motion.div
                         variants={stagger}
                         initial="hidden"
                         whileInView="visible"
                         viewport={viewport}
-                        className="mx-auto max-w-5xl"
                     >
-                        <SectionHeader prefix="Residential" index="01" kicker="Overview" title="Expert Residential Remodeling" />
-                        <motion.div variants={fadeUp} className="mt-20 h-0.5 w-16 bg-main-blue" />
+                        <SectionHeader
+                            prefix="Residential"
+                            index="01"
+                            title="Expert Residential Remodeling"
+                            meta="Maryland · Washington DC"
+                        />
 
-                        <motion.p variants={fadeUp} className="mt-10 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
+                        {/* Editorial intro — statement + ruled detail, as on WhatWeDo */}
+                        <motion.p
+                            variants={fadeUp}
+                            className="mt-14 max-w-4xl text-2xl leading-snug tracking-tight text-foreground md:mt-20 md:text-3xl"
+                        >
                             At Blue Rock Remodeling, we specialize in transforming residential
-                            spaces into beautiful, functional homes that reflect your unique
-                            style and meet your family&apos;s needs.
+                            spaces into <span className="text-main-blue">beautiful, functional homes</span>{" "}
+                            that reflect your unique style and meet your family&apos;s needs.
                         </motion.p>
-                        <motion.p variants={fadeUp} className="mt-4 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
+                        <motion.p
+                            variants={fadeUp}
+                            className="mt-7 max-w-[62ch] border-l border-dashed border-light-blue/30 pl-6 text-lg leading-relaxed text-foreground/80 md:text-xl"
+                        >
                             With over a decade of experience serving Maryland and Washington
                             DC, we bring expertise, creativity, and meticulous attention to
                             detail to every project.
@@ -105,7 +120,7 @@ export default function ResidentialShowcase() {
                             </div>
                         </motion.div>
                     </motion.div>
-                </Container>
+                </div>
             </section>
 
             {/* ── 02 · Service index — icon cards on blueprint ground ── */}

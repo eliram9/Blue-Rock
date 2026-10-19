@@ -40,9 +40,9 @@ export default function SectionHeader({
     const ink = tone === "ink";
     return (
         <>
-            <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
+            <motion.div variants={fadeUp} className="mb-8 flex items-center gap-3">
                 <span
-                    className={`font-mono text-sm uppercase tracking-widest ${ink ? "text-brand-light/80" : "text-light-blue/80"}`}
+                    className={`font-mono text-base uppercase tracking-widest ${ink ? "text-brand-light" : "text-light-blue/80"}`}
                 >
                     {prefix} 01.{index}
                     {kicker ? ` · ${kicker}` : ""}
@@ -54,21 +54,23 @@ export default function SectionHeader({
 
             <motion.div variants={fadeUp} className="relative">
                 <span
-                    className={`pointer-events-none absolute -top-10 -left-2 select-none font-title text-[7rem] font-normal leading-none md:text-[11rem] ${ink ? "text-brand-light/[0.09]" : "text-light-blue/[0.25]"}`}
+                    className={`pointer-events-none absolute -top-8 -left-3 select-none font-title text-[6.5rem] font-normal leading-none md:text-[8rem] ${ink ? "text-brand-light/[0.12]" : "text-light-blue/[0.25]"}`}
                 >
                     {index}
                 </span>
                 <h2
-                    className={`relative ml-20 font-title text-3xl font-normal uppercase tracking-[0.015em] md:text-5xl ${ink ? "text-white" : "text-foreground"}`}
+                    className={`relative ml-12 font-title text-3xl font-normal uppercase tracking-[0.015em] md:ml-14 md:text-5xl ${ink ? "text-white" : "text-foreground"}`}
                 >
                     {title}
                 </h2>
 
+                {/* flex-wrap: in a narrow rail (OurStory) the stamp drops under
+                    the bar; at full width it sits beside it. */}
                 {meta ? (
-                    <div className="mt-15 flex items-center gap-4">
+                    <div className="mt-10 flex flex-wrap items-center gap-4">
                         <span className={`h-1 w-24 ${ink ? "bg-brand-light" : "bg-light-blue"}`} />
                         <span
-                            className={`font-mono text-sm uppercase tracking-[0.25em] ${ink ? "text-blue-100/85" : "text-muted"}`}
+                            className={`font-mono text-base uppercase tracking-[0.2em] ${ink ? "text-blue-100/85" : "text-muted"}`}
                         >
                             {meta}
                         </span>
