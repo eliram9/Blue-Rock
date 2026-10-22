@@ -11,7 +11,6 @@ import {
     useTransform,
     type Variants,
 } from "framer-motion";
-import Blueprint from "@/components/svg/BlueprintGrid";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { stagger } from "@/lib/motion";
 
@@ -102,12 +101,6 @@ export default function WhoWeAre() {
 
     return (
         <section className="relative overflow-hidden bg-surface py-16 md:py-20">
-            {/* Blueprint background (test1) */}
-            <Blueprint
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full text-light-blue opacity-40 pointer-events-none select-none"
-            />
-
             <div className="relative z-10 mx-auto max-w-6xl px-6">
                 <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
                     <SectionHeader prefix="About" index="01" title="Who We Are" meta="Est. 2010 · DMV Area" />

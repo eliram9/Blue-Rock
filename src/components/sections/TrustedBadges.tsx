@@ -9,7 +9,6 @@ import {
     IconHomePlus,
     type Icon,
 } from "@tabler/icons-react";
-import Blueprint from "@/components/svg/BlueprintGrid";
 import Corners from "@/components/ui/Corners";
 import RecognitionLogos from "@/components/ui-elements/RecognitionLogos";
 import { SOCIAL_LINKS } from "@/constants/social";
@@ -55,12 +54,7 @@ function cellRules(i: number) {
  */
 export default function TrustedBadges() {
     return (
-        <section className="relative overflow-hidden bg-surface py-20 transition-colors md:py-28">
-            <Blueprint
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 h-full w-full select-none text-light-blue opacity-30"
-            />
-
+        <section className="relative overflow-hidden bg-surface py-20 transition-colors dark:bg-surface-muted md:py-28">
             <motion.div
                 variants={stagger}
                 initial="hidden"
@@ -116,7 +110,7 @@ export default function TrustedBadges() {
                 {/* Credential ledger */}
                 <motion.ul
                     variants={fadeUp}
-                    className="relative grid border border-border bg-surface-muted/70 backdrop-blur-[2px] sm:grid-cols-2 lg:col-span-7"
+                    className="relative grid border border-border bg-surface-muted/70 backdrop-blur-[2px] dark:bg-main-blue/10 sm:grid-cols-2 lg:col-span-7"
                 >
                     <Corners color="border-main-blue/60" />
                     {BUSINESS.licenses.map((license, i) => {
