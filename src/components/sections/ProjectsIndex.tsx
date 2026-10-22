@@ -7,6 +7,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import ProjectGrid from "@/components/sections/ProjectGrid";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import { PROJECTS } from "@/lib/projects";
+import { allVideos } from "@/lib/videos";
 
 /**
  * The /projects index band. One chronological grid, no filters - category
@@ -47,7 +48,7 @@ export default function ProjectsIndex() {
                 </motion.div>
 
                 <div className="mx-auto mt-16 max-w-6xl md:mt-20">
-                    <ProjectGrid projects={PROJECTS} />
+                    <ProjectGrid projects={PROJECTS} videos={allVideos()} />
                 </div>
             </Container>
         </section>

@@ -5,6 +5,7 @@ import ReadyToTransform from "@/components/sections/ReadyToTransform";
 import JsonLd from "@/components/seo/JsonLd";
 import { PROJECTS } from "@/lib/projects";
 import { SITE_URL } from "@/lib/site";
+import { allVideos, videoSchema } from "@/lib/videos";
 
 const PAGE_URL = `${SITE_URL}/projects`;
 
@@ -40,6 +41,11 @@ export default function Projects() {
     return (
         <main className="min-h-screen bg-background transition-colors">
             <JsonLd data={breadcrumbSchema} />
+            {/* The grid's film tiles play in a dialog, so the videos are on
+                this page and get their markup here. */}
+            {allVideos().map((video) => (
+                <JsonLd key={video.youtubeId} data={videoSchema(video)} />
+            ))}
 
             <MiniHero
                 title="OUR PROJECTS"
@@ -49,7 +55,6 @@ export default function Projects() {
             />
 
             <ProjectsIndex />
-
             <ReadyToTransform />
         </main>
     );

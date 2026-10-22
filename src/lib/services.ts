@@ -50,6 +50,9 @@ export interface Service {
         from the nav label. Falls back to `title` and `blurb` when absent. */
     seoTitle?: string;
     seoDescription?: string;
+    /** Drafting-sheet label prefix ("Demolition 01.01") for bands rendered on
+        pages without a SERVICE_DETAILS entry. Falls back to `title`. */
+    sheetName?: string;
 }
 
 export const SERVICES: Service[] = [
@@ -122,6 +125,7 @@ export const SERVICES: Service[] = [
     {
         slug: "demolition-services",
         title: "Demolition Services",
+        sheetName: "Demolition",
         blurb: "Safe, comprehensive demolition for residential and commercial projects, prepped for what's next.",
         flagship: false,
         href: "/services/residential/demolition-services",
@@ -339,6 +343,8 @@ export const SERVICE_SPLITS: Record<string, ServiceSplitBand> = {
  * side by side and compares cleanly regardless of how the shots were taken.
  */
 export interface BeforeAfterProject {
+    /** projects.json slug - links the study to its videos in videos.json. */
+    slug?: string;
     /** Project name, rendered as the sheet title above the frames. */
     title: string;
     /** City + state. Omit when the city is still unconfirmed. */

@@ -24,6 +24,8 @@ const nextConfig: NextConfig = {
        90 and 60, GovernmentCapabilities 80, Footer 75. Add a value here
        before using a new one in a `quality={...}` prop. */
     qualities: [60, 75, 80, 85, 90, 95],
+    /* YouTube posters for the VideoEmbed facade (src/data/videos.json). */
+    remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" }],
   },
   async redirects() {
     return [

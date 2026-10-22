@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { IconPlayerPlayFilled } from "@tabler/icons-react";
 import Corners from "@/components/ui/Corners";
 import ProjectModal from "@/components/ui/ProjectModal";
+import VideoModal from "@/components/ui/VideoModal";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import {
     ADDITION_1,
@@ -17,12 +19,14 @@ import {
     BATH_12,
     BATH_13,
     CATEGORY_LABELS,
+    findProject,
     GARAGE_1,
     KITCHEN_10,
     KITCHEN_11,
     projectSheetId,
     type Project,
 } from "@/lib/projects";
+import { formatDuration, posterUrl, type Video } from "@/lib/videos";
 
 /* ── Layout system ─────────────────────────────────────────────────────────
    The portfolio is laid out as a sequence of row compositions rather than a
@@ -78,6 +82,43 @@ const SPAN_CLASS: Record<number, string> = {
     12: "md:col-span-12",
 };
 
+/* ── Films in the collage ───────────────────────────────────────────────────
+   Videos are tiles in the same packed rows, not a separate band. A video tied
+   to a project on the grid sits right after that project's tile, so the pair
+   share a row where the layout allows. Videos with no visible project (a
+   hidden record, or a service video) are spread evenly through the sequence
+   so the films punctuate the page instead of clumping at one end. */
+
+type GridItem =
+    | { kind: "project"; project: Project }
+    | { kind: "video"; video: Video; location: string | null };
+
+const itemKey = (item: GridItem) =>
+    item.kind === "project" ? item.project.slug : `video-${item.video.youtubeId}`;
+
+function videoLocation(video: Video): string | null {
+    const project = video.project ? findProject(video.project) : undefined;
+    return project?.location ?? video.specs?.find((spec) => spec.label === "Location")?.value ?? null;
+}
+
+function interleave(projects: Project[], videos: Video[]): GridItem[] {
+    const toItem = (video: Video): GridItem => ({ kind: "video", video, location: videoLocation(video) });
+    const onGrid = new Set(projects.map((p) => p.slug));
+
+    const items: GridItem[] = projects.flatMap((project) => [
+        { kind: "project" as const, project },
+        ...videos.filter((v) => v.project === project.slug).map(toItem),
+    ]);
+
+    const loose = videos.filter((v) => !v.project || !onGrid.has(v.project));
+    const base = items.length;
+    loose.forEach((video, k) => {
+        /* +k accounts for the films already inserted ahead of this one. */
+        items.splice(Math.round((base * (k + 1)) / (loose.length + 1)) + k, 0, toItem(video));
+    });
+    return items;
+}
+
 /**
  * Put a featured project in the row's widest slot when it isn't already.
  *
@@ -85,18 +126,18 @@ const SPAN_CLASS: Record<number, string> = {
  * promote into, so a swap would only scramble the sheet numbers (PRJ-04 landing
  * ahead of PRJ-03) for no visual gain.
  */
-function leadWithFeatured(slice: Project[], spans: number[]): Project[] {
+function leadWithFeatured(slice: GridItem[], spans: number[]): GridItem[] {
     const widest = spans.indexOf(Math.max(...spans));
     if (spans.every((span) => span === spans[0])) return slice;
-    const featured = slice.findIndex((p) => p.featured);
+    const featured = slice.findIndex((item) => item.kind === "project" && item.project.featured);
     if (featured === -1 || featured === widest) return slice;
     const out = [...slice];
     [out[widest], out[featured]] = [out[featured], out[widest]];
     return out;
 }
 
-function packRows(projects: Project[]) {
-    const rows: { layout: RowLayout; items: Project[] }[] = [];
+function packRows(projects: GridItem[]) {
+    const rows: { layout: RowLayout; items: GridItem[] }[] = [];
     let i = 0;
     let pattern = 0;
 
@@ -112,14 +153,15 @@ function packRows(projects: Project[]) {
     return rows;
 }
 
-export default function ProjectGrid({ projects }: { projects: Project[] }) {
+export default function ProjectGrid({ projects, videos = [] }: { projects: Project[]; videos?: Video[] }) {
     /* One modal for the whole grid; the open tile decides what it shows.
        Every project opens it, including the ones that also build a detail
        page at /projects/<slug> - those routes stay indexable, they are just
        no longer what a tile click goes to. */
     const [active, setActive] = useState<Project | null>(null);
+    const [film, setFilm] = useState<Extract<GridItem, { kind: "video" }> | null>(null);
 
-    const rows = packRows(projects);
+    const rows = packRows(interleave(projects, videos));
 
     return (
         <>
@@ -138,8 +180,30 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                            tile in the row ends flush at the same baseline. */
                         className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-12 md:gap-6"
                     >
-                        {row.items.map((project, c) => {
+                        {row.items.map((item, c) => {
                             const span = row.layout.spans[c];
+                            if (item.kind === "video") {
+                                const duration = formatDuration(item.video.duration);
+                                return (
+                                    <motion.div key={itemKey(item)} variants={fadeUp} className={SPAN_CLASS[span]}>
+                                        <button
+                                            type="button"
+                                            onClick={() => setFilm(item)}
+                                            aria-label={`Play video: ${item.video.title}${duration ? ` (${duration})` : ""}`}
+                                            className="group relative flex h-full w-full cursor-pointer flex-col border border-border bg-surface text-left transition-colors hover:border-main-blue/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-main-blue"
+                                            style={{ touchAction: "manipulation" }}
+                                        >
+                                            <FilmTileInner
+                                                video={item.video}
+                                                location={item.location}
+                                                span={span}
+                                                heightClass={HEIGHTS[row.layout.height]}
+                                            />
+                                        </button>
+                                    </motion.div>
+                                );
+                            }
+                            const { project } = item;
                             /* Gallery frames only. The cover is the tile the
                                visitor is already looking at and is not shown
                                inside the modal, so counting it here would
@@ -179,6 +243,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             </motion.div>
 
             <ProjectModal project={active} onClose={() => setActive(null)} />
+            <VideoModal video={film?.video ?? null} location={film?.location} onClose={() => setFilm(null)} />
         </>
     );
 }
@@ -264,6 +329,67 @@ function TileInner({
                         {project.location}
                     </p>
                 )}
+            </div>
+        </>
+    );
+}
+
+/* A film tile reads as part of the same sheet set: identical frame, hover
+   brackets, and measurement line as a project tile. What marks it as footage
+   is the ink well, the play mark, and a run time in the label strip. */
+function FilmTileInner({
+    video,
+    location,
+    span,
+    heightClass,
+}: {
+    video: Video;
+    location: string | null;
+    span: number;
+    heightClass: string;
+}) {
+    const sizes = `(max-width: 768px) 100vw, ${Math.round((span / 12) * 100)}vw`;
+    const duration = formatDuration(video.duration);
+
+    return (
+        <>
+            <span className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <Corners color="border-main-blue/50" />
+            </span>
+
+            <div className={`relative w-full overflow-hidden bg-ink ${heightClass}`}>
+                <Image
+                    src={video.poster ?? posterUrl(video.youtubeId)}
+                    alt=""
+                    fill
+                    sizes={sizes}
+                    quality={80}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+                {/* Fixed ink/white over a photo, so constants in both themes */}
+                <span
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-ink/35 transition-colors duration-300 group-hover:bg-ink/20"
+                />
+                <span
+                    aria-hidden="true"
+                    className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-white/30 bg-brand text-white transition-[background-color,transform] duration-300 group-hover:bg-brand-deep group-active:scale-[0.96] md:h-16 md:w-16"
+                >
+                    <IconPlayerPlayFilled className="ml-0.5 h-6 w-6 md:h-7 md:w-7" />
+                </span>
+            </div>
+
+            <span
+                aria-hidden="true"
+                className="block h-px origin-left scale-x-0 bg-main-blue/70 transition-transform duration-500 ease-out group-hover:scale-x-100"
+            />
+
+            <div className="flex flex-1 flex-col border-t border-border px-4 py-4 md:px-5">
+                <span className="flex items-baseline justify-between gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
+                    <span>{location ? `${location} · ` : ""}Film</span>
+                    {duration && <time dateTime={video.duration}>{duration}</time>}
+                </span>
+                <h3 className="mt-2 text-base font-semibold leading-snug text-foreground">{video.title}</h3>
             </div>
         </>
     );

@@ -10,8 +10,11 @@ import Container from "@/components/ui/Container";
 import Corners from "@/components/ui/Corners";
 import SectionHeader from "@/components/ui/SectionHeader";
 import SheetPair from "@/components/ui/SheetPair";
+import VideoDetail from "@/components/ui/VideoDetail";
+import ServiceVideoBand from "@/components/sections/ServiceVideoBand";
 import { EASE, fadeUp, stagger, viewport } from "@/lib/motion";
 import type { ServiceDetail } from "@/lib/services";
+import { videosForProject, type Video } from "@/lib/videos";
 
 /* Dashed connector between phase markers "draws" downward into view */
 const lineDraw: Variants = {
@@ -19,7 +22,13 @@ const lineDraw: Variants = {
     visible: { scaleY: 1, transition: { duration: 0.5, ease: EASE } },
 };
 
-export default function ServiceDetailSections({ detail }: { detail: ServiceDetail }) {
+export default function ServiceDetailSections({
+    detail,
+    videos = [],
+}: {
+    detail: ServiceDetail;
+    videos?: Video[];
+}) {
     const { materials, process, care, timeline, gallery, beforeAfter, faq } = detail;
     /* Single-open FAQ accordion; answers stay in the DOM (CSS-collapsed, same
        as the home-page services drawer) so they keep matching the FAQPage
@@ -31,11 +40,18 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
     const pad = (n: number) => String(n).padStart(2, "0");
     const beforeAfterIndex = beforeAfter ? pad(++sheet) : "";
     const processIndex = process ? pad(++sheet) : "";
+    const videoIndex = videos.length ? pad(++sheet) : "";
     const careIndex = care ? pad(++sheet) : "";
     const timelineIndex = timeline ? pad(++sheet) : "";
     /* The carousel now lives inside 01, so it no longer takes a sheet number
        of its own — FAQ closes the sequence. */
     const faqIndex = pad(++sheet);
+    /* The video band sits right after Process and must alternate surfaces with
+       both neighbours: ink only when neither side is ink (Process and FAQ are
+       themed), otherwise a themed tint that differs from the band above. */
+    const inkAbove = !process && !!beforeAfter;
+    const inkBelow = !!(care || timeline);
+    const videoTone = !inkAbove && !inkBelow ? "ink" : process ? "muted" : "themed";
 
     return (
         <>
@@ -126,9 +142,13 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                  sheets side by side. ── */}
             {beforeAfter && (
             <section className="relative overflow-hidden bg-ink py-16 md:py-24">
-                <Blueprint
+                {/* Drafting dot grid instead of the blueprint drawing: the
+                    drawing's dimension lines read as stray leaders next to the
+                    video callouts. Dots hold the paper texture without
+                    competing with the real leader lines. */}
+                <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 h-full w-full select-none opacity-[0.30]"
+                    className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle,color-mix(in_srgb,var(--color-brand-light)_16%,transparent)_1px,transparent_1.5px)] [background-size:28px_28px]"
                 />
                 {/* Vignette keeps the eye on the frame without hiding the grid */}
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,var(--color-ink)_100%)]" />
@@ -156,13 +176,13 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                             {beforeAfter.lead}
                         </motion.p>
 
-                        {/* Scope readouts ride inside each frame's title
-                            block: short factual pairs in a <dl> are the
-                            cleanest thing for search and AI engines to lift,
-                            so the content stays and only the visual weight
-                            comes off. */}
+                        {/* Scope readouts are left off here on purpose: the
+                            title block carries the caption alone, and the
+                            video callouts below need the room. The specs stay
+                            on each Project record and still render on its
+                            /projects/[slug] page. */}
                         <div className="mt-14 space-y-20 md:space-y-24">
-                            {beforeAfter.projects.map((project) => (
+                            {beforeAfter.projects.map((project, i) => (
                                 <motion.div variants={fadeUp} key={project.title}>
                                     <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-dashed border-brand-light/20 pb-4">
                                         <h3 className="font-title text-xl font-normal uppercase tracking-[0.015em] text-white md:text-2xl">
@@ -185,17 +205,25 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                                                 before={project.before}
                                                 after={project.after}
                                                 caption={project.caption}
-                                                specs={project.specs}
                                             />
                                         ) : (
                                             <SheetPair
                                                 before={project.before}
                                                 after={project.after}
                                                 caption={project.caption}
-                                                specs={project.specs}
                                             />
                                         )}
                                     </div>
+
+                                    {/* The project's footage, called out as details C, D...
+                                        Alternate studies mirror the callout. */}
+                                    {project.slug && (
+                                        <VideoDetail
+                                            videos={videosForProject(project.slug)}
+                                            sheet={pad(Number(beforeAfterIndex) + i)}
+                                            mirror={i % 2 === 1}
+                                        />
+                                    )}
                                 </motion.div>
                             ))}
                         </div>
@@ -281,6 +309,9 @@ export default function ServiceDetailSections({ detail }: { detail: ServiceDetai
                 </Container>
             </section>
             )}
+
+            {/* ── Job-site footage — renders nothing without videos ── */}
+            <ServiceVideoBand videos={videos} prefix={detail.sheetName} index={videoIndex} tone={videoTone} />
 
             {/* ── Care & repair — inspection sheet on ink ── */}
             {care && (

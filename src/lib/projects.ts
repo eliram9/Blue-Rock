@@ -294,6 +294,12 @@ export const PROJECTS: Project[] = ALL_PROJECTS.filter((p) => !p.hidden);
 /* Named exports, re-derived by slug. services.ts references these ~90 times
    and ProjectGrid uses ADDITION_1, so they stay part of the public surface;
    they are now views onto the JSON rather than the storage itself. */
+/** Non-throwing lookup across every record, hidden ones included - for
+    content that points at a project by slug (videos.json) and must not crash
+    the build over a typo. */
+export const findProject = (slug: string): Project | undefined =>
+    ALL_PROJECTS.find((p) => p.slug === slug);
+
 function bySlug(slug: string): Project {
     const found = ALL_PROJECTS.find((p) => p.slug === slug);
     if (!found) throw new Error(`Unknown project slug: ${slug}`);
@@ -381,6 +387,7 @@ export const DETAIL_PROJECTS = PROJECTS.filter(hasDetailPage);
  */
 export function toBeforeAfterProjects(project: Project) {
     return (project.beforeAfter ?? []).map((study) => ({
+        slug: project.slug,
         title: project.title,
         ...(project.location ? { location: project.location } : {}),
         ...study,

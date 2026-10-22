@@ -1,0 +1,52 @@
+[
+    {
+        "youtubeId": "Tfq_fsvEPMo",
+        "title": "20-Unit Apartment Building Demolition",
+        "description": "Blue Rock Remodeling takes a 20-unit apartment building in Maryland down to ground level. Permitting took three months; the demolition itself took two and a half weeks.",
+        "duration": "PT1M5S",
+        "uploadDate": "2023-07-24T08:51:07-07:00",
+        "specs": [
+            {
+                "label": "Scope",
+                "value": "Full demolition to ground level"
+            },
+            {
+                "label": "Location",
+                "value": "Maryland"
+            },
+            {
+                "label": "Permitting",
+                "value": "3 months"
+            },
+            {
+                "label": "Demolition",
+                "value": "2.5 weeks"
+            }
+        ],
+        "project": null,
+        "service": "demolition-services",
+        "homepage": false
+    },
+    {
+        "youtubeId": "_6j_OF4T9Kg",
+        "title": "Second Story Over the Garage: Interior Walkthrough",
+        "description": "A walkthrough of the second story Blue Rock built over an attached two-car garage in Bethesda, MD, from the original exterior to the finished upper level.",
+        "duration": "PT34S",
+        "uploadDate": "2026-05-20T23:38:32-07:00",
+        "poster": "/images/work_gallery/addition_bethesda_26/after_06.jpg",
+        "project": "addition-second-story-garage",
+        "service": null,
+        "homepage": false
+    },
+    {
+        "youtubeId": "J-0rvKViaV4",
+        "title": "Mid-Century Second Story: Interior Walkthrough",
+        "description": "A walkthrough of the mid-century second story Blue Rock added above a split-level's garage wing in Rockville, MD, showing the finished interior.",
+        "duration": "PT1M0S",
+        "uploadDate": "2025-03-11T06:59:58-07:00",
+        "poster": "/images/projects/addition/pro2-video-poster.jpg",
+        "project": "addition-mid-century-second-story",
+        "service": null,
+        "homepage": false
+    }
+]

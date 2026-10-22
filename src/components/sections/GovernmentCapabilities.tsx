@@ -22,8 +22,9 @@ import {
 } from "@/lib/government";
 
 /* Past-performance sheet: two mirrored blocks of one feature plate beside two
-   stacked plates (feature left, then feature right). md pairs the small plates
-   under a full-width feature; mobile is a single column. */
+   stacked plates (feature left, then feature right). At lg the feature photo's
+   aspect sets the block height and the stacked plates' photos flex to fill it.
+   md pairs the small plates under a full-width feature; mobile is one column. */
 const PP_LAYOUT = [
     { feature: true, cell: "md:col-span-2 lg:col-span-7 lg:row-span-2" },
     { feature: false, cell: "lg:col-span-5" },
@@ -211,15 +212,25 @@ export default function GovernmentCapabilities() {
                                 <motion.div
                                     key={capability}
                                     variants={fadeUp}
-                                    className="group relative border border-border bg-surface p-5 transition-colors hover:border-main-blue/40"
+                                    className="group relative overflow-hidden border border-border bg-surface p-5 transition-colors duration-500 hover:border-main-blue/40"
                                 >
-                                    <span className="pointer-events-none absolute right-3 top-2 select-none font-title text-4xl font-normal leading-none text-light-blue/15">
+                                    {/* Brand wash + drafting underline, both on flipping
+                                        tokens so the hover reads in light and dark. */}
+                                    <span
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-0 bg-main-blue/[0.06] opacity-0 dark:bg-main-blue/[0.12] transition-opacity duration-500 group-hover:opacity-100"
+                                    />
+                                    <span
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-main-blue transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100 motion-reduce:transition-none"
+                                    />
+                                    <span className="pointer-events-none absolute right-3 top-2 select-none font-title text-4xl font-normal leading-none text-light-blue/15 transition-colors duration-500 group-hover:text-light-blue/35">
                                         {String(i + 1).padStart(2, "0")}
                                     </span>
-                                    <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
+                                    <span className="relative font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
                                         C—{String(i + 1).padStart(2, "0")}
                                     </span>
-                                    <h3 className="mt-3 pr-8 text-base font-semibold leading-snug text-foreground">
+                                    <h3 className="relative mt-3 pr-8 text-base font-semibold leading-snug text-foreground">
                                         {capability}
                                     </h3>
                                 </motion.div>
@@ -321,7 +332,7 @@ export default function GovernmentCapabilities() {
                                                 </div>
                                             )}
                                             <div
-                                                className={`relative aspect-[16/10] overflow-hidden ${feature ? "lg:aspect-auto lg:min-h-80 lg:flex-1" : "lg:aspect-[16/9]"}`}
+                                                className={`relative aspect-[16/10] overflow-hidden ${feature ? "lg:aspect-[4/3]" : "lg:aspect-auto lg:min-h-40 lg:flex-1"}`}
                                             >
                                                 <Image
                                                     src={project.image}

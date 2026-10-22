@@ -4,12 +4,14 @@ import MiniHero from "@/components/sections/MiniHero";
 import ReadyToTransform from "@/components/sections/ReadyToTransform";
 import ServiceDetailSections from "@/components/sections/ServiceDetailSections";
 import ServiceSplitSections from "@/components/sections/ServiceSplitSections";
+import ServiceVideoBand from "@/components/sections/ServiceVideoBand";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Container from "@/components/ui/Container";
 import JsonLd from "@/components/seo/JsonLd";
 import { SITE_URL, BUSINESS } from "@/lib/site";
 import { ORG_ID } from "@/lib/schema";
 import { SERVICES, SERVICE_DETAILS, SERVICE_SPLITS } from "@/lib/services";
+import { videosForProject, videosForService, videoSchema } from "@/lib/videos";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -47,6 +49,15 @@ export default async function ServicePage({ params }: Props) {
     const detail = SERVICE_DETAILS[slug];
     const split = SERVICE_SPLITS[slug];
     const pageUrl = `${SITE_URL}${service.href}`;
+    /* Videos render in the detail layout, or as their own band on a page with
+       neither layout. The split layout has no slot yet, so it gets none - and
+       no VideoObject markup for a player that isn't on the page. */
+    const videos = split && !detail ? [] : videosForService(slug);
+    /* Project videos render as detail callouts inside the before/after band,
+       so they get markup only when their study is on this page. */
+    const projectVideos = (detail?.beforeAfter?.projects ?? []).flatMap((p) =>
+        p.slug ? videosForProject(p.slug) : [],
+    );
 
     const breadcrumbSchema = {
         "@context": "https://schema.org",
@@ -99,6 +110,9 @@ export default async function ServicePage({ params }: Props) {
             <JsonLd data={breadcrumbSchema} />
             <JsonLd data={serviceSchema} />
             {faqSchema && <JsonLd data={faqSchema} />}
+            {[...videos, ...projectVideos].map((video) => (
+                <JsonLd key={video.youtubeId} data={videoSchema(video)} />
+            ))}
 
             {/* Breadcrumb bar — same component as the category pages */}
             <Breadcrumb
@@ -119,7 +133,13 @@ export default async function ServicePage({ params }: Props) {
             />
  
             {/* Designed detail sections — only for services with rich content */}
-            {detail && <ServiceDetailSections detail={detail} />}
+            {detail && <ServiceDetailSections detail={detail} videos={videos} />}
+
+            {/* No designed layout: the footage band stands alone as sheet 01.
+                Themed, so it never stacks against the steel CTA below. */}
+            {!detail && !split && (
+                <ServiceVideoBand videos={videos} prefix={service.sheetName ?? service.title} index="01" />
+            )}
 
             {/* Photo/copy bands — the lighter treatment for services with
                 photography but no documented process or before/after set */}
