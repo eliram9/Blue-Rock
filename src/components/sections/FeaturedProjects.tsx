@@ -57,7 +57,7 @@ export default function FeaturedProjects() {
                 {/* Lead */}
                 <motion.p
                     variants={fadeUp}
-                    className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-muted md:text-lg"
+                    className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-foreground/80 md:text-lg"
                 >
                     Explore our portfolio of remodeling projects that showcase our
                     craftsmanship and attention to detail — from first sketch to final

@@ -168,8 +168,8 @@ export default function Footer(): React.ReactElement {
                         <ul className="space-y-2 text-sm text-gray-400">
                             {WORKING_HOURS.map(({ day, hours }) => (
                                 <li key={day}>
-                                    <span className="text-gray-500">{day}: </span>
-                                    <span>{hours}</span>
+                                    <span className="text-gray-400">{day}: </span>
+                                    <span className="text-gray-300">{hours}</span>
                                 </li>
                             ))}
                         </ul>

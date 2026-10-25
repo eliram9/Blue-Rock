@@ -54,12 +54,12 @@ export default function CommercialShowcase() {
                         <SectionHeader prefix="Commercial" index="01" kicker="Overview" title="Built for Business" />
                         <motion.div variants={fadeUp} className="mt-20 h-0.5 w-16 bg-main-blue" />
 
-                        <motion.p variants={fadeUp} className="mt-10 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
+                        <motion.p variants={fadeUp} className="mt-10 max-w-3xl text-base leading-relaxed text-foreground/80 md:text-lg">
                             With over a decade of experience and a Better Business Bureau A+
                             rating, Blue Rock Remodeling brings the same craftsmanship from
                             residential projects to commercial spaces across Maryland and DC.
                         </motion.p>
-                        <motion.p variants={fadeUp} className="mt-4 max-w-3xl text-base leading-relaxed text-muted md:text-lg">
+                        <motion.p variants={fadeUp} className="mt-4 max-w-3xl text-base leading-relaxed text-foreground/80 md:text-lg">
                             From office build-outs and retail renovations to restaurant
                             interiors and full commercial kitchen upgrades, we handle projects
                             of any scale for businesses that need their space to perform, not
@@ -110,7 +110,7 @@ export default function CommercialShowcase() {
                                         <div className="mt-3 font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
                                             {cred.label}
                                         </div>
-                                        <div className="mt-2 text-xs leading-relaxed text-muted">
+                                        <div className="mt-2 text-xs leading-relaxed text-foreground/80">
                                             {cred.note}
                                         </div>
                                     </div>
@@ -210,7 +210,7 @@ export default function CommercialShowcase() {
                         <motion.div variants={fadeUp} className="lg:col-span-5">
                             <SectionHeader prefix="Commercial" index="03" kicker="Differentiators" title="A Partner You Can Trust" />
                             <div className="mt-20 h-0.5 w-16 bg-main-blue" />
-                            <p className="mt-6 text-base leading-relaxed text-muted">
+                            <p className="mt-6 text-base leading-relaxed text-foreground/80">
                                 Licensed and insured, Blue Rock Remodeling stands behind every
                                 commercial project with transparent pricing and a commitment to
                                 deadlines. We adapt to the unique needs of each space instead

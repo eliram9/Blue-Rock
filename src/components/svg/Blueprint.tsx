@@ -47,14 +47,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
     {...props}
   >
     <defs>
-      <linearGradient id="a" x1="0%" x2="100%" y1="0%" y2="0%">
+      <linearGradient id="bp-a" x1="0%" x2="100%" y1="0%" y2="0%">
         <stop offset="0%" stopColor="#fff" stopOpacity={0.08} />
         <stop offset="55%" stopColor="#fff" stopOpacity={0.35} />
         <stop offset="100%" stopColor="#fff" />
       </linearGradient>
     </defs>
     <path
-      stroke="url(#a)"
+      stroke="url(#bp-a)"
       d={gridPath(gridStep)}
       opacity={0.15}
       style={{
@@ -62,7 +62,7 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       }}
     />
     <path
-      stroke="url(#a)"
+      stroke="url(#bp-a)"
       strokeWidth={1.6}
       d={crossesPath(gridStep)}
       opacity={0.8}
@@ -77,14 +77,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
     >
       <g opacity={0.35}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M120 131v18m300-18v18m-300-9h300"
         />
         <text
           x={270}
           y={124}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
           textAnchor="middle"
@@ -94,14 +94,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.55}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M820 141v18m350-18v18m-350-9h350"
         />
         <text
           x={995}
           y={134}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
           textAnchor="middle"
@@ -111,14 +111,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.75}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M1280 251v18m370-18v18m-370-9h370"
         />
         <text
           x={1465}
           y={244}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
           textAnchor="middle"
@@ -128,14 +128,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.35}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M251 380h18m-18 340h18m-9-340v340"
         />
         <text
           x={276}
           y={550}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
         >
@@ -144,14 +144,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.8}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M2491 500h18m-18 400h18m-9-400v400"
         />
         <text
           x={2516}
           y={700}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
         >
@@ -160,14 +160,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.7}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M1450 971v18m400-18v18m-400-9h400"
         />
         <text
           x={1650}
           y={964}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
           textAnchor="middle"
@@ -177,14 +177,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.5}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M1711 150h18m-18 320h18m-9-320v320"
         />
         <text
           x={1736}
           y={310}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
         >
@@ -193,14 +193,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.75}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M1150 611v18m330-18v18m-330-9h330"
         />
         <text
           x={1315}
           y={604}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
           textAnchor="middle"
@@ -210,14 +210,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.75}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M2311 780h18m-18 300h18m-9-300v300"
         />
         <text
           x={2336}
           y={930}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
         >
@@ -226,14 +226,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.35}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M1180 1041v18m280-18v18m-280-9h280"
         />
         <text
           x={1320}
           y={1034}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
           textAnchor="middle"
@@ -243,14 +243,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.4}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M971 260h18m-18 300h18m-9-300v300"
         />
         <text
           x={996}
           y={410}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
         >
@@ -259,14 +259,14 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
       <g opacity={0.7}>
         <path
-          stroke="url(#a)"
+          stroke="url(#bp-a)"
           strokeWidth={1.6}
           d="M1550 1080v18m380-18v18m-380-9h380"
         />
         <text
           x={1740}
           y={1073}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={22}
           textAnchor="middle"
@@ -276,7 +276,7 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       </g>
     </g>
     <g
-      stroke="url(#a)"
+      stroke="url(#bp-a)"
       strokeWidth={1.4}
       style={{
         mixBlendMode: "soft-light",
@@ -301,7 +301,7 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       />
     </g>
     <g
-      fill="url(#a)"
+      fill="url(#bp-a)"
       style={{
         mixBlendMode: "soft-light",
       }}
@@ -317,22 +317,22 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
       }}
     >
       <g opacity={0.85}>
-        <path stroke="url(#a)" strokeWidth={1.4} d="M700 940h330v90H700z" />
+        <path stroke="url(#bp-a)" strokeWidth={1.4} d="M700 940h330v90H700z" />
         <text
           x={716}
           y={975}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={20}
           letterSpacing={1.5}
         >
           {"SCALE    N.T.S."}
         </text>
-        <path stroke="url(#a)" d="M700 985h330" />
+        <path stroke="url(#bp-a)" d="M700 985h330" />
         <text
           x={716}
           y={1020}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={20}
           letterSpacing={1.5}
@@ -341,11 +341,11 @@ const Bluprint3 = ({ zoom = 1, gridStep = 88, ...props }: BlueprintProps) => {
         </text>
       </g>
       <g opacity={0.55}>
-        <path stroke="url(#a)" strokeWidth={1.4} d="M1850 330h250v70h-250z" />
+        <path stroke="url(#bp-a)" strokeWidth={1.4} d="M1850 330h250v70h-250z" />
         <text
           x={1866}
           y={390}
-          fill="url(#a)"
+          fill="url(#bp-a)"
           fontFamily="Helvetica, Arial, sans-serif"
           fontSize={20}
           letterSpacing={1.5}

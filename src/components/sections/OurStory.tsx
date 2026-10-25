@@ -217,7 +217,10 @@ export default function OurStory() {
                                                         <span className="font-title text-2xl leading-none tracking-wide text-white md:text-3xl">
                                                             {current.year}
                                                         </span>
-                                                        <span className="truncate font-mono text-[11px] uppercase tracking-widest text-white/80">
+                                                        {/* Wraps rather than truncates: beside the progress
+                                                            ticks a 375px phone leaves ~90px, which cut every
+                                                            title to "FOUNDED I…". */}
+                                                        <span className="min-w-0 font-mono text-[11px] uppercase leading-snug tracking-widest text-white/80">
                                                             {current.title}
                                                         </span>
                                                     </motion.div>

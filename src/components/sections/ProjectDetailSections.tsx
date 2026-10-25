@@ -127,7 +127,7 @@ export default function ProjectDetailSections({ project }: { project: Project })
                                 <p className="max-w-[62ch] border-l-2 border-main-blue pl-5 text-lg leading-relaxed text-foreground md:text-xl">
                                     {project.summary}
                                 </p>
-                                <p className="mt-8 max-w-[58ch] text-base leading-relaxed text-muted md:text-lg">
+                                <p className="mt-8 max-w-[58ch] text-base leading-relaxed text-foreground/80 md:text-lg">
                                     Blue Rock Remodeling &amp; Construction handled this
                                     project end to end with one licensed, insured crew,
                                     from drawings and permits through the final

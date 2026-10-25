@@ -111,15 +111,12 @@ export default function Hero(): React.ReactElement {
                         >
                             Get Started
                         </Button>
-                        {/* The CTA band's outline plate sits on a flat steel
-                            gradient, where a brand-light hairline reads fine. Over
-                            photography it disappears, so this one keeps the white
-                            keyline and blur wash the old secondary pill carried —
-                            same shape and type, surface adapted to its ground. */}
+                        {/* Solid white plate with brand-blue type (ctaLight), so
+                            it reads over any photograph. */}
                         <Button
                             href="/projects"
-                            variant="ctaOutline"
-                            className="running-border border-white/60 bg-white/10 backdrop-blur-sm hover:border-white hover:bg-white/20 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+                            variant="ctaLight"
+                            className="running-border hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
                         >
                             View Projects
                         </Button>

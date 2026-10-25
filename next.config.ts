@@ -27,17 +27,53 @@ const nextConfig: NextConfig = {
     /* YouTube posters for the VideoEmbed facade (src/data/videos.json). */
     remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" }],
   },
+  /* Turns off Next's built-in trailing-slash strip, which ran *before*
+     redirects() and turned every legacy WordPress URL (they all end in "/")
+     into a 2-hop chain: /about-us/ -> /about-us -> /about. src/proxy.ts now
+     does the strip instead, and it runs after redirects(), so legacy URLs
+     resolve in one hop. Don't remove one without the other. */
+  skipTrailingSlashRedirect: true,
   async redirects() {
-    return [
-      // Stale duplicate route removed (2026-07-15); /services/residential is
-      // the canonical residential page.
-      {
-        source: "/residential",
-        destination: "/services/residential",
-        permanent: true,
-      },
-    ];
+    // Each source is registered with and without the trailing slash so both
+    // forms land in a single 308.
+    return Object.entries(LEGACY_REDIRECTS).flatMap(([source, destination]) =>
+      [source, `${source}/`].map((s) => ({ source: s, destination, permanent: true })),
+    );
   },
+};
+
+/* WordPress -> Next.js migration map (old site inventory taken 2026-10-22
+   from page-sitemap.xml, the WP REST API and a link crawl; the old site had
+   no blog posts). Paths that are unchanged apart from the trailing slash
+   (/, /projects, /resources) are left to the proxy. Intentionally absent:
+   /elementskit-content/dynamic-content-widget-b397b85-99/ - an Elementor
+   template fragment, not a page, so it 404s. */
+const LEGACY_REDIRECTS: Record<string, string> = {
+  // Stale duplicate route removed (2026-07-15); /services/residential is
+  // the canonical residential page. Also the old WordPress URL.
+  "/residential": "/services/residential",
+  "/home": "/",
+  "/about-us": "/about",
+  "/contact-us": "/contact",
+  "/commercial": "/services/commercial",
+  "/government-contracts": "/services/government",
+  "/general-contracting-in-rockville-md": "/services/commercial",
+  "/residential-kitchen-remodelers-in-rockville-md": "/services/residential/kitchen-remodeling",
+  "/residential-bathroom-remodeling-services-in-rockville-md": "/services/residential/bathroom-remodeling",
+  "/home-addition-services-in-rockville-md": "/services/residential/home-additions",
+  "/residential-basement-finishing-in-rockville-md": "/services/residential/basement-finishing",
+  "/exterior-renovation-services-in-rockville-md": "/services/residential/exterior-renovations",
+  "/residential-commercial-demolition-services-in-rockville-md": "/services/residential/demolition-services",
+  "/residential-deck-installation-repair-in-rockville-md": "/services/residential/deck-installation",
+  // No dedicated page; the FAQ answers "What areas does Blue Rock serve?"
+  "/areas-we-serve": "/faq",
+  // Old /blogs/ was an empty listing; /resources is the content hub.
+  "/blogs": "/resources",
+  // Old sitemap URLs still registered in Search Console.
+  "/sitemap_index.xml": "/sitemap.xml",
+  "/page-sitemap.xml": "/sitemap.xml",
+  "/sitemaps/sitemap.xml": "/sitemap.xml",
+  "/wp-sitemap.xml": "/sitemap.xml",
 };
 
 export default nextConfig;

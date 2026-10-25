@@ -11,6 +11,7 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fadeUp, stagger, viewport } from "@/lib/motion";
 import { BUSINESS } from "@/lib/site";
+import { formatUsPhone, PHONE_ERROR } from "@/lib/phone";
 import { SITE_CONFIG } from "@/constants/config";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -136,6 +137,12 @@ export default function Contact() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // Same check the API enforces, run first so a typo doesn't cost a round trip.
+        if (!formatUsPhone(formData.phone)) {
+            setStatus("error");
+            setErrorMessage(PHONE_ERROR);
+            return;
+        }
         setStatus("submitting");
         setErrorMessage("");
 

@@ -112,7 +112,7 @@ export default function ResidentialShowcase() {
                                         <div className="mt-3 font-mono text-[11px] uppercase tracking-[0.25em] text-main-blue">
                                             {cred.label}
                                         </div>
-                                        <div className="mt-2 text-xs leading-relaxed text-muted">
+                                        <div className="mt-2 text-xs leading-relaxed text-foreground/80">
                                             {cred.note}
                                         </div>
                                     </div>
@@ -237,7 +237,7 @@ export default function ResidentialShowcase() {
                         <motion.div variants={fadeUp} className="lg:col-span-5">
                             <SectionHeader prefix="Residential" index="03" kicker="Differentiators" title="Why Choose Us" />
                             <div className="mt-20 h-0.5 w-16 bg-main-blue" />
-                            <p className="mt-6 text-base leading-relaxed text-muted">
+                            <p className="mt-6 text-base leading-relaxed text-foreground/80">
                                 A remodel lives in your home long after the crew leaves. Here
                                 is what homeowners get when Blue Rock runs the job.
                             </p>

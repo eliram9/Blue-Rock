@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "cta" | "ctaOutline";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "cta" | "ctaOutline" | "ctaLight";
 
 interface ButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     variant?: ButtonVariant;
@@ -37,7 +37,9 @@ export default function Button({
         "inline-block transition-[color,background-color,border-color,transform] duration-200 ease-out";
 
     const variants: Record<ButtonVariant, string> = {
-        primary: `${PILL} bg-main-blue hover:bg-main-blue-deep text-white`,
+        /* Fixed `brand` for the same reason as `cta` below: white on the
+           flipping main-blue measured 3.53:1 in dark mode. */
+        primary: `${PILL} bg-brand hover:bg-brand-deep text-white`,
         secondary: `${PILL} bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-2 border-white`,
         ghost: `${PILL} bg-transparent text-white hover:bg-ink/40`,
         /* Fixed `brand`, not flipping `main-blue`: both consumers of this pair
@@ -50,6 +52,10 @@ export default function Button({
            they sit side by side. */
         cta: `${DRAFT} border border-transparent bg-brand text-white hover:bg-brand-deep`,
         ctaOutline: `${DRAFT} border border-brand-light/40 bg-transparent text-white hover:border-brand-light hover:bg-brand-light/10`,
+        /* White plate, brand type - the hero's secondary over photography.
+           Its own variant because overriding ctaOutline's text-white from
+           className loses to class-order roulette (rendered white on white). */
+        ctaLight: `${DRAFT} border border-white bg-white text-brand hover:bg-white/90`,
     };
 
     const { href, ...rest } = props;

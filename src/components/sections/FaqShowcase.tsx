@@ -11,14 +11,17 @@ import { fadeUp, stagger, viewport } from "@/lib/motion";
 import { BUSINESS } from "@/lib/site";
 import { FAQ_CATEGORIES, FAQ_COUNT } from "@/lib/faq";
 
+/* Global Q—01…15 numbering across categories: each category's first number,
+   precomputed so render doesn't mutate a running counter. */
+const CATEGORY_START = FAQ_CATEGORIES.map((_, i) =>
+    FAQ_CATEGORIES.slice(0, i).reduce((sum, c) => sum + c.items.length, 1),
+);
+
 export default function FaqShowcase() {
     /* Single-open accordion across the whole page; answers stay in the DOM
        (CSS-collapsed) so they keep matching the FAQPage JSON-LD for search
        and AI crawlers. Keyed by the question's global number. */
     const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-    /* Global Q—01…15 numbering across categories */
-    let questionNo = 0;
 
     return (
         <>
@@ -181,9 +184,8 @@ export default function FaqShowcase() {
                                     />
 
                                     <dl className="mt-10">
-                                        {category.items.map((item) => {
-                                            questionNo += 1;
-                                            const n = questionNo;
+                                        {category.items.map((item, itemIndex) => {
+                                            const n = CATEGORY_START[catIndex] + itemIndex;
                                             const open = openFaq === n;
                                             return (
                                                 <motion.div

@@ -152,13 +152,13 @@ export default function GovernmentCapabilities() {
                             </h2>
                         </motion.div>
                         <motion.div variants={fadeUp} className="mt-4 h-0.5 w-16 bg-main-blue" />
-                        <motion.p variants={fadeUp} className="mt-6 text-base text-center leading-relaxed text-muted md:text-lg">
+                        <motion.p variants={fadeUp} className="mt-6 text-base text-center leading-relaxed text-foreground/80 md:text-lg">
                             {BUSINESS.name} is a Maryland-based general contractor providing
                             construction, renovation, demolition, fencing, and site development
                             services for federal, state, local government, commercial, and
                             institutional clients.
                         </motion.p>
-                        <motion.p variants={fadeUp} className="mt-4 text-base text-center leading-relaxed text-muted md:text-lg">
+                        <motion.p variants={fadeUp} className="mt-4 text-base text-center leading-relaxed text-foreground/80 md:text-lg">
                             Our leadership team is composed entirely of military veterans,
                             bringing firsthand experience operating in high-security
                             facilities, executing under pressure, and managing demanding,
@@ -166,7 +166,7 @@ export default function GovernmentCapabilities() {
                             how we run every job - with discipline, accountability, and a
                             clear chain of command from day one.
                         </motion.p>
-                        <motion.p variants={fadeUp} className="mt-4 text-base text-center leading-relaxed text-muted md:text-lg">
+                        <motion.p variants={fadeUp} className="mt-4 text-base text-center leading-relaxed text-foreground/80 md:text-lg">
                             We deliver turnkey project management from planning and
                             permitting through construction and closeout, maintaining strict
                             safety, quality, and schedule requirements throughout.
@@ -269,7 +269,7 @@ export default function GovernmentCapabilities() {
                                 </h2>
                             </div>
                             <div className="mt-4 h-0.5 w-16 bg-main-blue" />
-                            <p className="mt-6 text-base leading-relaxed text-muted">
+                            <p className="mt-6 text-base leading-relaxed text-foreground/80">
                                 Public-sector work demands more than construction skill - it
                                 demands documentation, coordination, and accountability. Here
                                 is what agencies get with one call.

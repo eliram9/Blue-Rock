@@ -220,7 +220,7 @@ function FlagshipCard({
             <h3 className="font-title text-xl font-normal uppercase tracking-[0.015em] text-foreground md:text-2xl lg:flex lg:min-h-[3.5rem] lg:items-end lg:text-xl">
                 {service.title}
             </h3>
-            <p className="mt-3 flex-1 text-sm leading-relaxed text-muted md:text-base">{service.blurb}</p>
+            <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground/80 md:text-base">{service.blurb}</p>
             <span className="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-main-blue md:text-sm">
                 View details
                 <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover:translate-x-1.5 group-focus-visible:translate-x-1.5 motion-reduce:transition-none md:h-4 md:w-4" />

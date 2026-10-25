@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { formatUsPhone, PHONE_ERROR } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
@@ -29,6 +30,7 @@ function validate(body: Partial<ContactPayload>): string | null {
     if (!isNonEmptyString(body.email, MAX_FIELD)) return "Email is required.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) return "Please enter a valid email address.";
     if (!isNonEmptyString(body.phone, MAX_FIELD)) return "Phone number is required.";
+    if (!formatUsPhone(body.phone)) return PHONE_ERROR;
     if (!isNonEmptyString(body.service, MAX_FIELD)) return "Service is required.";
     if (!ALLOWED_SERVICES.includes(body.service as Service)) return "Invalid service selection.";
     if (!isNonEmptyString(body.message, MAX_MESSAGE)) return "Message is required.";
@@ -101,7 +103,9 @@ export async function POST(request: Request) {
         );
     }
 
-    const { firstName, lastName, email, phone, service, message } = body as ContactPayload;
+    const { firstName, lastName, email, service, message } = body as ContactPayload;
+    // Normalised so every lead email shows the number the same way.
+    const phone = formatUsPhone((body as ContactPayload).phone)!;
     const resend = new Resend(apiKey);
 
     try {

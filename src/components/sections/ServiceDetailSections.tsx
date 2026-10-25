@@ -72,7 +72,7 @@ export default function ServiceDetailSections({
                                 <motion.p
                                     key={paragraph.slice(0, 32)}
                                     variants={fadeUp}
-                                    className="mt-6 text-base leading-relaxed text-muted first:mt-0 md:text-lg"
+                                    className="mt-6 text-base leading-relaxed text-foreground/80 first:mt-0 md:text-lg"
                                 >
                                     {paragraph}
                                 </motion.p>
@@ -118,7 +118,7 @@ export default function ServiceDetailSections({
                                             {option.points.map((point) => (
                                                 <li
                                                     key={point}
-                                                    className="flex items-start gap-3 text-sm leading-relaxed text-muted md:text-base"
+                                                    className="flex items-start gap-3 text-sm leading-relaxed text-foreground/80 md:text-base"
                                                 >
                                                     <span
                                                         aria-hidden="true"
@@ -252,7 +252,7 @@ export default function ServiceDetailSections({
                         <div className="py-10">
                             <motion.p
                                 variants={fadeUp}
-                                className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-muted md:text-lg"
+                                className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-foreground/80 md:text-lg"
                             >
                                 {process.lead}
                             </motion.p>
@@ -289,7 +289,7 @@ export default function ServiceDetailSections({
                                                         {phase.title}
                                                     </h3>
                                                 </div>
-                                                <p className="mt-1 text-sm leading-relaxed text-muted">
+                                                <p className="mt-1 text-sm leading-relaxed text-foreground/80">
                                                     {phase.note}
                                                 </p>
                                             </div>
@@ -300,7 +300,7 @@ export default function ServiceDetailSections({
 
                             <motion.p
                                 variants={fadeUp}
-                                className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-muted md:text-lg"
+                                className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-foreground/80 md:text-lg"
                             >
                                 {process.close}
                             </motion.p>

@@ -158,7 +158,7 @@ export default function ServiceSplitSections({ band }: { band: ServiceSplitBand 
                                                 {section.points.map((point) => (
                                                     <li
                                                         key={point}
-                                                        className="flex items-start gap-3 text-sm leading-relaxed text-muted md:text-base"
+                                                        className="flex items-start gap-3 text-sm leading-relaxed text-foreground/80 md:text-base"
                                                     >
                                                         <span
                                                             aria-hidden="true"
